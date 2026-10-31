@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wallpaper App</title>
+    <!-- مكتبة الأيقونات -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg-color: #1e2235;
+            --surface-color: #2a2f45;
+            --surface-light: #363c59;
+            --text-color: #ffffff;
+            --text-muted: #a0a4b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+
+        /* الشريط العلوي */
+        .header-container { padding: 15px 20px; }
+        .top-bar-box {
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 20px;
+            font-size: 22px;
+        }
+        .top-bar-box i { cursor: pointer; color: var(--text-color); }
+        .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
+
+        /* شريط التنقل */
+        .nav-tabs {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 25px 20px 25px;
+        }
+        .tab {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 15px; border-radius: 20px; 
+            cursor: pointer; color: var(--text-muted);
+            transition: all 0.3s ease; font-size: 24px;
+        }
+        .tab.active { background-color: var(--surface-light); color: var(--text-color); }
+        .tab .tab-text { display: none; font-size: 15px; font-weight: 500; }
+        .tab.active .tab-text { display: inline-block; }
+
+        /* شبكة الصور والأقسام */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .wallpaper-card {
+            border-radius: 12px; overflow: hidden; height: 180px; position: relative;
+            background-color: var(--surface-color); cursor: pointer;
+        }
+        .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
+        .category-card {
+            border-radius: 16px; height: 120px; position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; padding: 15px; cursor: pointer;
+        }
+        .category-card span { font-weight: bold; font-size: 20px; z-index: 2; color: white;}
+
+        /* القائمة الجانبية */
+        .sidebar {
+            position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
+            background-color: var(--surface-color); z-index: 1000;
+            transition: left 0.3s ease; padding: 20px 0; box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column;
+        }
+        .sidebar.open { left: 0; }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); z-index: 999; display: none;
+        }
+        .overlay.show { display: block; }
+        
+        .pro-banner {
+            background-color: rgba(251, 191, 36, 0.1); margin: 0 20px 20px 20px; padding: 15px;
+            border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.3);
+            display: flex; align-items: center; gap: 15px; cursor: pointer;
+        }
+        .pro-banner i { color: #fbbf24; font-size: 24px; }
+        .pro-text h4 { color: #fbbf24; margin: 0; }
+        .pro-text p { color: var(--text-muted); font-size: 12px; margin: 2px 0 0 0; }
+
+        .menu-item { 
+            padding: 15px 20px; font-size: 16px; cursor:pointer;
+            display: flex; align-items: center; color: var(--text-color);
+            transition: background 0.2s;
+        }
+        .menu-item:hover { background-color: var(--surface-light); }
+        .menu-item i { margin-right: 15px; width: 24px; font-size: 20px; color: var(--text-muted); text-align: center;}
+        
+        .menu-divider { height: 1px; background-color: var(--border-color); margin: 10px 20px; }
+        .sidebar-bottom { margin-top: auto; padding: 20px; }
+
+        /* شاشة عرض تفاصيل الصورة (بدون سكرول) */
+        .image-viewer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color); z-index: 2000;
+            display: none; flex-direction: column;
+            overflow: hidden; /* يمنع السكرول نهائياً */
+        }
+        .image-viewer.show { display: flex; }
+        
+        .viewer-header {
+            display: flex; justify-content: space-between; padding: 20px;
+            position: absolute; top: 0; width: 100%; z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+        .header-icons-left { display: flex; gap: 20px; }
+        .viewer-header i { font-size: 24px; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        
+        .viewer-image-container {
+            flex-grow: 1; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; padding: 0; position: relative;
+        }
+        .viewer-image-container img {
+            width: 100%; height: 100%;
+            object-fit: contain; /* لاحتواء الصورة كاملة داخل الشاشة */
+            transition: transform 0.3s ease;
+        }
+        
+        .viewer-actions {
+            display: flex; justify-content: space-around; padding: 20px;
+            background: linear-gradient(to top, var(--bg-color) 80%, transparent);
+            position: absolute; bottom: 0; width: 100%;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* تأثير التكبير (Full Screen) */
+        .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
+        .image-viewer.fullscreen .viewer-actions { opacity: 0; transform: translateY(100%); pointer-events: none; }
+        .image-viewer.fullscreen .viewer-image-container img { object-fit: cover; }
+
+        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); }
+        .action-icon { background-color: var(--surface-color); padding: 15px; border-radius: 12px; font-size: 24px; color: var(--text-color); }
+        .action-btn span { font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة الجانبية -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="pro-banner" onclick="alert('صفحة الترقية')">
+            <i class="ph-fill ph-crown"></i>
+            <div class="pro-text">
+                <h4>Go Pro!</h4>
+                <p>Unlock everything.</p>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="alert('المفضلة')"><i class="ph ph-heart"></i> Favorites</div>
+        <div class="menu-divider"></div>
+        <div class="menu-item" onclick="alert('عن التطبيق')"><i class="ph ph-info"></i> About the app</div>
+        <div class="menu-item" onclick="alert('تقييم')"><i class="ph ph-star"></i> Rate the app</div>
+        <div class="menu-item" onclick="alert('مشاركة')"><i class="ph ph-share-network"></i> Share with friends</div>
+        <div class="menu-item" onclick="alert('تطبيقات أخرى')"><i class="ph ph-storefront"></i> More apps</div>
+        <div class="menu-item" onclick="alert('استخدم صورتك')">
+            <i class="ph ph-image"></i> Use your photo 
+            <span style="background-color: #10b981; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; margin-left: auto;">New</span>
+        </div>
+        
+        <div class="sidebar-bottom">
+            <div class="menu-item" style="padding: 0;" onclick="alert('الإعدادات')"><i class="ph ph-gear"></i> Settings</div>
+        </div>
+    </div>
+
+    <!-- شاشة عرض الصورة -->
+    <div class="image-viewer" id="imageViewer">
+        <div class="viewer-header">
+            <div class="header-icons-left">
+                <i class="ph ph-dots-three-vertical" onclick="alert('خيارات إضافية')"></i>
+                <!-- زر التكبير الجديد -->
+                <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
+            </div>
+            <i class="ph ph-x" onclick="closeImageViewer()"></i>
+        </div>
+        
+        <!-- جعل الصورة قابلة للضغط لتفعيل وضع ملء الشاشة -->
+        <div class="viewer-image-container" onclick="toggleFullscreen()"> 
+            <img id="viewerImage" src="" alt="Full Wallpaper">
+        </div>
+        
+        <div class="viewer-actions">
+            <div class="action-btn" onclick="applyWallpaper()">
+                <div class="action-icon"><i class="ph ph-paint-roller"></i></div>
+                <span>Apply</span>
+            </div>
+            <div class="action-btn" onclick="alert('جاري الحفظ...')">
+                <div class="action-icon"><i class="ph ph-download-simple"></i></div>
+                <span>Save</span>
+            </div>
+            <div class="action-btn" onclick="alert('اقتباس')">
+                <div class="action-icon"><i class="ph ph-quotes"></i></div>
+                <span>Quote</span>
+            </div>
+             <div class="action-btn" onclick="alert('ودجت')">
+                <div class="action-icon"><i class="ph ph-squares-four"></i></div>
+                <span>Widgets</span>
+            </div>
+             <div class="action-btn" onclick="alert('ضباب')">
+                <div class="action-icon"><i class="ph ph-drop"></i></div>
+                <span>Blur</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- الواجهة الرئيسية للتطبيق -->
+    <div class="header-container">
+        <div class="top-bar-box">
+            <i class="ph ph-list" onclick="toggleMenu()"></i>
+            <div class="title">MyWalls</div>
+            <i class="ph ph-magnifying-glass"></i>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="tab" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i> <span class="tab-text">Category</span></div>
+        <div class="tab" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i> <span class="tab-text">Premium</span></div>
+        <div class="tab active" onclick="switchTab('home', this)"><i class="ph ph-house"></i> <span class="tab-text">Home</span></div>
+        <div class="tab" onclick="switchTab('community', this)"><i class="ph ph-users"></i> <span class="tab-text">Community</span></div>
+        <div class="tab" onclick="switchTab('desktop', this)">
+            <span style="font-size: 14px; font-weight: bold; border: 1px solid var(--text-muted); padding: 2px 6px; border-radius: 6px;">4K</span>
+            <span class="tab-text">Desktop</span>
+        </div>
+    </div>
+
+    <!-- حاوية عرض المحتوى -->
+    <div id="mainContainer" class="grid"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
