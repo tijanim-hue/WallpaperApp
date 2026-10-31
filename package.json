@@ -4,8 +4,8 @@
 "description": "Wallpaper Android App",
 "main": "index.js",
 "scripts": {
-"build": "echo "Web application files are ready"",
-"test": "echo "No tests specified""
+"build": "echo Web application files are ready",
+"test": "echo No tests specified"
 },
 "keywords": [],
 "author": "",
