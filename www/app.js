@@ -1,97 +1,150 @@
-container.className = 'categories-grid';
-        container.innerHTML = `<h3 style="text-align:center; margin-top:50px; color:#a0a4b8;">قريباً...</h3>`;
-    }
-}
+// مفتاح Pixabay الخاص بك
+const API_KEY = '34904576-1b3b2ade155886a3ef79485ce'; 
+const mainContainer = document.getElementById('mainContainer');
 
-// دالة جلب وعرض الصور
-async function fetchWallpapers(query) {
-    container.innerHTML = `<p style="text-align:center; color:#fff; width:100%; grid-column: span 3;">جاري تحميل الصور...</p>`;
-    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${query}&image_type=photo&orientation=vertical&per_page=21`;
-    
+// دالة جلب الصور من Pixabay
+async function fetchWallpapers(query = 'nature') {
+    mainContainer.innerHTML = '<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 20px;">جاري تحميل الخلفيات...</p>';
     try {
-        const response = await fetch(url);
+        const response = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&per_page=18`);
         const data = await response.json();
-        container.innerHTML = '';
         
-        if(data.hits.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color:#fff;">لا توجد صور</p>`;
-            return;
+        if (data.hits && data.hits.length > 0) {
+            displayWallpapers(data.hits);
+        } else {
+            mainContainer.innerHTML = '<p style="text-align:center; grid-column: span 3; color: var(--text-muted);">لا توجد صور مطابقة</p>';
         }
-
-        data.hits.forEach(photo => {
-            const card = document.createElement('div');
-            card.className = 'wallpaper-card';
-            card.onclick = () => openImageViewer(photo.largeImageURL);
-            card.innerHTML = `<img src="${photo.largeImageURL}" alt="Wallpaper">`;
-            container.appendChild(card);
-        });
     } catch (error) {
-        container.innerHTML = `<p style="text-align:center; color:red; grid-column: span 3;">حدث خطأ في الاتصال بالإنترنت</p>`;
+        console.error('خطأ في جلب الصور:', error);
+        mainContainer.innerHTML = '<p style="text-align:center; grid-column: span 3; color: #ef4444;">فشل الاتصال بالإنترنت</p>';
     }
 }
 
-// دالة عرض الأقسام
-function loadCategories() {
-    const categoriesList = [
-        { name: 'Islamic', color: 'linear-gradient(45deg, #1e3c72, #2a5298)' },
-        { name: 'Nature', color: 'linear-gradient(45deg, #56ab2f, #a8e063)' },
-        { name: 'Dark', color: 'linear-gradient(45deg, #000000, #434343)' },
-        { name: 'Cars', color: 'linear-gradient(45deg, #ed213a, #93291e)' }
-    ];
-
-    categoriesList.forEach(cat => {
+// عرض الصور في شبكة التطبيق
+function displayWallpapers(images) {
+    mainContainer.className = 'grid';
+    mainContainer.innerHTML = '';
+    images.forEach(image => {
         const card = document.createElement('div');
-        card.className = 'category-card';
-        card.style.background = cat.color;
-        card.onclick = () => {
-            container.innerHTML = '';
-            container.className = 'grid';
-            fetchWallpapers(cat.name);
-        };
-        card.innerHTML = `<span style="color:#fff;">${cat.name}</span>`;
-        container.appendChild(card);
+        card.className = 'wallpaper-card';
+        card.innerHTML = `<img src="${image.webformatURL}" alt="Wallpaper" loading="lazy">`;
+        
+        card.onclick = () => openImageViewer(image.largeImageURL);
+        mainContainer.appendChild(card);
     });
 }
 
-// دالة فتح عارض الصور
-function openImageViewer(imageUrl) {
-    currentImageUrl = imageUrl;
-    viewerImage.src = imageUrl;
+// عرض الأقسام (Categories)
+function displayCategories() {
+    mainContainer.className = 'categories-grid';
+    mainContainer.innerHTML = '';
     
-    // التأكد من أن وضع التكبير ملغى دائماً عند فتح صورة جديدة
-    imageViewer.classList.remove('fullscreen');
-    const fullscreenIcon = document.querySelector('#fullscreenBtn');
-    fullscreenIcon.classList.replace('ph-corners-in', 'ph-corners-out');
-    
+    const categories = [
+        { name: 'Nature', query: 'nature wallpaper', bg: 'https://images.pixabay.com/photo/2015/12/01/20/28/road-1072823_640.jpg' },
+        { name: 'Abstract', query: 'abstract background', bg: 'https://images.pixabay.com/photo/2018/01/14/23/12/nature-3082832_640.jpg' },
+        { name: 'Cars', query: 'sports car', bg: 'https://images.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_640.jpg' },
+        { name: 'Technology', query: 'technology neon', bg: 'https://images.pixabay.com/photo/2016/04/04/14/12/monitor-1307227_640.jpg' }
+    ];
+
+    categories.forEach(cat => {
+        const catCard = document.createElement('div');
+        catCard.className = 'category-card';
+        catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('${cat.bg}')`;
+        catCard.style.backgroundSize = 'cover';
+        catCard.style.backgroundPosition = 'center';
+        catCard.innerHTML = `<span>${cat.name}</span>`;
+        
+        catCard.onclick = () => {
+            fetchWallpapers(cat.query);
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const homeTab = document.querySelector('.tab:nth-child(3)');
+            if(homeTab) homeTab.classList.add('active');
+        };
+        mainContainer.appendChild(catCard);
+    });
+}
+
+// تبديل التبويبات (Tabs)
+function switchTab(tabName, element) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+
+    if (tabName === 'home') {
+        fetchWallpapers('nature');
+    } else if (tabName === 'categories') {
+        displayCategories();
+    } else if (tabName === 'premium') {
+        fetchWallpapers('luxury gold dark');
+    } else if (tabName === 'community') {
+        fetchWallpapers('people portrait');
+    } else if (tabName === 'desktop') {
+        fetchWallpapers('4k resolution wallpaper');
+    }
+}
+
+// القائمة الجانبية (Sidebar)
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+}
+
+// دوال فتح وإغلاق الإعدادات وعن التطبيق الجديدة
+function openSettings() {
+    toggleMenu();
+    document.getElementById('settingsModal').style.display = 'flex';
+}
+
+function closeSettings() {
+    document.getElementById('settingsModal').style.display = 'none';
+}
+
+function openAbout() {
+    toggleMenu();
+    document.getElementById('aboutModal').style.display = 'flex';
+}
+
+function closeAbout() {
+    document.getElementById('aboutModal').style.display = 'none';
+}
+
+// عارض الصور (Image Viewer)
+const imageViewer = document.getElementById('imageViewer');
+const viewerImage = document.getElementById('viewerImage');
+
+function openImageViewer(imgUrl) {
+    viewerImage.src = imgUrl;
     imageViewer.classList.add('show');
 }
 
-// دالة إغلاق عارض الصور
 function closeImageViewer() {
     imageViewer.classList.remove('show');
-    viewerImage.src = ''; 
+    imageViewer.classList.remove('fullscreen');
 }
 
-// دالة التبديل لوضع ملء الشاشة (إخفاء الأزرار)
 function toggleFullscreen() {
     imageViewer.classList.toggle('fullscreen');
-    
-    const fullscreenIcon = document.querySelector('#fullscreenBtn');
-    if (imageViewer.classList.contains('fullscreen')) {
-        fullscreenIcon.classList.replace('ph-corners-out', 'ph-corners-in');
-    } else {
-        fullscreenIcon.classList.replace('ph-corners-in', 'ph-corners-out');
-    }
 }
 
-// دالة تعيين الخلفية
+// تطبيق الخلفية
 function applyWallpaper() {
-    if (window.plugins && window.plugins.wallpaper) {
-        alert("جاري تعيين الخلفية...");
-    } else {
-        alert("وظيفة تعيين الخلفية ستعمل بعد تحويل الكود إلى تطبيق أندرويد عبر Termux.");
+    alert('جاري تعيين الخلفية...');
+    try {
+        if (window.Wallpaper) {
+            window.Wallpaper.setImage({ url: viewerImage.src }, (success) => {
+                alert('تم تغيير خلفية الشاشة بنجاح!');
+            }, (error) => {
+                alert('فشل تعيين الخلفية: ' + error);
+            });
+        } else {
+            alert('ميزة تغيير الخلفية تعمل بوضع التطبيق المثبت (APK).');
+        }
+    } catch (e) {
+        alert('حدث خطأ أثناء التطبيق.');
     }
 }
 
-// تشغيل جلب الصور فوراً عند فتح التطبيق
-fetchWallpapers('wallpaper');
+// التشغيل التلقائي عند فتح التطبيق
+window.onload = () => {
+    fetchWallpapers('nature');
+};
+
