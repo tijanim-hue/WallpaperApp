@@ -127,21 +127,25 @@ function toggleFullscreen() {
 
 // تطبيق الخلفية
 function applyWallpaper() {
-    alert('جاري تعيين الخلفية...');
+    alert('جاري التحدث مع نظام أندرويد لتعيين الخلفية...');
     try {
-        if (window.Wallpaper) {
-            window.Wallpaper.setImage({ url: viewerImage.src }, (success) => {
-                alert('تم تغيير خلفية الشاشة بنجاح!');
-            }, (error) => {
-                alert('فشل تعيين الخلفية: ' + error);
+        if (window.plugins && window.plugins.wallpaper) {
+            window.plugins.wallpaper.setImage(viewerImage.src, function(error) {
+                if (error) {
+                    alert('فشل تعيين الخلفية.');
+                } else {
+                    alert('تم تغيير خلفية الشاشة بنجاح!');
+                }
             });
         } else {
-            alert('ميزة تغيير الخلفية تعمل بوضع التطبيق المثبت (APK).');
+            alert('الجسر البرمجي غير متصل، تأكد من تحميل النسخة الجديدة للتطبيق.');
         }
     } catch (e) {
-        alert('حدث خطأ أثناء التطبيق.');
+        alert('حدث خطأ أثناء عملية التطبيق.');
     }
 }
+
+
 
 // التشغيل التلقائي عند فتح التطبيق
 window.onload = () => {
