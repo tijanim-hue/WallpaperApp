@@ -26,6 +26,7 @@ jobs:
         run: |
           npm install
           npm install -g @capacitor/cli
+          npm install cordova-plugin-wallpaper 
 
       - name: Sync Capacitor Android
         run: npx cap sync android
