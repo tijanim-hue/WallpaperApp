@@ -40,8 +40,6 @@ const categoriesData = [
     { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
     { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
 ];
-
-
 function changeLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('appLang', lang);
