@@ -6,7 +6,6 @@
     <title>My Wallpaper App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        /* الألوان الافتراضية (الساطعة/الحالية) */
         :root {
             --bg-color: #1e2235;
             --surface-color: #2a2f45;
@@ -17,7 +16,6 @@
             --sidebar-bg: #212536;
         }
 
-        /* الألوان للوضع الداكن (الأسود المفتوح للرمادي) */
         body.dark-theme {
             --bg-color: #121212;
             --surface-color: #1e1e1e;
@@ -44,15 +42,62 @@
         .top-bar-box i { cursor: pointer; color: var(--text-color); }
         .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
 
-        /* المساحة السفلية لكي لا يغطي الشريط الصور */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; padding-bottom: 100px; }
+        /* شاشة البحث المنبثقة (الشفافة) */
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            z-index: 2500; display: none; flex-direction: column; padding: 20px;
+        }
+        .search-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .search-bar-modern {
+            display: flex; align-items: center; background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 12px 20px;
+            gap: 15px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .search-bar-modern input {
+            flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none;
+        }
+        .search-bar-modern input::placeholder { color: #d1d5db; }
+        
+        .search-results {
+            margin-top: 20px; display: flex; flex-direction: column; gap: 12px;
+            overflow-y: auto; max-height: 75vh; padding-bottom: 20px;
+        }
+        .search-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px;
+            background: var(--surface-color); border-radius: 16px; cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .search-item:active { transform: scale(0.98); }
+        .search-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
+        .search-item-info { display: flex; flex-direction: column; gap: 4px;}
+        .search-item-title { font-size: 15px; color: white; font-weight: bold; text-transform: capitalize; }
+        .search-item-type { font-size: 12px; color: #10b981; }
+
+        .nav-tabs {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 25px 20px 25px;
+        }
+        .tab {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 15px; border-radius: 20px; 
+            cursor: pointer; color: var(--text-muted);
+            transition: all 0.3s ease; font-size: 24px;
+        }
+        .tab.active { background-color: var(--surface-light); color: var(--text-color); }
+        .tab .tab-text { display: none; font-size: 15px; font-weight: 500; }
+        .tab.active .tab-text { display: inline-block; }
+
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
         .wallpaper-card {
             border-radius: 12px; overflow: hidden; height: 180px; position: relative;
             background-color: var(--surface-color); cursor: pointer;
         }
         .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; padding-bottom: 100px; }
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
         .category-card {
             border-radius: 16px; height: 120px; position: relative; overflow: hidden;
             display: flex; align-items: flex-end; padding: 15px; cursor: pointer;
@@ -63,8 +108,7 @@
             position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
             background-color: var(--sidebar-bg); z-index: 1000;
             transition: left 0.3s ease, right 0.3s ease, background-color 0.3s ease; 
-            display: flex; flex-direction: column;
-            box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; box-shadow: 2px 0 15px rgba(0,0,0,0.5);
         }
         html[dir="rtl"] .sidebar { left: auto; right: -320px; }
         html[dir="rtl"] .sidebar.open { right: 0; }
@@ -102,52 +146,6 @@
         .sidebar-bottom { padding: 15px 20px; border-top: 1px solid var(--border-color); }
         .sidebar-bottom .menu-item { border-bottom: none; }
 
-        /* الشريط السفلي العائم (التصميم الجديد) */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 75px;
-            background-color: var(--surface-color);
-            display: flex; justify-content: space-around; align-items: center;
-            border-top-left-radius: 25px; border-top-right-radius: 25px;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 990;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; width: 60px;
-            position: relative; height: 100%;
-        }
-
-        .nav-item i { font-size: 26px; transition: transform 0.3s ease, color 0.3s ease; }
-        
-        .nav-text {
-            font-size: 11px; font-weight: bold; position: absolute; bottom: 12px;
-            opacity: 0; transform: translateY(10px); transition: all 0.3s ease;
-        }
-
-        /* تفاعل الأيقونات الجانبية */
-        .nav-item:not(.center-fab) i { transform: translateY(6px); }
-        .nav-item:not(.center-fab).active { color: var(--text-color); }
-        .nav-item:not(.center-fab).active i { transform: translateY(-10px); }
-        .nav-item:not(.center-fab).active .nav-text { opacity: 1; transform: translateY(0); }
-
-        /* الزر المركزي العائم (الرئيسية) */
-        .center-fab { transform: translateY(-28px); z-index: 995; justify-content: flex-start; }
-        
-        .fab-bg {
-            background-color: var(--surface-light); width: 64px; height: 64px;
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            border: 8px solid var(--bg-color); /* الوهم البصري للقطع الدائري */
-            transition: all 0.3s ease;
-        }
-
-        .center-fab.active .fab-bg { background-color: var(--text-color); }
-        .center-fab.active i { color: var(--bg-color); }
-        .center-fab .nav-text { bottom: -28px; opacity: 1; transform: translateY(0); color: var(--text-muted); }
-        .center-fab.active .nav-text { color: var(--text-color); }
-
-        /* الشاشات والعناصر الأخرى */
         .image-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 2000;
@@ -168,9 +166,7 @@
             flex-grow: 1; display: flex; justify-content: center; align-items: center;
             overflow: hidden; padding: 0; position: relative;
         }
-        .viewer-image-container img {
-            width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease;
-        }
+        .viewer-image-container img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
         
         .viewer-actions {
             display: flex; justify-content: space-around; padding: 20px;
@@ -195,8 +191,7 @@
         .apply-menu.show { display: flex; }
         .apply-option {
             padding: 20px; display: flex; align-items: center; gap: 15px;
-            color: var(--text-color); cursor: pointer; font-size: 16px;
-            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color);
         }
         .apply-option:last-child { border-bottom: none; }
         .apply-option:hover { background-color: var(--surface-light); }
@@ -209,11 +204,21 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
         }
         .toast-msg.show { display: flex; }
-        
         select option { background-color: var(--bg-color); color: white; }
     </style>
 </head>
 <body>
+
+    <!-- نظام البحث المنبثق -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-bar-modern">
+            <i class="ph ph-magnifying-glass"></i>
+            <!-- يتم تعيين الـ placeholder تلقائياً حسب اللغة -->
+            <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search wallpapers..." oninput="handleSearch(this.value)">
+            <i class="ph-bold ph-x" onclick="toggleSearch()" style="cursor:pointer; color: #ef4444;"></i>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
 
     <!-- القائمة الجانبية -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
@@ -257,19 +262,13 @@
                 <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
                     <span data-i18n="app_lang">App language</span>
                     <select id="langSelect" onchange="changeLanguage(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px; cursor: pointer;">
-                        <option value="en">English</option>
-                        <option value="ar">العربية</option>
-                        <option value="fr">Français</option>
+                        <option value="en">English</option><option value="ar">العربية</option><option value="fr">Français</option>
                     </select>
                 </div>
                 <div style="display: flex; justify-content: space-between; padding: 18px 0;">
                     <span data-i18n="auto_change">Auto Change Wallpaper</span>
                     <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option value="off" data-i18n="off">Off</option>
-                        <option value="30" data-i18n="mins_30">30 Mins</option>
-                        <option value="60" data-i18n="hour_1">1 Hour</option>
-                        <option value="180" data-i18n="hours_3">3 Hours</option>
-                        <option value="1440" data-i18n="hours_24">24 Hours</option>
+                        <option value="off" data-i18n="off">Off</option><option value="30" data-i18n="mins_30">30 Mins</option><option value="60" data-i18n="hour_1">1 Hour</option><option value="180" data-i18n="hours_3">3 Hours</option><option value="1440" data-i18n="hours_24">24 Hours</option>
                     </select>
                 </div>
             </div>
@@ -309,12 +308,10 @@
         
         <div class="viewer-actions">
             <div class="action-btn" onclick="toggleApplyMenu()">
-                <div class="action-icon"><i class="ph ph-paint-roller"></i></div>
-                <span data-i18n="apply">Apply</span>
+                <div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span>
             </div>
             <div class="action-btn" onclick="saveWallpaper()">
-                <div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div>
-                <span id="saveText" data-i18n="save">Save</span>
+                <div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span>
             </div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
@@ -322,52 +319,23 @@
         </div>
     </div>
 
-    <!-- الشريط العلوي المبسط -->
+    <!-- الواجهة الرئيسية -->
     <div class="header-container">
         <div class="top-bar-box">
             <i class="ph ph-list" onclick="toggleMenu()"></i>
             <div class="title" data-i18n="app_title">MyWalls</div>
-            <i class="ph ph-magnifying-glass"></i>
+            <!-- زر البحث يفتح نافذة البحث السريعة -->
+            <i class="ph ph-magnifying-glass" onclick="toggleSearch()"></i>
         </div>
     </div>
-
-    <!-- حاوية الصور -->
+    <div class="nav-tabs">
+        <div class="tab" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i> <span class="tab-text" data-i18n="tab_category">Category</span></div>
+        <div class="tab" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i> <span class="tab-text" data-i18n="tab_premium">Premium</span></div>
+        <div class="tab active" onclick="switchTab('home', this)"><i class="ph ph-house"></i> <span class="tab-text" data-i18n="tab_home">Home</span></div>
+        <div class="tab" onclick="switchTab('community', this)"><i class="ph ph-users"></i> <span class="tab-text" data-i18n="tab_community">Community</span></div>
+        <div class="tab" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 1px solid var(--text-muted); padding: 2px 6px; border-radius: 6px;">4K</span> <span class="tab-text" data-i18n="tab_desktop">Desktop</span></div>
+    </div>
     <div id="mainContainer" class="grid"></div>
-
-    <!-- الشريط السفلي الجديد (Bottom Navigation) -->
-    <div class="bottom-nav">
-        <!-- قسم الأقسام -->
-        <div class="nav-item" onclick="switchTab('categories', this)">
-            <i class="ph ph-stack"></i>
-            <span class="nav-text" data-i18n="tab_category">Category</span>
-        </div>
-        
-        <!-- قسم المميزة -->
-        <div class="nav-item" onclick="switchTab('premium', this)">
-            <i class="ph ph-crown"></i>
-            <span class="nav-text" data-i18n="tab_premium">Premium</span>
-        </div>
-        
-        <!-- الزر المركزي البارز (الرئيسية) -->
-        <div class="nav-item center-fab active" onclick="switchTab('home', this)">
-            <div class="fab-bg">
-                <i class="ph ph-house"></i>
-            </div>
-            <span class="nav-text" data-i18n="tab_home">Home</span>
-        </div>
-        
-        <!-- قسم المجتمع -->
-        <div class="nav-item" onclick="switchTab('community', this)">
-            <i class="ph ph-users"></i>
-            <span class="nav-text" data-i18n="tab_community">Community</span>
-        </div>
-        
-        <!-- قسم 4K -->
-        <div class="nav-item" onclick="switchTab('desktop', this)">
-            <span style="font-size: 13px; font-weight: bold; border: 1.5px solid currentColor; padding: 1px 5px; border-radius: 6px; margin-bottom: 4px; display: inline-block; transition: all 0.3s ease;">4K</span>
-            <span class="nav-text" data-i18n="tab_desktop">Desktop</span>
-        </div>
-    </div>
 
     <script src="app.js"></script>
 </body>
