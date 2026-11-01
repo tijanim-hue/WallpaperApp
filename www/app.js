@@ -31,15 +31,16 @@ let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
 
 // تصنيفات عالمية قوية مع صور خلفيات عالية الجودة من Pixabay
 const categoriesData = [
-    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'https://images.pixabay.com/photo/2015/12/01/20/28/road-1072823_640.jpg' },
-    { id: 'cat_abstract', query: 'abstract background texture', bg: 'https://images.pixabay.com/photo/2016/12/28/08/15/texture-1935661_640.jpg' },
-    { id: 'cat_space', query: 'space galaxy stars', bg: 'https://images.pixabay.com/photo/2011/12/14/12/11/astronaut-11080_640.jpg' },
-    { id: 'cat_architecture', query: 'architecture city building', bg: 'https://images.pixabay.com/photo/2015/07/11/14/53/buildings-840921_640.jpg' },
-    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'https://images.pixabay.com/photo/2016/04/01/12/16/car-1300629_640.jpg' },
-    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'https://images.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg' },
-    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'https://images.pixabay.com/photo/2015/01/28/23/34/landscape-615429_640.jpg' },
-    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'https://images.pixabay.com/photo/2018/11/29/21/51/social-media-3846597_640.jpg' }
+    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'img/nature.jpg' },
+    { id: 'cat_abstract', query: 'abstract background texture', bg: 'img/abstract.jpg' },
+    { id: 'cat_space', query: 'space galaxy stars', bg: 'img/space.jpg' },
+    { id: 'cat_architecture', query: 'architecture city building', bg: 'img/architecture.jpg' },
+    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'img/cars.jpg' },
+    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'img/animals.jpg' },
+    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
+    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
 ];
+
 
 function changeLanguage(lang) {
     currentLang = lang;
