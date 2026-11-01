@@ -5,23 +5,28 @@ const mainContainer = document.getElementById('mainContainer');
 const translations = {
     en: {
         app_title: "MyWalls", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
-        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
-        cat_video: "Video", cat_occasions: "Occasions", cat_horoof: "Horoof", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Gradient", cat_palestine: "Palestine", cat_islamic: "Islamic"
+        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_12: "12 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
+        cat_video: "Video", cat_occasions: "Occasions", cat_horoof: "Horoof", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Gradient", cat_palestine: "Palestine", cat_islamic: "Islamic",
+        add_fav: "Add to favourites", turn_off_snapping: "Turn off snapping", fav_added: "Added to favorites", fav_removed: "Removed from favorites", fav_empty: "No favorites yet"
     },
     ar: {
         app_title: "خلفياتي", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
-        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
-        cat_video: "فيديو", cat_occasions: "مناسبات", cat_horoof: "حروف", cat_nature: "طبيعة", cat_sahara: "صحراء", cat_gradient: "تدرج", cat_palestine: "فلسطين", cat_islamic: "إسلامي"
+        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_15: "15 دقيقة", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_12: "12 ساعة", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
+        cat_video: "فيديو", cat_occasions: "مناسبات", cat_horoof: "حروف", cat_nature: "طبيعة", cat_sahara: "صحراء", cat_gradient: "تدرج", cat_palestine: "فلسطين", cat_islamic: "إسلامي",
+        add_fav: "إضافة للمفضلة", turn_off_snapping: "إيقاف الجذب", fav_added: "تمت الإضافة للمفضلة", fav_removed: "تمت الإزالة من المفضلة", fav_empty: "لا توجد مفضلات بعد"
     },
     fr: {
         app_title: "MesFonds", tab_category: "Catégorie", tab_premium: "Premium", tab_home: "Accueil", tab_community: "Communauté", tab_desktop: "Bureau",
-        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher des fonds...", cat_label: "Catégorie", wall_label: "Fond d'écran",
-        cat_video: "Vidéo", cat_occasions: "Occasions", cat_horoof: "Lettres", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Dégradé", cat_palestine: "Palestine", cat_islamic: "Islamique"
+        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_12: "12 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher des fonds...", cat_label: "Catégorie", wall_label: "Fond d'écran",
+        cat_video: "Vidéo", cat_occasions: "Occasions", cat_horoof: "Lettres", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Dégradé", cat_palestine: "Palestine", cat_islamic: "Islamique",
+        add_fav: "Ajouter aux favoris", turn_off_snapping: "Désactiver l'accrochage", fav_added: "Ajouté aux favoris", fav_removed: "Retiré des favoris", fav_empty: "Aucun favori pour le moment"
     }
 };
 
 let currentLang = localStorage.getItem('appLang') || 'en';
 let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+// استرجاع المفضلة من ذاكرة التخزين
+let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
 
 const categoriesData = [
     { id: 'cat_video', query: 'video background animation', bg: 'https://images.pixabay.com/photo/2020/04/24/09/24/arabic-5085994_640.jpg' },
@@ -73,6 +78,7 @@ function applyTheme() {
     }
 }
 
+// ---------------- نظام البحث المنبثق ---------------- //
 function toggleSearch() {
     const searchOverlay = document.getElementById('searchOverlay');
     const searchInput = document.getElementById('searchInput');
@@ -147,12 +153,99 @@ async function handleSearch(query) {
 function executeSearch(query) {
     toggleSearch(); 
     fetchWallpapers(query); 
-    // تحويل الأكتيف إلى الزر المركزي
     document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
     const homeTab = document.querySelector('.nav-item-center');
     if(homeTab) homeTab.classList.add('active'); 
 }
 
+// ---------------- معالجة رفع صورة من الجهاز ---------------- //
+function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            openImageViewer(e.target.result); // فتح الصورة المرفوعة في عارض التطبيق
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// ---------------- نظام المفضلة ---------------- //
+function toggleOptionsMenu() {
+    const menu = document.getElementById('optionsMenu');
+    menu.classList.toggle('show');
+}
+
+function toggleFavorite() {
+    const url = viewerImage.src;
+    const index = favoritesList.indexOf(url);
+    const heartIcon = document.getElementById('favHeartIcon');
+    
+    if (index > -1) {
+        favoritesList.splice(index, 1);
+        showToast('fav_removed');
+        heartIcon.className = 'ph ph-heart';
+        heartIcon.style.color = 'var(--text-color)';
+    } else {
+        favoritesList.push(url);
+        showToast('fav_added');
+        heartIcon.className = 'ph-fill ph-heart';
+        heartIcon.style.color = '#ef4444'; // لون أحمر عند الإضافة
+    }
+    localStorage.setItem('myFavorites', JSON.stringify(favoritesList));
+    toggleOptionsMenu();
+}
+
+function displayFavorites() {
+    toggleMenu();
+    document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
+    mainContainer.className = 'grid';
+    mainContainer.innerHTML = '';
+    
+    if (favoritesList.length === 0) {
+        mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 40px;">${translations[currentLang].fav_empty}</p>`;
+        return;
+    }
+    
+    favoritesList.forEach(url => {
+        const card = document.createElement('div');
+        card.className = 'wallpaper-card';
+        card.innerHTML = `<img src="${url}" alt="Favorite" loading="lazy">`;
+        card.onclick = () => openImageViewer(url);
+        mainContainer.appendChild(card);
+    });
+}
+
+// ---------------- نظام التغيير التلقائي ---------------- //
+let autoChangeInterval = null;
+function setAutoWallpaper(minutes) {
+    localStorage.setItem('autoWallpaper', minutes);
+    if (autoChangeInterval) clearInterval(autoChangeInterval);
+    
+    if (minutes !== 'off') {
+        const ms = parseInt(minutes) * 60 * 1000;
+        // سيقوم بتغيير الخلفية من المفضلة كل مدة محددة
+        autoChangeInterval = setInterval(changeWallpaperAuto, ms);
+    }
+}
+
+async function changeWallpaperAuto() {
+    if (favoritesList.length > 0 && window.plugins && window.plugins.wallpaper) {
+        const randomUrl = favoritesList[Math.floor(Math.random() * favoritesList.length)];
+        try {
+            const response = await fetch(randomUrl);
+            const blob = await response.blob();
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+                const base64data = reader.result.split(',')[1];
+                window.plugins.wallpaper.setImageBase64(base64data, function(){}, function(){});
+            }
+        } catch (e) { console.log('Auto wallpaper error'); }
+    }
+}
+
+// ---------------- الجلب والعرض ---------------- //
 async function fetchWallpapers(query = 'nature') {
     const loadingText = translations[currentLang].loading;
     mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 20px;">${loadingText}</p>`;
@@ -205,7 +298,6 @@ function displayCategories() {
 }
 
 function switchTab(tabName, element) {
-    // إزالة التحديد عن كل الأزرار في البار السفلي
     document.querySelectorAll('.nav-item, .nav-item-center').forEach(tab => tab.classList.remove('active'));
     if(element) element.classList.add('active');
     
@@ -234,6 +326,17 @@ const toastMsg = document.getElementById('toastMsg');
 function openImageViewer(imgUrl) {
     viewerImage.src = imgUrl;
     imageViewer.classList.add('show');
+    
+    // التحقق مما إذا كانت الصورة في المفضلة لضبط شكل القلب
+    const heartIcon = document.getElementById('favHeartIcon');
+    if (favoritesList.indexOf(imgUrl) > -1) {
+        heartIcon.className = 'ph-fill ph-heart';
+        heartIcon.style.color = '#ef4444';
+    } else {
+        heartIcon.className = 'ph ph-heart';
+        heartIcon.style.color = 'var(--text-color)';
+    }
+    
     document.getElementById('saveIcon').innerHTML = '<i class="ph ph-download-simple"></i>';
     document.getElementById('saveText').innerText = translations[currentLang].save;
     document.getElementById('saveIcon').style.color = "var(--text-color)";
@@ -243,11 +346,12 @@ function closeImageViewer() {
     imageViewer.classList.remove('show');
     imageViewer.classList.remove('fullscreen');
     applyMenu.classList.remove('show');
+    document.getElementById('optionsMenu').classList.remove('show');
     toastMsg.classList.remove('show');
 }
-function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyMenu.classList.remove('show'); }
+function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); }
 
-function toggleApplyMenu() { applyMenu.classList.toggle('show'); }
+function toggleApplyMenu() { applyMenu.classList.toggle('show'); document.getElementById('optionsMenu').classList.remove('show'); }
 
 function showToast(messageKey) {
     const text = document.getElementById('toastText');
@@ -256,7 +360,7 @@ function showToast(messageKey) {
     setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// معالجة تعيين الخلفية بدقة (قفل أو رئيسية أو كلاهما)
+// ---------------- التعيين الدقيق للشاشات ---------------- //
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
     showToast('wallpaper_success'); 
@@ -271,16 +375,14 @@ async function processWallpaper(mode) {
             if (window.plugins && window.plugins.wallpaper) {
                 const wp = window.plugins.wallpaper;
                 
-                // تمرير المعاملات لنظام الأندرويد بناءً على اختيار المستخدم
+                // توجيه الأمر الدقيق للنظام (1 للرئيسية, 2 للقفل, 0 لكلاهما)
+                // الأكواد مبنية على أحدث إضافات (Forks) لكوردوفا
                 if (mode === 1) { 
-                    // الشاشة الرئيسية
                     if(wp.setImageBase64) wp.setImageBase64(base64data, ()=>{}, ()=>{});
                 } else if (mode === 2) { 
-                    // شاشة القفل (باستخدام دوال الإضافات الشائعة)
                     if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, ()=>{}, ()=>{});
-                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 2, ()=>{}, ()=>{});
+                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 2, ()=>{}, ()=>{}); 
                 } else if (mode === 0) { 
-                    // كلتا الشاشتين
                     if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, ()=>{}, ()=>{});
                     else if(wp.setImageBase64) wp.setImageBase64(base64data, 0, ()=>{}, ()=>{});
                 }
@@ -317,4 +419,9 @@ window.onload = () => {
     applyTheme(); 
     document.getElementById('langSelect').value = currentLang;
     fetchWallpapers('nature'); 
+    
+    // تفعيل إعدادات التغيير التلقائي المحفوظة
+    const savedAuto = localStorage.getItem('autoWallpaper') || 'off';
+    document.getElementById('autoWallpaper').value = savedAuto;
+    setAutoWallpaper(savedAuto);
 };
