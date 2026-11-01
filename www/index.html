@@ -96,22 +96,22 @@
         .menu-divider { height: 1px; background-color: var(--border-color); margin: 10px 20px; }
         .sidebar-bottom { margin-top: auto; padding: 20px; }
 
-        /* شاشة عرض تفاصيل الصورة (بدون سكرول) */
+        /* شاشة عرض الصورة */
         .image-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 2000;
             display: none; flex-direction: column;
-            overflow: hidden; /* يمنع السكرول نهائياً */
+            overflow: hidden;
         }
         .image-viewer.show { display: flex; }
         
         .viewer-header {
-            display: flex; justify-content: space-between; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center; padding: 20px;
             position: absolute; top: 0; width: 100%; z-index: 10;
-            transition: opacity 0.3s ease;
+            background: linear-gradient(to bottom, var(--bg-color) 80%, transparent);
         }
         .header-icons-left { display: flex; gap: 20px; }
-        .viewer-header i { font-size: 24px; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .viewer-header i { font-size: 24px; cursor: pointer; }
         
         .viewer-image-container {
             flex-grow: 1; display: flex; justify-content: center; align-items: center;
@@ -119,7 +119,7 @@
         }
         .viewer-image-container img {
             width: 100%; height: 100%;
-            object-fit: contain; /* لاحتواء الصورة كاملة داخل الشاشة */
+            object-fit: contain;
             transition: transform 0.3s ease;
         }
         
@@ -127,10 +127,8 @@
             display: flex; justify-content: space-around; padding: 20px;
             background: linear-gradient(to top, var(--bg-color) 80%, transparent);
             position: absolute; bottom: 0; width: 100%;
-            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         
-        /* تأثير التكبير (Full Screen) */
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
         .image-viewer.fullscreen .viewer-actions { opacity: 0; transform: translateY(100%); pointer-events: none; }
         .image-viewer.fullscreen .viewer-image-container img { object-fit: cover; }
@@ -165,7 +163,69 @@
         </div>
         
         <div class="sidebar-bottom">
-            <div class="menu-item" style="padding: 0;" onclick="alert('الإعدادات')"><i class="ph ph-gear"></i> Settings</div>
+            <div class="menu-item" style="padding: 0;" onclick="openSettings()"><i class="ph ph-gear"></i> Settings</div>
+        </div>
+    </div>
+
+    <!-- شاشة الإعدادات المطابقة للتصميم الأصلي -->
+    <div class="image-viewer" id="settingsModal" style="display: none; z-index: 3000; background-color: #1e2235;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 22px;">Settings</div>
+            <i class="ph ph-x" onclick="closeSettings()" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        
+        <div style="padding: 80px 20px 20px 20px; overflow-y: auto; height: 100%;">
+            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">Display</div>
+            <div style="background-color: var(--surface-color); border-radius: 16px; padding: 0 15px; margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>App language</span>
+                    <select style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
+                        <option>Default</option>
+                        <option>العربية</option>
+                        <option>English</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>Auto Change Wallpaper</span>
+                    <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
+                        <option value="off">Off</option>
+                        <option value="30">30 Mins</option>
+                        <option value="60">1 Hour</option>
+                        <option value="180">3 Hours</option>
+                        <option value="1440">24 Hours</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>Date & time</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 18px 0;">
+                    <span>Prayer times</span>
+                </div>
+            </div>
+
+            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">About</div>
+            <div style="background-color: var(--surface-color); border-radius: 16px; padding: 0 15px;">
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>Terms of use</span>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted);"></i>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span>Privacy policy</span>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted);"></i>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 18px 0;">
+                    <span>Version</span>
+                    <span style="color: var(--text-muted);">3.8.8</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
+                <p style="margin-bottom: 5px;">Developed by Mahmoud Zadah</p>
+                <p>© 2026 All rights reserved</p>
+                <div style="display: inline-block; background-color: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 20px; margin-top: 15px; border: 1px solid var(--border-color);">
+                    <span style="color: #10b981; font-size: 10px;">●</span> mahmoudzadah.com <i class="ph ph-arrow-up-right" style="font-size: 12px;"></i>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -174,35 +234,34 @@
         <div class="viewer-header">
             <div class="header-icons-left">
                 <i class="ph ph-dots-three-vertical" onclick="alert('خيارات إضافية')"></i>
-                <!-- زر التكبير الجديد -->
                 <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
             </div>
             <i class="ph ph-x" onclick="closeImageViewer()"></i>
         </div>
         
-        <!-- جعل الصورة قابلة للضغط لتفعيل وضع ملء الشاشة -->
         <div class="viewer-image-container" onclick="toggleFullscreen()"> 
             <img id="viewerImage" src="" alt="Full Wallpaper">
         </div>
         
         <div class="viewer-actions">
+            <!-- أزرار الأفعال المعدلة -->
             <div class="action-btn" onclick="applyWallpaper()">
                 <div class="action-icon"><i class="ph ph-paint-roller"></i></div>
                 <span>Apply</span>
             </div>
-            <div class="action-btn" onclick="alert('جاري الحفظ...')">
+            <div class="action-btn" onclick="saveWallpaper()">
                 <div class="action-icon"><i class="ph ph-download-simple"></i></div>
                 <span>Save</span>
             </div>
-            <div class="action-btn" onclick="alert('اقتباس')">
+            <div class="action-btn" onclick="alert('ميزة الاقتباس قيد التطوير')">
                 <div class="action-icon"><i class="ph ph-quotes"></i></div>
                 <span>Quote</span>
             </div>
-             <div class="action-btn" onclick="alert('ودجت')">
+             <div class="action-btn" onclick="alert('ميزة الودجت قيد التطوير')">
                 <div class="action-icon"><i class="ph ph-squares-four"></i></div>
                 <span>Widgets</span>
             </div>
-             <div class="action-btn" onclick="alert('ضباب')">
+             <div class="action-btn" onclick="alert('ميزة الضباب قيد التطوير')">
                 <div class="action-icon"><i class="ph ph-drop"></i></div>
                 <span>Blur</span>
             </div>
