@@ -382,15 +382,23 @@ async function saveWallpaper() {
     } catch (error) { showToast('conn_failed'); }
 }
 
-window.onload = () => { 
-    changeLanguage(currentLang);
-    applyTheme(); 
-    document.getElementById('langSelect').value = currentLang;
-    fetchWallpapers('nature'); 
+// تشغيل شريط التحميل وإخفاء شاشة البداية
+document.addEventListener('DOMContentLoaded', () => {
+    const loadingBar = document.getElementById('loading-bar');
+    const splash = document.getElementById('splash-screen');
     
-    const savedAuto = localStorage.getItem('autoWallpaper') || 'off';
-    document.getElementById('autoWallpaper').value = savedAuto;
-    const savedSource = localStorage.getItem('autoSource') || 'random';
-    document.getElementById('autoSource').value = savedSource;
-    setAutoWallpaper(savedAuto);
-};
+    // تحريك شريط التحميل فوراً
+    if(loadingBar) {
+        setTimeout(() => { 
+            loadingBar.style.width = '100%'; 
+        }, 100);
+    }
+    
+    // إخفاء الشاشة بالكامل بعد ثانيتين ونصف لضمان تحميل التطبيق
+    setTimeout(() => {
+        if(splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => splash.remove(), 500); // حذف العنصر بعد تلاشيه
+        }
+    }, 2500);
+});
