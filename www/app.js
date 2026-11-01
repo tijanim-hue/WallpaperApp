@@ -266,12 +266,18 @@ function displayWallpapers(images) {
 }
 
 function displayCategories() {
-    mainContainer.className = 'categories-grid'; mainContainer.innerHTML = '';
+    mainContainer.className = 'categories-grid';
+    mainContainer.innerHTML = '';
     categoriesData.forEach(cat => {
-        const catCard = document.createElement('div'); catCard.className = 'category-card';
-        // إضافة الخلفية الصورية التي تم تحديدها في المتغيرات كما هو موضح في التصميم
-        catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('${cat.bg}')`;
-        catCard.style.backgroundSize = 'cover'; catCard.style.backgroundPosition = 'center';
+        const catCard = document.createElement('div');
+        catCard.className = 'category-card';
+        
+        // إصلاح طريقة تعيين صورة الخلفية
+        // تأكد من أن الروابط تعمل بشكل صحيح ولا يتم حظرها بواسطة سياسات الأمان (CORS) أو قيود الشبكة
+        catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url("${cat.bg}")`;
+        catCard.style.backgroundSize = 'cover';
+        catCard.style.backgroundPosition = 'center';
+        
         catCard.innerHTML = `<span>${translations[currentLang][cat.id]}</span>`;
         catCard.onclick = () => {
             fetchWallpapers(cat.query);
