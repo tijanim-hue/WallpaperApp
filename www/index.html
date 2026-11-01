@@ -15,7 +15,6 @@
             --border-color: rgba(255, 255, 255, 0.05);
             --sidebar-bg: #212536;
         }
-
         body.dark-theme {
             --bg-color: #121212;
             --surface-color: #1e1e1e;
@@ -27,21 +26,13 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { 
-            background-color: var(--bg-color); color: var(--text-color); 
-            overflow-x: hidden; transition: background-color 0.3s ease; 
-            padding-bottom: 90px; 
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; transition: background-color 0.3s ease; padding-bottom: 90px; }
 
         .header-container { padding: 15px 20px; }
         .top-bar-box {
             display: flex; justify-content: space-between; align-items: center;
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 12px 20px;
-            font-size: 22px;
-            transition: background-color 0.3s ease;
+            background-color: var(--surface-color); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: background-color 0.3s ease;
         }
         .top-bar-box i { cursor: pointer; color: var(--text-color); }
         .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
@@ -59,19 +50,13 @@
             border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 12px 20px;
             gap: 15px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .search-bar-modern input {
-            flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none;
-        }
+        .search-bar-modern input { flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none; }
         .search-bar-modern input::placeholder { color: #d1d5db; }
         
-        .search-results {
-            margin-top: 20px; display: flex; flex-direction: column; gap: 12px;
-            overflow-y: auto; max-height: 75vh; padding-bottom: 20px;
-        }
+        .search-results { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 75vh; padding-bottom: 20px; }
         .search-item {
-            display: flex; align-items: center; gap: 15px; padding: 12px;
-            background: var(--surface-color); border-radius: 16px; cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            display: flex; align-items: center; gap: 15px; padding: 12px; background: var(--surface-color);
+            border-radius: 16px; cursor: pointer; transition: background 0.2s, transform 0.1s;
         }
         .search-item:active { transform: scale(0.98); }
         .search-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
@@ -80,10 +65,7 @@
         .search-item-type { font-size: 12px; color: #10b981; }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
-        .wallpaper-card {
-            border-radius: 12px; overflow: hidden; height: 180px; position: relative;
-            background-color: var(--surface-color); cursor: pointer;
-        }
+        .wallpaper-card { border-radius: 12px; overflow: hidden; height: 180px; position: relative; background-color: var(--surface-color); cursor: pointer; }
         .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
         
         .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
@@ -103,29 +85,21 @@
         html[dir="rtl"] .sidebar.open { right: 0; }
         html[dir="ltr"] .sidebar.open { left: 0; }
 
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6); z-index: 1499; display: none;
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1499; display: none; }
         .overlay.show { display: block; }
         
         .pro-banner {
             background-color: rgba(251, 191, 36, 0.1); margin: 20px; padding: 15px 20px;
             border-radius: 16px; display: flex; align-items: center; gap: 15px; cursor: pointer;
         }
-        .pro-icon-box {
-            border: 2px solid #fbbf24; border-radius: 50%; padding: 10px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .pro-icon-box { border: 2px solid #fbbf24; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; }
         .pro-icon-box i { color: #fbbf24; font-size: 22px; }
         .pro-text h4 { color: var(--text-color); margin: 0; font-size: 16px; font-weight: 600;}
         .pro-text p { color: var(--text-muted); font-size: 13px; margin: 4px 0 0 0; }
 
         .menu-items-container { overflow-y: auto; flex-grow: 1; padding: 0 20px; }
         .menu-item { 
-            padding: 18px 0; font-size: 16px; cursor:pointer;
-            display: flex; align-items: center; color: var(--text-color);
-            border-bottom: 1px solid var(--border-color);
+            padding: 18px 0; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); border-bottom: 1px solid var(--border-color);
         }
         .menu-item:last-child { border-bottom: none; }
         .menu-item i { width: 35px; font-size: 22px; color: var(--text-color); }
@@ -135,13 +109,12 @@
         .sidebar-bottom { padding: 15px 20px; border-top: 1px solid var(--border-color); }
         .sidebar-bottom .menu-item { border-bottom: none; }
 
-        .image-viewer {
+        .image-viewer, .modal-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 2000;
-            display: none; flex-direction: column; overflow: hidden;
-            transition: background-color 0.3s ease;
+            display: none; flex-direction: column; overflow: hidden; transition: background-color 0.3s ease;
         }
-        .image-viewer.show { display: flex; }
+        .image-viewer.show, .modal-viewer.show { display: flex; }
         
         .viewer-header {
             display: flex; justify-content: space-between; align-items: center; padding: 20px;
@@ -151,34 +124,24 @@
         .header-icons-left { display: flex; gap: 20px; position: relative; }
         .viewer-header i { font-size: 24px; cursor: pointer; }
         
-        /* قائمة الثلاث نقاط الجانبية */
         .options-menu {
-            position: absolute; top: 40px; left: 0;
-            background-color: var(--surface-color); border-radius: 12px;
-            display: none; flex-direction: column; z-index: 2010;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
-            min-width: 200px;
+            position: absolute; top: 40px; left: 0; background-color: var(--surface-color); border-radius: 12px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden; min-width: 200px;
         }
         .options-menu.show { display: flex; }
         .options-option {
-            padding: 16px; display: flex; align-items: center; gap: 12px;
-            color: var(--text-color); cursor: pointer; font-size: 15px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-color); cursor: pointer; font-size: 15px; border-bottom: 1px solid var(--border-color);
         }
         .options-option:last-child { border-bottom: none; }
         .options-option:hover { background-color: var(--surface-light); }
         html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
-        .viewer-image-container {
-            flex-grow: 1; display: flex; justify-content: center; align-items: center;
-            overflow: hidden; padding: 0; position: relative;
-        }
+        .viewer-image-container { flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 0; position: relative; }
         .viewer-image-container img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
         
         .viewer-actions {
             display: flex; justify-content: space-around; padding: 20px;
-            background: linear-gradient(to top, var(--bg-color) 80%, transparent);
-            position: absolute; bottom: 0; width: 100%;
+            background: linear-gradient(to top, var(--bg-color) 80%, transparent); position: absolute; bottom: 0; width: 100%;
         }
         
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
@@ -190,55 +153,33 @@
         .action-btn span { font-size: 12px; }
 
         .apply-menu {
-            position: absolute; bottom: 110px; left: 20px; right: 20px;
-            background-color: var(--surface-color); border-radius: 16px;
-            display: none; flex-direction: column; z-index: 2010;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
+            position: absolute; bottom: 110px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 16px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
         }
         .apply-menu.show { display: flex; }
-        .apply-option {
-            padding: 20px; display: flex; align-items: center; gap: 15px;
-            color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color);
-        }
+        .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); }
         .apply-option:last-child { border-bottom: none; }
         .apply-option:hover { background-color: var(--surface-light); }
 
         .toast-msg {
             position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
-            background-color: var(--surface-light); color: var(--text-color); padding: 10px 20px;
-            border-radius: 30px; font-size: 14px; z-index: 3000;
-            display: none; align-items: center; gap: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
+            background-color: var(--surface-light); color: var(--text-color); padding: 10px 20px; border-radius: 30px; font-size: 14px; z-index: 3000;
+            display: none; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
         }
         .toast-msg.show { display: flex; }
 
-        /* البار السفلي الاحترافي */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background-color: var(--surface-color);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px;
-            border-top-left-radius: 30px; border-top-right-radius: 30px;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000;
-            transition: background-color 0.3s ease;
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--surface-color);
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
+            border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000; transition: background-color 0.3s ease;
         }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); cursor: pointer; font-size: 26px;
-            flex: 1; transition: color 0.3s ease;
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; font-size: 26px; flex: 1; transition: color 0.3s ease; }
         .nav-item.active { color: var(--text-color); }
         
-        .nav-item-center-wrapper {
-            position: relative; flex: 1; display: flex; justify-content: center; height: 40px;
-        }
+        .nav-item-center-wrapper { position: relative; flex: 1; display: flex; justify-content: center; height: 40px; }
         .nav-item-center {
-            position: absolute; top: -35px; width: 65px; height: 65px;
-            background-color: #10b981; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 30px; border: 6px solid var(--bg-color); 
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-            cursor: pointer; transition: transform 0.2s, border-color 0.3s ease;
+            position: absolute; top: -35px; width: 65px; height: 65px; background-color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 30px; border: 6px solid var(--bg-color); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); cursor: pointer; transition: transform 0.2s, border-color 0.3s ease;
         }
         .nav-item-center:active { transform: scale(0.95); }
         select option { background-color: var(--bg-color); color: white; }
@@ -246,10 +187,8 @@
 </head>
 <body>
 
-    <!-- رفع الصورة المخفي -->
     <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-    <!-- نظام البحث المنبثق -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-bar-modern">
             <i class="ph ph-magnifying-glass"></i>
@@ -271,16 +210,16 @@
         </div>
 
         <div class="menu-items-container">
-            <div class="menu-item" onclick="toggleTheme()">
-                <i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span>
-            </div>
-            <!-- زر المفضلة -->
+            <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
-            <div class="menu-item"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
+            
+            <!-- زر عن التطبيق -->
+            <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
             <div class="menu-item"><i class="ph ph-star"></i> <span data-i18n="rate">Rate the app</span></div>
-            <div class="menu-item"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
+            
+            <!-- زر المشاركة -->
+            <div class="menu-item" onclick="shareApp()"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
             <div class="menu-item"><i class="ph ph-storefront"></i> <span data-i18n="more_apps">More apps</span></div>
-            <!-- زر استخدام صورتك -->
             <div class="menu-item" onclick="document.getElementById('photoInput').click(); toggleMenu();">
                 <i class="ph ph-image-square"></i> <span data-i18n="use_photo">Use your photo</span> <span class="new-badge" data-i18n="new_badge">New</span>
             </div>
@@ -291,8 +230,30 @@
         </div>
     </div>
 
+    <!-- نافذة عن التطبيق -->
+    <div class="modal-viewer" id="aboutModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 22px;" data-i18n="about_app">About the app</div>
+            <i class="ph ph-x" onclick="closeAbout()" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div style="padding: 100px 30px 30px 30px; text-align: center; overflow-y: auto;">
+            <div style="background-color: var(--surface-color); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <i class="ph-fill ph-images" style="font-size: 60px; color: #10b981; margin-bottom: 20px;"></i>
+                <h2 style="margin-bottom: 15px; color: var(--text-color);" data-i18n="about_title">Welcome to MyWalls</h2>
+                <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;" data-i18n="about_desc">
+                    MyWalls is your ultimate destination for high-quality, stunning wallpapers. 
+                    Carefully crafted to bring beauty to your screen every single day.
+                </p>
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                    <p style="color: #10b981; font-weight: bold; font-size: 14px;" data-i18n="developed_by">Developed by Mahammed Tijani</p>
+                    <p style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Version 1.0.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- الإعدادات -->
-    <div class="image-viewer" id="settingsModal" style="display: none; z-index: 3000;">
+    <div class="modal-viewer" id="settingsModal" style="z-index: 3000;">
         <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
             <div class="title" style="font-size: 22px;" data-i18n="settings">Settings</div>
             <i class="ph ph-x" onclick="closeSettings()" style="font-size: 24px; cursor: pointer;"></i>
@@ -307,17 +268,21 @@
                         <option value="en">English</option><option value="ar">العربية</option><option value="fr">Français</option>
                     </select>
                 </div>
-                <div style="display: flex; justify-content: space-between; padding: 18px 0;">
+                
+                <!-- إعدادات الخلفية التلقائية -->
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
                     <span data-i18n="auto_change">Auto Change Wallpaper</span>
-                    <!-- تم تحديث المدد الزمنية حسب طلبك -->
                     <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option value="off" data-i18n="off">Off</option>
-                        <option value="15" data-i18n="mins_15">15 Mins</option>
-                        <option value="30" data-i18n="mins_30">30 Mins</option>
-                        <option value="60" data-i18n="hour_1">1 Hour</option>
-                        <option value="180" data-i18n="hours_3">3 Hours</option>
-                        <option value="720" data-i18n="hours_12">12 Hours</option>
-                        <option value="1440" data-i18n="hours_24">24 Hours</option>
+                        <option value="off" data-i18n="off">Off</option><option value="15" data-i18n="mins_15">15 Mins</option><option value="30" data-i18n="mins_30">30 Mins</option>
+                        <option value="60" data-i18n="hour_1">1 Hour</option><option value="180" data-i18n="hours_3">3 Hours</option><option value="720" data-i18n="hours_12">12 Hours</option><option value="1440" data-i18n="hours_24">24 Hours</option>
+                    </select>
+                </div>
+                <!-- مصدر الخلفيات التلقائية -->
+                <div id="autoSourceContainer" style="display: none; justify-content: space-between; padding: 18px 0;">
+                    <span data-i18n="auto_source">Wallpaper Source</span>
+                    <select id="autoSource" onchange="setAutoSource(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
+                        <option value="random" data-i18n="source_random">Random (Home)</option>
+                        <option value="favorites" data-i18n="source_fav">My Favorites</option>
                     </select>
                 </div>
             </div>
@@ -332,25 +297,17 @@
     <div class="image-viewer" id="imageViewer">
         <div class="viewer-header">
             <div class="header-icons-left">
-                <!-- زر الثلاث نقاط والقائمة المنبثقة منه -->
                 <i class="ph ph-dots-three-vertical" onclick="toggleOptionsMenu()"></i>
                 <div class="options-menu" id="optionsMenu">
-                    <div class="options-option" onclick="toggleFavorite()">
-                        <i class="ph ph-heart" id="favHeartIcon"></i> <span data-i18n="add_fav">Add to favourites</span>
-                    </div>
-                    <div class="options-option" onclick="toggleOptionsMenu()">
-                        <i class="ph ph-grid-nine"></i> <span data-i18n="turn_off_snapping">Turn off snapping</span>
-                    </div>
+                    <div class="options-option" onclick="toggleFavorite()"><i class="ph ph-heart" id="favHeartIcon"></i> <span data-i18n="add_fav">Add to favourites</span></div>
+                    <div class="options-option" onclick="toggleOptionsMenu()"><i class="ph ph-grid-nine"></i> <span data-i18n="turn_off_snapping">Turn off snapping</span></div>
                 </div>
-
                 <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
             </div>
             <i class="ph ph-x" onclick="closeImageViewer()"></i>
         </div>
         
-        <div class="viewer-image-container" onclick="toggleFullscreen()"> 
-            <img id="viewerImage" src="" alt="Full Wallpaper">
-        </div>
+        <div class="viewer-image-container" onclick="toggleFullscreen()"> <img id="viewerImage" src="" alt="Full Wallpaper"> </div>
         
         <div class="apply-menu" id="applyMenu">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
@@ -366,12 +323,8 @@
         </div>
         
         <div class="viewer-actions">
-            <div class="action-btn" onclick="toggleApplyMenu()">
-                <div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span>
-            </div>
-            <div class="action-btn" onclick="saveWallpaper()">
-                <div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span>
-            </div>
+            <div class="action-btn" onclick="toggleApplyMenu()"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
+            <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
@@ -387,24 +340,17 @@
         </div>
     </div>
     
-    <!-- شبكة الصور أو الأقسام -->
     <div id="mainContainer" class="grid"></div>
 
     <!-- البار السفلي الاحترافي -->
     <div class="bottom-nav">
         <div class="nav-item" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i></div>
         <div class="nav-item" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i></div>
-        
         <div class="nav-item-center-wrapper">
-            <div class="nav-item-center active" onclick="switchTab('home', this)">
-                <i class="ph-fill ph-house"></i>
-            </div>
+            <div class="nav-item-center active" onclick="switchTab('home', this)"><i class="ph-fill ph-house"></i></div>
         </div>
-        
         <div class="nav-item" onclick="switchTab('community', this)"><i class="ph ph-users"></i></div>
-        <div class="nav-item" onclick="switchTab('desktop', this)">
-            <span style="font-size: 14px; font-weight: bold; border: 2px solid var(--text-muted); padding: 1px 5px; border-radius: 6px;">4K</span>
-        </div>
+        <div class="nav-item" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 2px solid var(--text-muted); padding: 1px 5px; border-radius: 6px;">4K</span></div>
     </div>
 
     <script src="app.js"></script>
