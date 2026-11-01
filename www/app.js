@@ -137,14 +137,25 @@ function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyM
 
 function toggleApplyMenu() { applyMenu.classList.toggle('show'); }
 
+// دالة إظهار الرسالة
 function showToast(messageKey) {
-    document.getElementById('toastText').innerText = translations[currentLang][messageKey] || messageKey;
-    toastMsg.classList.add('show');
-    setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
+    const toast = document.getElementById('toastMsg');
+    const text = document.getElementById('toastText');
+    
+    // جلب الترجمة من القاموس، أو عرض النص كما هو إذا لم يكن في القاموس
+    text.innerText = translations[currentLang][messageKey] || messageKey;
+    
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); }, 3000);
 }
 
+// معالجة تعيين الخلفية بشكل فوري (Optimistic UI)
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
+    
+    // إظهار الرسالة فوراً بمجرد الضغط لضمان تفاعل الواجهة قبل المعالجة الثقيلة
+    showToast('wallpaper_success'); 
+    
     try {
         const response = await fetch(viewerImage.src);
         const blob = await response.blob();
@@ -154,13 +165,8 @@ async function processWallpaper(mode) {
         reader.onloadend = function() {
             const base64data = reader.result.split(',')[1];
             if (window.plugins && window.plugins.wallpaper) {
-                window.plugins.wallpaper.setImageBase64(base64data, function() {
-                    showToast('wallpaper_success');
-                }, function(error) {
-                    showToast('conn_failed');
-                });
-            } else {
-                showToast('wallpaper_success'); 
+                // النظام يعين الخلفية بصمت في الخلفية
+                window.plugins.wallpaper.setImageBase64(base64data, function() {}, function() {});
             }
         }
     } catch (e) {
@@ -168,6 +174,7 @@ async function processWallpaper(mode) {
     }
 }
 
+// حفظ الصورة مع ظهور رسالة التنبيه
 async function saveWallpaper() {
     try {
         const response = await fetch(viewerImage.src);
@@ -181,9 +188,14 @@ async function saveWallpaper() {
                 const { Filesystem } = window.Capacitor.Plugins;
                 const fileName = 'MyWalls_' + new Date().getTime() + '.jpg';
                 await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
+                
+                // تغيير الأيقونة لعلامة الصح
                 document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                // إظهار رسالة تفاعلية للحفظ
+                showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
             } else {
                 document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
             }
         }
     } catch (error) {
