@@ -5,21 +5,21 @@ const translations = {
     en: {
         app_title: "MyWalls", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
         go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_12: "12 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
-        cat_video: "Video", cat_occasions: "Occasions", cat_horoof: "Horoof", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Gradient", cat_palestine: "Palestine", cat_islamic: "Islamic",
+        cat_nature: "Nature", cat_abstract: "Abstract", cat_space: "Space", cat_architecture: "Architecture", cat_cars: "Cars", cat_animals: "Animals", cat_minimalist: "Minimalist", cat_neon: "Neon",
         add_fav: "Add to favourites", turn_off_snapping: "Turn off snapping", fav_added: "Added to favorites", fav_removed: "Removed from favorites", fav_empty: "No favorites yet",
         about_title: "Welcome to MyWalls", about_desc: "MyWalls is your ultimate destination for high-quality, stunning wallpapers. Carefully crafted to bring beauty to your screen every single day.", share_text: "Check out this amazing wallpaper app I found! Get stunning 4K wallpapers every day.", auto_source: "Wallpaper Source", source_random: "Random (Home)", source_fav: "My Favorites"
     },
     ar: {
         app_title: "خلفياتي", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
         go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_15: "15 دقيقة", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_12: "12 ساعة", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
-        cat_video: "فيديو", cat_occasions: "مناسبات", cat_horoof: "حروف", cat_nature: "طبيعة", cat_sahara: "صحراء", cat_gradient: "تدرج", cat_palestine: "فلسطين", cat_islamic: "إسلامي",
+        cat_nature: "الطبيعة", cat_abstract: "تجريدي", cat_space: "الفضاء", cat_architecture: "عمارة", cat_cars: "سيارات", cat_animals: "حيوانات", cat_minimalist: "بسيط", cat_neon: "نيون",
         add_fav: "إضافة للمفضلة", turn_off_snapping: "إيقاف الجذب", fav_added: "تمت الإضافة للمفضلة", fav_removed: "تمت الإزالة من المفضلة", fav_empty: "لا توجد مفضلات بعد",
         about_title: "مرحباً بك في خلفياتي", about_desc: "تطبيق خلفياتي هو وجهتك الأولى للحصول على صور عالية الجودة. تم تصميمه بعناية ليضفي لمسة من الجمال على شاشتك كل يوم.", share_text: "اكتشف هذا التطبيق الرائع للخلفيات! احصل على أروع صور 4K لشاشتك يومياً.", auto_source: "مصدر الخلفيات", source_random: "عشوائي (الرئيسية)", source_fav: "مفضلاتي"
     },
     fr: {
         app_title: "MesFonds", tab_category: "Catégorie", tab_premium: "Premium", tab_home: "Accueil", tab_community: "Communauté", tab_desktop: "Bureau",
         go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_12: "12 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher des fonds...", cat_label: "Catégorie", wall_label: "Fond d'écran",
-        cat_video: "Vidéo", cat_occasions: "Occasions", cat_horoof: "Lettres", cat_nature: "Nature", cat_sahara: "Sahara", cat_gradient: "Dégradé", cat_palestine: "Palestine", cat_islamic: "Islamique",
+        cat_nature: "Nature", cat_abstract: "Abstrait", cat_space: "Espace", cat_architecture: "Architecture", cat_cars: "Voitures", cat_animals: "Animaux", cat_minimalist: "Minimaliste", cat_neon: "Néon",
         add_fav: "Ajouter aux favoris", turn_off_snapping: "Désactiver l'accrochage", fav_added: "Ajouté aux favoris", fav_removed: "Retiré des favoris", fav_empty: "Aucun favori pour le moment",
         about_title: "Bienvenue sur MesFonds", about_desc: "Votre destination ultime pour des fonds d'écran de haute qualité. Conçu pour apporter de la beauté à votre écran chaque jour.", share_text: "Découvrez cette application géniale de fonds d'écran ! Obtenez des images 4K époustouflantes tous les jours.", auto_source: "Source des fonds", source_random: "Aléatoire (Accueil)", source_fav: "Mes Favoris"
     }
@@ -29,15 +29,16 @@ let currentLang = localStorage.getItem('appLang') || 'en';
 let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
 let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
 
+// تصنيفات عالمية قوية مع صور خلفيات عالية الجودة من Pixabay
 const categoriesData = [
-    { id: 'cat_video', query: 'video background animation', bg: 'https://images.pixabay.com/photo/2020/04/24/09/24/arabic-5085994_640.jpg' },
-    { id: 'cat_occasions', query: 'ramadan eid islamic', bg: 'https://images.pixabay.com/photo/2020/04/23/16/27/ramadan-5083161_640.jpg' },
-    { id: 'cat_horoof', query: 'arabic calligraphy letter', bg: 'https://images.pixabay.com/photo/2021/02/10/11/49/arabic-6001859_640.jpg' },
-    { id: 'cat_nature', query: 'nature mountains landscape', bg: 'https://images.pixabay.com/photo/2016/11/22/19/25/adult-1850177_640.jpg' },
-    { id: 'cat_sahara', query: 'desert sand dunes', bg: 'https://images.pixabay.com/photo/2017/01/18/16/46/desert-1990342_640.jpg' },
-    { id: 'cat_gradient', query: 'gradient background blur', bg: 'https://images.pixabay.com/photo/2016/12/28/08/15/texture-1935661_640.jpg' },
-    { id: 'cat_palestine', query: 'palestine jerusalem dome of rock', bg: 'https://images.pixabay.com/photo/2018/01/29/21/04/dome-of-the-rock-3117367_640.jpg' },
-    { id: 'cat_islamic', query: 'islamic muslim prayer', bg: 'https://images.pixabay.com/photo/2021/11/25/19/50/ramadan-6824490_640.jpg' }
+    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'https://images.pixabay.com/photo/2015/12/01/20/28/road-1072823_640.jpg' },
+    { id: 'cat_abstract', query: 'abstract background texture', bg: 'https://images.pixabay.com/photo/2016/12/28/08/15/texture-1935661_640.jpg' },
+    { id: 'cat_space', query: 'space galaxy stars', bg: 'https://images.pixabay.com/photo/2011/12/14/12/11/astronaut-11080_640.jpg' },
+    { id: 'cat_architecture', query: 'architecture city building', bg: 'https://images.pixabay.com/photo/2015/07/11/14/53/buildings-840921_640.jpg' },
+    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'https://images.pixabay.com/photo/2016/04/01/12/16/car-1300629_640.jpg' },
+    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'https://images.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg' },
+    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'https://images.pixabay.com/photo/2015/01/28/23/34/landscape-615429_640.jpg' },
+    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'https://images.pixabay.com/photo/2018/11/29/21/51/social-media-3846597_640.jpg' }
 ];
 
 function changeLanguage(lang) {
@@ -124,9 +125,6 @@ function executeSearch(query) {
     if(homeTab) homeTab.classList.add('active'); 
 }
 
-// ---------------- معالجة الميزات الجديدة ---------------- //
-
-// استخدام صورتك
 function handlePhotoUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -136,7 +134,6 @@ function handlePhotoUpload(event) {
     }
 }
 
-// نظام المفضلة
 function toggleOptionsMenu() { document.getElementById('optionsMenu').classList.toggle('show'); }
 
 function toggleFavorite() {
@@ -174,7 +171,6 @@ function displayFavorites() {
     });
 }
 
-// مشاركة التطبيق بأسلوب احترافي
 async function shareApp() {
     toggleMenu();
     if (navigator.share) {
@@ -190,7 +186,6 @@ async function shareApp() {
     }
 }
 
-// نوافذ (عن التطبيق / الإعدادات)
 function openAbout() { toggleMenu(); document.getElementById('aboutModal').classList.add('show'); }
 function closeAbout() { document.getElementById('aboutModal').classList.remove('show'); }
 
@@ -198,7 +193,6 @@ function toggleMenu() { document.getElementById('sidebar').classList.toggle('ope
 function openSettings() { toggleMenu(); document.getElementById('settingsModal').classList.add('show'); }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('show'); }
 
-// نظام التغيير التلقائي الذكي
 let autoChangeInterval = null;
 function setAutoWallpaper(minutes) {
     localStorage.setItem('autoWallpaper', minutes);
@@ -249,7 +243,6 @@ async function changeWallpaperAuto() {
     }
 }
 
-// ---------------- الجلب والعرض ---------------- //
 async function fetchWallpapers(query = 'nature') {
     const loadingText = translations[currentLang].loading;
     mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 20px;">${loadingText}</p>`;
@@ -276,6 +269,7 @@ function displayCategories() {
     mainContainer.className = 'categories-grid'; mainContainer.innerHTML = '';
     categoriesData.forEach(cat => {
         const catCard = document.createElement('div'); catCard.className = 'category-card';
+        // إضافة الخلفية الصورية التي تم تحديدها في المتغيرات كما هو موضح في التصميم
         catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('${cat.bg}')`;
         catCard.style.backgroundSize = 'cover'; catCard.style.backgroundPosition = 'center';
         catCard.innerHTML = `<span>${translations[currentLang][cat.id]}</span>`;
@@ -332,7 +326,6 @@ function showToast(messageKey) {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// التعيين الدقيق للشاشات عبر استخدام Flags أندرويد الصريحة (1, 2, 0)
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
     showToast('wallpaper_success'); 
@@ -347,8 +340,6 @@ async function processWallpaper(mode) {
             if (window.plugins && window.plugins.wallpaper) {
                 const wp = window.plugins.wallpaper;
                 
-                // هذه الأوامر ترسل القيم (1 الرئيسية، 2 القفل، 0 كلاهما) للإضافة
-                // إذا لم تستجب الشاشة للقفل فهذا قيد من الإضافة الأصلية، وتحتاج نسخة متقدمة لاحقاً
                 if (mode === 2) { 
                     if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, ()=>{}, ()=>{});
                     else if(wp.setImageBase64) wp.setImageBase64(base64data, 2, ()=>{}, ()=>{}); 
