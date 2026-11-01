@@ -82,13 +82,12 @@ function switchTab(tabName, element) {
     }
 }
 
-// القائمة الجانبية (Sidebar)
+// القائمة الجانبية والإعدادات
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('overlay').classList.toggle('show');
 }
 
-// دوال فتح وإغلاق الإعدادات وعن التطبيق الجديدة
 function openSettings() {
     toggleMenu();
     document.getElementById('settingsModal').style.display = 'flex';
@@ -96,15 +95,6 @@ function openSettings() {
 
 function closeSettings() {
     document.getElementById('settingsModal').style.display = 'none';
-}
-
-function openAbout() {
-    toggleMenu();
-    document.getElementById('aboutModal').style.display = 'flex';
-}
-
-function closeAbout() {
-    document.getElementById('aboutModal').style.display = 'none';
 }
 
 // عارض الصور (Image Viewer)
@@ -145,10 +135,78 @@ function applyWallpaper() {
     }
 }
 
+// حفظ الصورة في الهاتف
+async function saveWallpaper() {
+    alert('جاري تحميل وحفظ الصورة في هاتفك...');
+    try {
+        const response = await fetch(viewerImage.src);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'MyWalls_' + new Date().getTime() + '.jpg';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert('تم حفظ الصورة بنجاح في ملفات الهاتف!');
+    } catch (error) {
+        alert('حدث خطأ أثناء الحفظ. تأكد من اتصالك بالإنترنت.');
+    }
+}
 
+// التغيير التلقائي للخلفية
+let autoWallpaperInterval;
+function setAutoWallpaper(minutes) {
+    clearInterval(autoWallpaperInterval);
+    if (minutes === 'off') {
+        alert('تم إيقاف التغيير التلقائي.');
+        return;
+    }
+    
+    alert(`تم تفعيل الميزة: ستتغير الخلفية كل ${minutes} دقيقة.`);
+    const ms = parseInt(minutes) * 60 * 1000;
+    
+    autoWallpaperInterval = setInterval(async () => {
+        try {
+            const res = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=nature&image_type=photo`);
+            const data = await res.json();
+            if (data.hits && data.hits.length > 0) {
+                const randomImg = data.hits[Math.floor(Math.random() * data.hits.length)].largeImageURL;
+                if (window.plugins && window.plugins.wallpaper) {
+                    window.plugins.wallpaper.setImage(randomImg, function() {}, function() {});
+                }
+            }
+        } catch(e) { console.log('فشل التغيير التلقائي'); }
+    }, ms);
+}
+
+// برمجة زر الرجوع في هاتف أندرويد
+document.addEventListener('backbutton', function(e) {
+    const imageViewer = document.getElementById('imageViewer');
+    const settingsModal = document.getElementById('settingsModal');
+    const sidebar = document.getElementById('sidebar');
+
+    if (imageViewer.classList.contains('fullscreen')) {
+        toggleFullscreen();
+        e.preventDefault();
+    } else if (imageViewer.classList.contains('show')) {
+        closeImageViewer();
+        e.preventDefault();
+    } else if (settingsModal.style.display === 'flex') {
+        closeSettings();
+        e.preventDefault();
+    } else if (sidebar.classList.contains('open')) {
+        toggleMenu();
+        e.preventDefault();
+    } else {
+        if (navigator.app && navigator.app.exitApp) {
+            navigator.app.exitApp();
+        }
+    }
+}, false);
 
 // التشغيل التلقائي عند فتح التطبيق
 window.onload = () => {
     fetchWallpapers('nature');
 };
-
