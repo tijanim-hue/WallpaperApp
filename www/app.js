@@ -117,27 +117,25 @@ function toggleFullscreen() {
 
 // تطبيق الخلفية
 function applyWallpaper() {
-    alert('جاري التحدث مع نظام أندرويد لتعيين الخلفية...');
     try {
         if (window.plugins && window.plugins.wallpaper) {
             window.plugins.wallpaper.setImage(viewerImage.src, function(error) {
                 if (error) {
                     alert('فشل تعيين الخلفية.');
                 } else {
-                    alert('تم تغيير خلفية الشاشة بنجاح!');
+                    alert('تم تعيين الخلفية بنجاح! تفقد شاشة هاتفك.');
                 }
             });
         } else {
-            alert('الجسر البرمجي غير متصل، تأكد من تحميل النسخة الجديدة للتطبيق.');
+            alert('انتظر حتى يكتمل بناء النسخة الجديدة من التطبيق.');
         }
     } catch (e) {
-        alert('حدث خطأ أثناء عملية التطبيق.');
+        alert('حدث خطأ غير متوقع.');
     }
 }
 
-// حفظ الصورة في الهاتف
+// حفظ الصورة بدون إيقاف الشاشة
 async function saveWallpaper() {
-    alert('جاري تحميل وحفظ الصورة في هاتفك...');
     try {
         const response = await fetch(viewerImage.src);
         const blob = await response.blob();
@@ -149,12 +147,11 @@ async function saveWallpaper() {
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
-        alert('تم حفظ الصورة بنجاح في ملفات الهاتف!');
+        // تم الحفظ بصمت دون إزعاج المستخدم
     } catch (error) {
         alert('حدث خطأ أثناء الحفظ. تأكد من اتصالك بالإنترنت.');
     }
 }
-
 // التغيير التلقائي للخلفية
 let autoWallpaperInterval;
 function setAutoWallpaper(minutes) {
