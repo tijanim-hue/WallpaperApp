@@ -1,23 +1,24 @@
 const API_KEY = '34904576-1b3b2ade155886a3ef79485ce'; 
 const mainContainer = document.getElementById('mainContainer');
 
-// قاموس الترجمة
+// قاموس الترجمة المحدث لدعم الوضع الداكن والساطع
 const translations = {
     en: {
         app_title: "MyWalls", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
-        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed"
+        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode"
     },
     ar: {
         app_title: "خلفياتي", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
-        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال"
+        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع"
     },
     fr: {
         app_title: "MesFonds", tab_category: "Catégorie", tab_premium: "Premium", tab_home: "Accueil", tab_community: "Communauté", tab_desktop: "Bureau",
-        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion"
+        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair"
     }
 };
 
 let currentLang = localStorage.getItem('appLang') || 'en';
+let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
 
 // دالة تغيير اللغة
 function changeLanguage(lang) {
@@ -31,6 +32,33 @@ function changeLanguage(lang) {
             el.innerText = translations[lang][key];
         }
     });
+}
+
+// دوال تفعيل وتبديل الوضع الداكن
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    localStorage.setItem('isDarkMode', isDarkMode);
+    applyTheme();
+}
+
+function applyTheme() {
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    
+    if (isDarkMode) {
+        document.body.classList.add('dark-theme');
+        themeIcon.className = 'ph ph-sun';
+        themeText.setAttribute('data-i18n', 'theme_light');
+    } else {
+        document.body.classList.remove('dark-theme');
+        themeIcon.className = 'ph ph-moon';
+        themeText.setAttribute('data-i18n', 'theme_dark');
+    }
+    
+    // تحديث نص زر الثيم مباشرة بناءً على اللغة الحالية
+    if (translations[currentLang][themeText.getAttribute('data-i18n')]) {
+        themeText.innerText = translations[currentLang][themeText.getAttribute('data-i18n')];
+    }
 }
 
 async function fetchWallpapers(query = 'nature') {
@@ -137,25 +165,15 @@ function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyM
 
 function toggleApplyMenu() { applyMenu.classList.toggle('show'); }
 
-// دالة إظهار الرسالة
 function showToast(messageKey) {
-    const toast = document.getElementById('toastMsg');
-    const text = document.getElementById('toastText');
-    
-    // جلب الترجمة من القاموس، أو عرض النص كما هو إذا لم يكن في القاموس
-    text.innerText = translations[currentLang][messageKey] || messageKey;
-    
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    document.getElementById('toastText').innerText = translations[currentLang][messageKey] || messageKey;
+    toastMsg.classList.add('show');
+    setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// معالجة تعيين الخلفية بشكل فوري (Optimistic UI)
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
-    
-    // إظهار الرسالة فوراً بمجرد الضغط لضمان تفاعل الواجهة قبل المعالجة الثقيلة
     showToast('wallpaper_success'); 
-    
     try {
         const response = await fetch(viewerImage.src);
         const blob = await response.blob();
@@ -165,7 +183,6 @@ async function processWallpaper(mode) {
         reader.onloadend = function() {
             const base64data = reader.result.split(',')[1];
             if (window.plugins && window.plugins.wallpaper) {
-                // النظام يعين الخلفية بصمت في الخلفية
                 window.plugins.wallpaper.setImageBase64(base64data, function() {}, function() {});
             }
         }
@@ -174,7 +191,6 @@ async function processWallpaper(mode) {
     }
 }
 
-// حفظ الصورة مع ظهور رسالة التنبيه
 async function saveWallpaper() {
     try {
         const response = await fetch(viewerImage.src);
@@ -188,10 +204,7 @@ async function saveWallpaper() {
                 const { Filesystem } = window.Capacitor.Plugins;
                 const fileName = 'MyWalls_' + new Date().getTime() + '.jpg';
                 await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
-                
-                // تغيير الأيقونة لعلامة الصح
                 document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
-                // إظهار رسالة تفاعلية للحفظ
                 showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
             } else {
                 document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
@@ -203,9 +216,10 @@ async function saveWallpaper() {
     }
 }
 
-// التشغيل المبدئي وتعيين اللغة المختارة مسبقاً
+// التشغيل المبدئي واسترجاع اللغة والوضع المفضل
 window.onload = () => { 
     changeLanguage(currentLang);
+    applyTheme(); // تفعيل الوضع المحفوظ
     document.getElementById('langSelect').value = currentLang;
     fetchWallpapers('nature'); 
 };
