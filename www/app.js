@@ -1,4 +1,4 @@
-// ضع مفتاحك الخاص هنا كما اتفقنا
+// المفتاح الخاص بك
 const API_KEY = '34904576-1b3b2ade155886a3ef79485ce'; 
 const mainContainer = document.getElementById('mainContainer');
 
@@ -23,7 +23,6 @@ const translations = {
 let currentLang = localStorage.getItem('appLang') || 'en';
 let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
 
-// القائمة المركزية للأقسام
 const categoriesData = [
     { id: 'cat_video', query: 'video background animation', bg: 'https://images.pixabay.com/photo/2020/04/24/09/24/arabic-5085994_640.jpg' },
     { id: 'cat_occasions', query: 'ramadan eid islamic', bg: 'https://images.pixabay.com/photo/2020/04/23/16/27/ramadan-5083161_640.jpg' },
@@ -74,7 +73,6 @@ function applyTheme() {
     }
 }
 
-// ---------------- نظام البحث الذكي ---------------- //
 function toggleSearch() {
     const searchOverlay = document.getElementById('searchOverlay');
     const searchInput = document.getElementById('searchInput');
@@ -98,7 +96,6 @@ async function handleSearch(query) {
         let html = '';
         const searchLower = query.toLowerCase();
 
-        // 1. البحث السريع داخل الأقسام المحفوظة
         const matchedCats = categoriesData.filter(c => {
             const catNameEn = c.id.replace('cat_', '');
             const catNameLocal = translations[currentLang][c.id].toLowerCase();
@@ -118,9 +115,7 @@ async function handleSearch(query) {
             `;
         });
 
-        // 2. جلب الصور المشابهة من سيرفرات Pixabay
         try {
-            // Pixabay يدعم en و fr، وإذا كانت ar نرسلها مباشرة ليحاول فهمها
             const langParam = (currentLang === 'en' || currentLang === 'fr') ? `&lang=${currentLang}` : '';
             const res = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}${langParam}&image_type=photo&orientation=vertical&per_page=10`);
             const data = await res.json();
@@ -146,17 +141,17 @@ async function handleSearch(query) {
         } catch (e) {
             resultsContainer.innerHTML = `<div style="text-align:center; color:#ef4444; padding:20px;">${translations[currentLang].conn_failed}</div>`;
         }
-    }, 500); // تأخير نصف ثانية لعدم استهلاك API بكثرة أثناء الكتابة السريعة
+    }, 500);
 }
 
 function executeSearch(query) {
-    toggleSearch(); // إغلاق نافذة البحث
-    fetchWallpapers(query); // جلب النتائج للشبكة الرئيسية
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    const homeTab = document.querySelector('.tab:nth-child(3)');
-    if(homeTab) homeTab.classList.add('active'); // تحويل المستخدم لتبويب Home لمشاهدة النتائج
+    toggleSearch(); 
+    fetchWallpapers(query); 
+    // تحويل الأكتيف إلى الزر المركزي
+    document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
+    const homeTab = document.querySelector('.nav-item-center');
+    if(homeTab) homeTab.classList.add('active'); 
 }
-// ---------------- نهاية نظام البحث ---------------- //
 
 async function fetchWallpapers(query = 'nature') {
     const loadingText = translations[currentLang].loading;
@@ -201,8 +196,8 @@ function displayCategories() {
         
         catCard.onclick = () => {
             fetchWallpapers(cat.query);
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            const homeTab = document.querySelector('.tab:nth-child(3)');
+            document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
+            const homeTab = document.querySelector('.nav-item-center');
             if(homeTab) homeTab.classList.add('active');
         };
         mainContainer.appendChild(catCard);
@@ -210,8 +205,10 @@ function displayCategories() {
 }
 
 function switchTab(tabName, element) {
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    element.classList.add('active');
+    // إزالة التحديد عن كل الأزرار في البار السفلي
+    document.querySelectorAll('.nav-item, .nav-item-center').forEach(tab => tab.classList.remove('active'));
+    if(element) element.classList.add('active');
+    
     if (tabName === 'home') fetchWallpapers('nature');
     else if (tabName === 'categories') displayCategories();
     else if (tabName === 'premium') fetchWallpapers('luxury');
@@ -259,6 +256,7 @@ function showToast(messageKey) {
     setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
+// معالجة تعيين الخلفية بدقة (قفل أو رئيسية أو كلاهما)
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
     showToast('wallpaper_success'); 
@@ -271,7 +269,21 @@ async function processWallpaper(mode) {
         reader.onloadend = function() {
             const base64data = reader.result.split(',')[1];
             if (window.plugins && window.plugins.wallpaper) {
-                window.plugins.wallpaper.setImageBase64(base64data, function() {}, function() {});
+                const wp = window.plugins.wallpaper;
+                
+                // تمرير المعاملات لنظام الأندرويد بناءً على اختيار المستخدم
+                if (mode === 1) { 
+                    // الشاشة الرئيسية
+                    if(wp.setImageBase64) wp.setImageBase64(base64data, ()=>{}, ()=>{});
+                } else if (mode === 2) { 
+                    // شاشة القفل (باستخدام دوال الإضافات الشائعة)
+                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, ()=>{}, ()=>{});
+                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 2, ()=>{}, ()=>{});
+                } else if (mode === 0) { 
+                    // كلتا الشاشتين
+                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, ()=>{}, ()=>{});
+                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 0, ()=>{}, ()=>{});
+                }
             }
         }
     } catch (e) { showToast('conn_failed'); }
