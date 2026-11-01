@@ -116,42 +116,61 @@ function toggleFullscreen() {
 }
 
 // تطبيق الخلفية
+// 1. تطبيق الخلفية بشكل حقيقي (Native)
 function applyWallpaper() {
+    alert('جاري إرسال الصورة لنظام أندرويد...');
     try {
         if (window.plugins && window.plugins.wallpaper) {
             window.plugins.wallpaper.setImage(viewerImage.src, function(error) {
                 if (error) {
-                    alert('فشل تعيين الخلفية.');
+                    alert('فشل تعيين الخلفية. تأكد من إعطاء التطبيق الصلاحيات.');
                 } else {
-                    alert('تم تعيين الخلفية بنجاح! تفقد شاشة هاتفك.');
+                    alert('تم تعيين الخلفية بنجاح! تفقد شاشتك الرئيسية.');
                 }
             });
         } else {
-            alert('انتظر حتى يكتمل بناء النسخة الجديدة من التطبيق.');
+            alert('الجسر البرمجي للخلفية غير متصل. حمل التحديث الجديد.');
         }
     } catch (e) {
-        alert('حدث خطأ غير متوقع.');
+        alert('حدث خطأ: ' + e.message);
     }
 }
 
-// حفظ الصورة بدون إيقاف الشاشة
+// 2. حفظ الصورة في استوديو الهاتف باستخدام Capacitor Filesystem
 async function saveWallpaper() {
+    alert('جاري معالجة الصورة وحفظها في المعرض...');
     try {
+        // جلب الصورة وتحويلها إلى بيانات يفهمها الهاتف (Base64)
         const response = await fetch(viewerImage.src);
         const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'MyWalls_' + new Date().getTime() + '.jpg';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        // تم الحفظ بصمت دون إزعاج المستخدم
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        
+        reader.onloadend = async function() {
+            const base64data = reader.result;
+
+            // التحقق من وجود إضافة نظام الملفات (Filesystem)
+            if (window.Capacitor && window.Capacitor.Plugins.Filesystem) {
+                const { Filesystem } = window.Capacitor.Plugins;
+                const fileName = 'MyWalls_' + new Date().getTime() + '.jpg';
+
+                // أمر أندرويد بحفظ الملف في مجلد المستندات/الصور
+                await Filesystem.writeFile({
+                    path: fileName,
+                    data: base64data,
+                    directory: 'DOCUMENTS', // لتفادي قيود أندرويد 11+ الأمنية
+                    recursive: true
+                });
+                alert('تم حفظ الصورة بنجاح! تفقد ملفات هاتفك.');
+            } else {
+                alert('نظام حفظ الملفات غير مفعل بعد. يرجى تثبيت النسخة المحدثة.');
+            }
+        }
     } catch (error) {
-        alert('حدث خطأ أثناء الحفظ. تأكد من اتصالك بالإنترنت.');
+        alert('حدث خطأ أثناء التنزيل: ' + error.message);
     }
 }
+
 // التغيير التلقائي للخلفية
 let autoWallpaperInterval;
 function setAutoWallpaper(minutes) {
