@@ -15,6 +15,7 @@
             --border-color: rgba(255, 255, 255, 0.05);
             --sidebar-bg: #212536;
         }
+
         body.dark-theme {
             --bg-color: #121212;
             --surface-color: #1e1e1e;
@@ -26,7 +27,11 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; transition: background-color 0.3s ease; padding-bottom: 90px; }
+        body { 
+            background-color: var(--bg-color); color: var(--text-color); 
+            overflow-x: hidden; transition: background-color 0.3s ease; 
+            padding-bottom: 90px; 
+        }
 
         .header-container { padding: 15px 20px; }
         .top-bar-box {
@@ -213,11 +218,9 @@
             <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             
-            <!-- زر عن التطبيق -->
             <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
             <div class="menu-item"><i class="ph ph-star"></i> <span data-i18n="rate">Rate the app</span></div>
             
-            <!-- زر المشاركة -->
             <div class="menu-item" onclick="shareApp()"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
             <div class="menu-item"><i class="ph ph-storefront"></i> <span data-i18n="more_apps">More apps</span></div>
             <div class="menu-item" onclick="document.getElementById('photoInput').click(); toggleMenu();">
@@ -269,7 +272,6 @@
                     </select>
                 </div>
                 
-                <!-- إعدادات الخلفية التلقائية -->
                 <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
                     <span data-i18n="auto_change">Auto Change Wallpaper</span>
                     <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
@@ -277,7 +279,6 @@
                         <option value="60" data-i18n="hour_1">1 Hour</option><option value="180" data-i18n="hours_3">3 Hours</option><option value="720" data-i18n="hours_12">12 Hours</option><option value="1440" data-i18n="hours_24">24 Hours</option>
                     </select>
                 </div>
-                <!-- مصدر الخلفيات التلقائية -->
                 <div id="autoSourceContainer" style="display: none; justify-content: space-between; padding: 18px 0;">
                     <span data-i18n="auto_source">Wallpaper Source</span>
                     <select id="autoSource" onchange="setAutoSource(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
@@ -342,7 +343,6 @@
     
     <div id="mainContainer" class="grid"></div>
 
-    <!-- البار السفلي الاحترافي -->
     <div class="bottom-nav">
         <div class="nav-item" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i></div>
         <div class="nav-item" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i></div>
