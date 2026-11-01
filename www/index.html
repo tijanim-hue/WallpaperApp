@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Wallpaper App</title>
-    <!-- مكتبة الأيقونات -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         :root {
@@ -19,7 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
 
-        /* الشريط العلوي */
         .header-container { padding: 15px 20px; }
         .top-bar-box {
             display: flex; justify-content: space-between; align-items: center;
@@ -32,7 +30,6 @@
         .top-bar-box i { cursor: pointer; color: var(--text-color); }
         .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
 
-        /* شريط التنقل */
         .nav-tabs {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 25px 20px 25px;
@@ -47,7 +44,6 @@
         .tab .tab-text { display: none; font-size: 15px; font-weight: 500; }
         .tab.active .tab-text { display: inline-block; }
 
-        /* شبكة الصور والأقسام */
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
         .wallpaper-card {
             border-radius: 12px; overflow: hidden; height: 180px; position: relative;
@@ -62,7 +58,6 @@
         }
         .category-card span { font-weight: bold; font-size: 20px; z-index: 2; color: white;}
 
-        /* القائمة الجانبية */
         .sidebar {
             position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
             background-color: var(--surface-color); z-index: 1000;
@@ -96,7 +91,6 @@
         .menu-divider { height: 1px; background-color: var(--border-color); margin: 10px 20px; }
         .sidebar-bottom { margin-top: auto; padding: 20px; }
 
-        /* شاشة عرض الصورة */
         .image-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 2000;
@@ -136,6 +130,32 @@
         .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); }
         .action-icon { background-color: var(--surface-color); padding: 15px; border-radius: 12px; font-size: 24px; color: var(--text-color); }
         .action-btn span { font-size: 12px; }
+
+        /* قائمة التطبيق (الخيارات الثلاثة) */
+        .apply-menu {
+            position: absolute; bottom: 110px; left: 20px; right: 20px;
+            background-color: #2a2f45; border-radius: 16px;
+            display: none; flex-direction: column; z-index: 2010;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
+        }
+        .apply-menu.show { display: flex; }
+        .apply-option {
+            padding: 20px; display: flex; align-items: center; gap: 15px;
+            color: #fff; cursor: pointer; font-size: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .apply-option:last-child { border-bottom: none; }
+        .apply-option:hover { background-color: #363c59; }
+
+        /* رسالة النجاح (Toast) */
+        .toast-msg {
+            position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background-color: #4b5563; color: white; padding: 12px 24px;
+            border-radius: 30px; font-size: 14px; z-index: 2020;
+            display: none; align-items: center; gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .toast-msg.show { display: flex; }
     </style>
 </head>
 <body>
@@ -143,31 +163,21 @@
     <!-- القائمة الجانبية -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
-        <div class="pro-banner" onclick="alert('صفحة الترقية')">
+        <div class="pro-banner">
             <i class="ph-fill ph-crown"></i>
-            <div class="pro-text">
-                <h4>Go Pro!</h4>
-                <p>Unlock everything.</p>
-            </div>
+            <div class="pro-text"><h4>Go Pro!</h4><p>Unlock everything.</p></div>
         </div>
-
-        <div class="menu-item" onclick="alert('المفضلة')"><i class="ph ph-heart"></i> Favorites</div>
+        <div class="menu-item"><i class="ph ph-heart"></i> Favorites</div>
         <div class="menu-divider"></div>
-        <div class="menu-item" onclick="alert('عن التطبيق')"><i class="ph ph-info"></i> About the app</div>
-        <div class="menu-item" onclick="alert('تقييم')"><i class="ph ph-star"></i> Rate the app</div>
-        <div class="menu-item" onclick="alert('مشاركة')"><i class="ph ph-share-network"></i> Share with friends</div>
-        <div class="menu-item" onclick="alert('تطبيقات أخرى')"><i class="ph ph-storefront"></i> More apps</div>
-        <div class="menu-item" onclick="alert('استخدم صورتك')">
-            <i class="ph ph-image"></i> Use your photo 
-            <span style="background-color: #10b981; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; margin-left: auto;">New</span>
-        </div>
-        
-        <div class="sidebar-bottom">
-            <div class="menu-item" style="padding: 0;" onclick="openSettings()"><i class="ph ph-gear"></i> Settings</div>
-        </div>
+        <div class="menu-item"><i class="ph ph-info"></i> About the app</div>
+        <div class="menu-item"><i class="ph ph-star"></i> Rate the app</div>
+        <div class="menu-item"><i class="ph ph-share-network"></i> Share with friends</div>
+        <div class="menu-item"><i class="ph ph-storefront"></i> More apps</div>
+        <div class="menu-item"><i class="ph ph-image"></i> Use your photo <span style="background-color: #10b981; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; margin-left: auto;">New</span></div>
+        <div class="sidebar-bottom"><div class="menu-item" style="padding: 0;" onclick="openSettings()"><i class="ph ph-gear"></i> Settings</div></div>
     </div>
 
-    <!-- شاشة الإعدادات المطابقة للتصميم الأصلي -->
+    <!-- الإعدادات -->
     <div class="image-viewer" id="settingsModal" style="display: none; z-index: 3000; background-color: #1e2235;">
         <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
             <div class="title" style="font-size: 22px;">Settings</div>
@@ -180,60 +190,28 @@
                 <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
                     <span>App language</span>
                     <select style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option>Default</option>
-                        <option>العربية</option>
-                        <option>English</option>
+                        <option>Default</option><option>العربية</option><option>English</option>
                     </select>
                 </div>
                 <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
                     <span>Auto Change Wallpaper</span>
                     <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option value="off">Off</option>
-                        <option value="30">30 Mins</option>
-                        <option value="60">1 Hour</option>
-                        <option value="180">3 Hours</option>
-                        <option value="1440">24 Hours</option>
+                        <option value="off">Off</option><option value="30">30 Mins</option><option value="60">1 Hour</option><option value="180">3 Hours</option><option value="1440">24 Hours</option>
                     </select>
                 </div>
-                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
-                    <span>Date & time</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 18px 0;">
-                    <span>Prayer times</span>
-                </div>
             </div>
-
-            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">About</div>
-            <div style="background-color: var(--surface-color); border-radius: 16px; padding: 0 15px;">
-                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
-                    <span>Terms of use</span>
-                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted);"></i>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
-                    <span>Privacy policy</span>
-                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted);"></i>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 18px 0;">
-                    <span>Version</span>
-                    <span style="color: var(--text-muted);">3.8.8</span>
-                </div>
-            </div>
-
             <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
                 <p style="margin-bottom: 5px;">Developed by Mahammed Tijani</p>
                 <p>© 2026 All rights reserved</p>
-                <div style="display: inline-block; background-color: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 20px; margin-top: 15px; border: 1px solid var(--border-color);">
-                    <span style="color: #10b981; font-size: 10px;">●</span> muhjaty.com <i class="ph ph-arrow-up-right" style="font-size: 12px;"></i>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- شاشة عرض الصورة -->
+    <!-- عارض الصورة -->
     <div class="image-viewer" id="imageViewer">
         <div class="viewer-header">
             <div class="header-icons-left">
-                <i class="ph ph-dots-three-vertical" onclick="alert('خيارات إضافية')"></i>
+                <i class="ph ph-dots-three-vertical"></i>
                 <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
             </div>
             <i class="ph ph-x" onclick="closeImageViewer()"></i>
@@ -243,52 +221,43 @@
             <img id="viewerImage" src="" alt="Full Wallpaper">
         </div>
         
+        <!-- قائمة خيارات التطبيق -->
+        <div class="apply-menu" id="applyMenu">
+            <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> Lock screen</div>
+            <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> Home screen</div>
+            <div class="apply-option" onclick="processWallpaper(0)"><i class="ph ph-devices"></i> Home and lock screens</div>
+        </div>
+
+        <!-- رسالة النجاح -->
+        <div class="toast-msg" id="toastMsg">
+            <i class="ph-fill ph-check-circle" style="color: #10b981; font-size: 20px;"></i>
+            <span>Wallpaper was set successfully</span>
+        </div>
+        
         <div class="viewer-actions">
-            <!-- أزرار الأفعال المعدلة -->
-            <div class="action-btn" onclick="applyWallpaper()">
+            <div class="action-btn" onclick="toggleApplyMenu()">
                 <div class="action-icon"><i class="ph ph-paint-roller"></i></div>
                 <span>Apply</span>
             </div>
             <div class="action-btn" onclick="saveWallpaper()">
-                <div class="action-icon"><i class="ph ph-download-simple"></i></div>
-                <span>Save</span>
+                <div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div>
+                <span id="saveText">Save</span>
             </div>
-            <div class="action-btn" onclick="alert('ميزة الاقتباس قيد التطوير')">
-                <div class="action-icon"><i class="ph ph-quotes"></i></div>
-                <span>Quote</span>
-            </div>
-             <div class="action-btn" onclick="alert('ميزة الودجت قيد التطوير')">
-                <div class="action-icon"><i class="ph ph-squares-four"></i></div>
-                <span>Widgets</span>
-            </div>
-             <div class="action-btn" onclick="alert('ميزة الضباب قيد التطوير')">
-                <div class="action-icon"><i class="ph ph-drop"></i></div>
-                <span>Blur</span>
-            </div>
+            <div class="action-btn"><div class="action-icon"><i class="ph ph-quotes"></i></div><span>Quote</span></div>
+            <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span>Widgets</span></div>
+            <div class="action-btn"><div class="action-icon"><i class="ph ph-drop"></i></div><span>Blur</span></div>
         </div>
     </div>
 
-    <!-- الواجهة الرئيسية للتطبيق -->
-    <div class="header-container">
-        <div class="top-bar-box">
-            <i class="ph ph-list" onclick="toggleMenu()"></i>
-            <div class="title">MyWalls</div>
-            <i class="ph ph-magnifying-glass"></i>
-        </div>
-    </div>
-
+    <!-- الواجهة الرئيسية -->
+    <div class="header-container"><div class="top-bar-box"><i class="ph ph-list" onclick="toggleMenu()"></i><div class="title">MyWalls</div><i class="ph ph-magnifying-glass"></i></div></div>
     <div class="nav-tabs">
         <div class="tab" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i> <span class="tab-text">Category</span></div>
         <div class="tab" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i> <span class="tab-text">Premium</span></div>
         <div class="tab active" onclick="switchTab('home', this)"><i class="ph ph-house"></i> <span class="tab-text">Home</span></div>
         <div class="tab" onclick="switchTab('community', this)"><i class="ph ph-users"></i> <span class="tab-text">Community</span></div>
-        <div class="tab" onclick="switchTab('desktop', this)">
-            <span style="font-size: 14px; font-weight: bold; border: 1px solid var(--text-muted); padding: 2px 6px; border-radius: 6px;">4K</span>
-            <span class="tab-text">Desktop</span>
-        </div>
+        <div class="tab" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 1px solid var(--text-muted); padding: 2px 6px; border-radius: 6px;">4K</span> <span class="tab-text">Desktop</span></div>
     </div>
-
-    <!-- حاوية عرض المحتوى -->
     <div id="mainContainer" class="grid"></div>
 
     <script src="app.js"></script>
