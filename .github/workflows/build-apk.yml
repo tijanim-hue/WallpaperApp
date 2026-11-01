@@ -22,12 +22,18 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Dependencies
+           - name: Install Dependencies
         run: |
           npm install
           npm install -g @capacitor/cli
-          npm install cordova-plugin-wallpaper 
+          npm install @capacitor/filesystem
+          npm install cordova-plugin-wallpaper
           npx cap sync android
+          
+      - name: Inject Android Permissions
+        run: |
+          sed -i '/<\/manifest>/i \    <uses-permission android:name="android.permission.SET_WALLPAPER" />\n    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />' android/app/src/main/AndroidManifest.xml
+
 
       - name: Sync Capacitor Android
         run: npx cap sync android
