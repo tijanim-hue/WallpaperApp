@@ -44,28 +44,15 @@
         .top-bar-box i { cursor: pointer; color: var(--text-color); }
         .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
 
-        .nav-tabs {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 25px 20px 25px;
-        }
-        .tab {
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 15px; border-radius: 20px; 
-            cursor: pointer; color: var(--text-muted);
-            transition: all 0.3s ease; font-size: 24px;
-        }
-        .tab.active { background-color: var(--surface-light); color: var(--text-color); }
-        .tab .tab-text { display: none; font-size: 15px; font-weight: 500; }
-        .tab.active .tab-text { display: inline-block; }
-
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        /* المساحة السفلية لكي لا يغطي الشريط الصور */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; padding-bottom: 100px; }
         .wallpaper-card {
             border-radius: 12px; overflow: hidden; height: 180px; position: relative;
             background-color: var(--surface-color); cursor: pointer;
         }
         .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; padding-bottom: 100px; }
         .category-card {
             border-radius: 16px; height: 120px; position: relative; overflow: hidden;
             display: flex; align-items: flex-end; padding: 15px; cursor: pointer;
@@ -115,6 +102,52 @@
         .sidebar-bottom { padding: 15px 20px; border-top: 1px solid var(--border-color); }
         .sidebar-bottom .menu-item { border-bottom: none; }
 
+        /* الشريط السفلي العائم (التصميم الجديد) */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 75px;
+            background-color: var(--surface-color);
+            display: flex; justify-content: space-around; align-items: center;
+            border-top-left-radius: 25px; border-top-right-radius: 25px;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 990;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; width: 60px;
+            position: relative; height: 100%;
+        }
+
+        .nav-item i { font-size: 26px; transition: transform 0.3s ease, color 0.3s ease; }
+        
+        .nav-text {
+            font-size: 11px; font-weight: bold; position: absolute; bottom: 12px;
+            opacity: 0; transform: translateY(10px); transition: all 0.3s ease;
+        }
+
+        /* تفاعل الأيقونات الجانبية */
+        .nav-item:not(.center-fab) i { transform: translateY(6px); }
+        .nav-item:not(.center-fab).active { color: var(--text-color); }
+        .nav-item:not(.center-fab).active i { transform: translateY(-10px); }
+        .nav-item:not(.center-fab).active .nav-text { opacity: 1; transform: translateY(0); }
+
+        /* الزر المركزي العائم (الرئيسية) */
+        .center-fab { transform: translateY(-28px); z-index: 995; justify-content: flex-start; }
+        
+        .fab-bg {
+            background-color: var(--surface-light); width: 64px; height: 64px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 8px solid var(--bg-color); /* الوهم البصري للقطع الدائري */
+            transition: all 0.3s ease;
+        }
+
+        .center-fab.active .fab-bg { background-color: var(--text-color); }
+        .center-fab.active i { color: var(--bg-color); }
+        .center-fab .nav-text { bottom: -28px; opacity: 1; transform: translateY(0); color: var(--text-muted); }
+        .center-fab.active .nav-text { color: var(--text-color); }
+
+        /* الشاشات والعناصر الأخرى */
         .image-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color); z-index: 2000;
@@ -182,7 +215,7 @@
 </head>
 <body>
 
-    <!-- القائمة الجانبية المعدلة -->
+    <!-- القائمة الجانبية -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="pro-banner">
@@ -194,12 +227,10 @@
         </div>
 
         <div class="menu-items-container">
-            <!-- زر تبديل الوضع الداكن/الساطع الجديد -->
             <div class="menu-item" onclick="toggleTheme()">
                 <i class="ph ph-moon" id="themeIcon"></i> 
                 <span data-i18n="theme_dark" id="themeText">Dark Mode</span>
             </div>
-
             <div class="menu-item"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             <div class="menu-item"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
             <div class="menu-item"><i class="ph ph-star"></i> <span data-i18n="rate">Rate the app</span></div>
@@ -263,7 +294,6 @@
             <img id="viewerImage" src="" alt="Full Wallpaper">
         </div>
         
-        <!-- قائمة خيارات التطبيق -->
         <div class="apply-menu" id="applyMenu">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
             <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
@@ -292,16 +322,52 @@
         </div>
     </div>
 
-    <!-- الواجهة الرئيسية -->
-    <div class="header-container"><div class="top-bar-box"><i class="ph ph-list" onclick="toggleMenu()"></i><div class="title" data-i18n="app_title">MyWalls</div><i class="ph ph-magnifying-glass"></i></div></div>
-    <div class="nav-tabs">
-        <div class="tab" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i> <span class="tab-text" data-i18n="tab_category">Category</span></div>
-        <div class="tab" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i> <span class="tab-text" data-i18n="tab_premium">Premium</span></div>
-        <div class="tab active" onclick="switchTab('home', this)"><i class="ph ph-house"></i> <span class="tab-text" data-i18n="tab_home">Home</span></div>
-        <div class="tab" onclick="switchTab('community', this)"><i class="ph ph-users"></i> <span class="tab-text" data-i18n="tab_community">Community</span></div>
-        <div class="tab" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 1px solid var(--text-muted); padding: 2px 6px; border-radius: 6px;">4K</span> <span class="tab-text" data-i18n="tab_desktop">Desktop</span></div>
+    <!-- الشريط العلوي المبسط -->
+    <div class="header-container">
+        <div class="top-bar-box">
+            <i class="ph ph-list" onclick="toggleMenu()"></i>
+            <div class="title" data-i18n="app_title">MyWalls</div>
+            <i class="ph ph-magnifying-glass"></i>
+        </div>
     </div>
+
+    <!-- حاوية الصور -->
     <div id="mainContainer" class="grid"></div>
+
+    <!-- الشريط السفلي الجديد (Bottom Navigation) -->
+    <div class="bottom-nav">
+        <!-- قسم الأقسام -->
+        <div class="nav-item" onclick="switchTab('categories', this)">
+            <i class="ph ph-stack"></i>
+            <span class="nav-text" data-i18n="tab_category">Category</span>
+        </div>
+        
+        <!-- قسم المميزة -->
+        <div class="nav-item" onclick="switchTab('premium', this)">
+            <i class="ph ph-crown"></i>
+            <span class="nav-text" data-i18n="tab_premium">Premium</span>
+        </div>
+        
+        <!-- الزر المركزي البارز (الرئيسية) -->
+        <div class="nav-item center-fab active" onclick="switchTab('home', this)">
+            <div class="fab-bg">
+                <i class="ph ph-house"></i>
+            </div>
+            <span class="nav-text" data-i18n="tab_home">Home</span>
+        </div>
+        
+        <!-- قسم المجتمع -->
+        <div class="nav-item" onclick="switchTab('community', this)">
+            <i class="ph ph-users"></i>
+            <span class="nav-text" data-i18n="tab_community">Community</span>
+        </div>
+        
+        <!-- قسم 4K -->
+        <div class="nav-item" onclick="switchTab('desktop', this)">
+            <span style="font-size: 13px; font-weight: bold; border: 1.5px solid currentColor; padding: 1px 5px; border-radius: 6px; margin-bottom: 4px; display: inline-block; transition: all 0.3s ease;">4K</span>
+            <span class="nav-text" data-i18n="tab_desktop">Desktop</span>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
