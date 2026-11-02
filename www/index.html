@@ -6,6 +6,16 @@
     <title>Rawnaq</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
+        body.glass-theme .top-bar-box, 
+body.glass-theme .sidebar, 
+body.glass-theme .bottom-nav, 
+body.glass-theme .apply-menu {
+    background-color: rgba(30, 34, 53, 0.4) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
         :root {
             --bg-color: #1e2235;
             --surface-color: #2a2f45;
@@ -230,6 +240,8 @@
 
         <div class="menu-items-container">
             <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
+            <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="blur">Glass Theme</span></div>
+
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             
             <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
@@ -321,9 +333,21 @@
             </div>
             <i class="ph ph-x" onclick="closeImageViewer()"></i>
         </div>
-        
-        <div class="viewer-image-container" onclick="toggleFullscreen()"> <img id="viewerImage" src="" alt="Full Wallpaper"> </div>
-        
+        <div class="viewer-image-container" id="viewerImageContainer"> 
+    <img id="viewerImage" src="" alt="Full Wallpaper"> 
+    <!-- المخطوطة القابلة للسحب -->
+    <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none;">
+</div>
+
+<!-- قائمة اختيار المخطوطات (تظهر عند الضغط على زر Quote) -->
+<div class="apply-menu" id="quoteMenu" style="bottom: 110px; max-height: 250px; overflow-y: auto;">
+    <div class="apply-option" onclick="addQuote('img/quran1.png')">قرآن 1</div>
+    <div class="apply-option" onclick="addQuote('img/wisdom1.png')">حكمة 1</div>
+    <!-- يمكنك إضافة الصور المحلية للمخطوطات هنا -->
+</div>
+
+ <div class="action-btn" onclick="document.getElementById('quoteMenu').classList.toggle('show'); applyMenu.classList.remove('show');"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
+       
         <div class="apply-menu" id="applyMenu">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
             <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
