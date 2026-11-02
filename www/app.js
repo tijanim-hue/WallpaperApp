@@ -1,524 +1,421 @@
-const API_KEY = '34904576-1b3b2ade155886a3ef79485ce'; 
-const mainContainer = document.getElementById('mainContainer');
-
-const translations = {
-    en: {
-        app_title: "MyWalls", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
-        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", more_apps: "More apps", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change Wallpaper", off: "Off", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Hour", hours_3: "3 Hours", hours_12: "12 Hours", hours_24: "24 Hours", developed_by: "Developed by Mahammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", widgets: "Widgets", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
-        cat_nature: "Nature", cat_abstract: "Abstract", cat_space: "Space", cat_architecture: "Architecture", cat_cars: "Cars", cat_animals: "Animals", cat_minimalist: "Minimalist", cat_neon: "Neon",
-        add_fav: "Add to favourites", turn_off_snapping: "Turn off snapping", fav_added: "Added to favorites", fav_removed: "Removed from favorites", fav_empty: "No favorites yet",
-        about_title: "Welcome to MyWalls", about_desc: "MyWalls is your ultimate destination for high-quality, stunning wallpapers. Carefully crafted to bring beauty to your screen every single day.", share_text: "Check out this amazing wallpaper app I found! Get stunning 4K wallpapers every day.", auto_source: "Wallpaper Source", source_random: "Random (Home)", source_fav: "My Favorites"
-    },
-    ar: {
-        app_title: "خلفياتي", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
-        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", more_apps: "تطبيقات أخرى", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير الخلفية تلقائياً", off: "إيقاف", mins_15: "15 دقيقة", mins_30: "30 دقيقة", hour_1: "ساعة واحدة", hours_3: "3 ساعات", hours_12: "12 ساعة", hours_24: "24 ساعة", developed_by: "تطوير محمد التجاني", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", widgets: "ودجت", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
-        cat_nature: "الطبيعة", cat_abstract: "تجريدي", cat_space: "الفضاء", cat_architecture: "عمارة", cat_cars: "سيارات", cat_animals: "حيوانات", cat_minimalist: "بسيط", cat_neon: "نيون",
-        add_fav: "إضافة للمفضلة", turn_off_snapping: "إيقاف الجذب", fav_added: "تمت الإضافة للمفضلة", fav_removed: "تمت الإزالة من المفضلة", fav_empty: "لا توجد مفضلات بعد",
-        about_title: "مرحباً بك في خلفياتي", about_desc: "تطبيق خلفياتي هو وجهتك الأولى للحصول على صور عالية الجودة. تم تصميمه بعناية ليضفي لمسة من الجمال على شاشتك كل يوم.", share_text: "اكتشف هذا التطبيق الرائع للخلفيات! احصل على أروع صور 4K لشاشتك يومياً.", auto_source: "مصدر الخلفيات", source_random: "عشوائي (الرئيسية)", source_fav: "مفضلاتي"
-    },
-    fr: {
-        app_title: "MesFonds", tab_category: "Catégorie", tab_premium: "Premium", tab_home: "Accueil", tab_community: "Communauté", tab_desktop: "Bureau",
-        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", more_apps: "Plus d'applis", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue de l'appli", auto_change: "Changement auto", off: "Désactivé", mins_15: "15 Mins", mins_30: "30 Mins", hour_1: "1 Heure", hours_3: "3 Heures", hours_12: "12 Heures", hours_24: "24 Heures", developed_by: "Développé par Mahammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", widgets: "Widgets", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher des fonds...", cat_label: "Catégorie", wall_label: "Fond d'écran",
-        cat_nature: "Nature", cat_abstract: "Abstrait", cat_space: "Espace", cat_architecture: "Architecture", cat_cars: "Voitures", cat_animals: "Animaux", cat_minimalist: "Minimaliste", cat_neon: "Néon",
-        add_fav: "Ajouter aux favoris", turn_off_snapping: "Désactiver l'accrochage", fav_added: "Ajouté aux favoris", fav_removed: "Retiré des favoris", fav_empty: "Aucun favori pour le moment",
-        about_title: "Bienvenue sur MesFonds", about_desc: "Votre destination ultime pour des fonds d'écran de haute qualité. Conçu pour apporter de la beauté à votre écran chaque jour.", share_text: "Découvrez cette application géniale de fonds d'écran ! Obtenez des images 4K époustouflantes tous les jours.", auto_source: "Source des fonds", source_random: "Aléatoire (Accueil)", source_fav: "Mes Favoris"
-    }
-};
-
-let currentLang = localStorage.getItem('appLang') || 'en';
-let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
-let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true'; // تعريف واحد فقط هنا
-let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
-
-const categoriesData = [
-    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'img/nature.jpg' },
-    { id: 'cat_abstract', query: 'abstract background texture', bg: 'img/abstract.jpg' },
-    { id: 'cat_space', query: 'space galaxy stars', bg: 'img/space.jpg' },
-    { id: 'cat_architecture', query: 'architecture city building', bg: 'img/architecture.jpg' },
-    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'img/cars.jpg' },
-    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'img/animals.jpg' },
-    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
-    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
-];
-
-function changeLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('appLang', lang);
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.innerText = translations[lang][key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang][key]) el.setAttribute('placeholder', translations[lang][key]);
-    });
-}
-
-function toggleTheme() { isDarkMode = !isDarkMode; localStorage.setItem('isDarkMode', isDarkMode); applyTheme(); }
-function applyTheme() {
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
-    if (isDarkMode) {
-        document.body.classList.add('dark-theme');
-        themeIcon.className = 'ph ph-sun'; themeText.setAttribute('data-i18n', 'theme_light');
-    } else {
-        document.body.classList.remove('dark-theme');
-        themeIcon.className = 'ph ph-moon'; themeText.setAttribute('data-i18n', 'theme_dark');
-    }
-    if (translations[currentLang][themeText.getAttribute('data-i18n')]) {
-        themeText.innerText = translations[currentLang][themeText.getAttribute('data-i18n')];
-    }
-}
-
-function toggleGlassTheme() {
-    isGlassTheme = !isGlassTheme;
-    localStorage.setItem('isGlassTheme', isGlassTheme);
-    applyGlassTheme();
-}
-function applyGlassTheme() {
-    if (isGlassTheme) document.body.classList.add('glass-theme');
-    else document.body.classList.remove('glass-theme');
-}
-
-// تطبيق الثيمات عند البداية
-applyTheme();
-applyGlassTheme();
-
-function toggleSearch() {
-    const searchOverlay = document.getElementById('searchOverlay');
-    const searchInput = document.getElementById('searchInput');
-    searchOverlay.classList.toggle('show');
-    if(searchOverlay.classList.contains('show')) searchInput.focus();
-    else { searchInput.value = ''; document.getElementById('searchResults').innerHTML = ''; }
-}
-
-let searchTimeout;
-async function handleSearch(query) {
-    const resultsContainer = document.getElementById('searchResults');
-    if (query.trim().length < 2) { resultsContainer.innerHTML = ''; return; }
-    
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(async () => {
-        resultsContainer.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${translations[currentLang].loading}</div>`;
-        let html = '';
-        const searchLower = query.toLowerCase();
-
-        const matchedCats = categoriesData.filter(c => {
-            const catNameEn = c.id.replace('cat_', '');
-            const catNameLocal = translations[currentLang][c.id].toLowerCase();
-            return catNameEn.includes(searchLower) || catNameLocal.includes(searchLower);
-        });
-
-        matchedCats.forEach(cat => {
-            const catName = translations[currentLang][cat.id];
-            html += `<div class="search-item" onclick="executeSearch('${cat.query}')"><img src="${cat.bg}" alt="${catName}"><div class="search-item-info"><span class="search-item-title">${catName}</span><span class="search-item-type">${translations[currentLang].cat_label}</span></div></div>`;
-        });
-
-        try {
-            const langParam = (currentLang === 'en' || currentLang === 'fr') ? `&lang=${currentLang}` : '';
-            const res = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}${langParam}&image_type=photo&orientation=vertical&per_page=10`);
-            const data = await res.json();
-            if (data.hits && data.hits.length > 0) {
-                data.hits.forEach(hit => {
-                    const title = hit.tags.split(',')[0].trim();
-                    html += `<div class="search-item" onclick="openImageViewer('${hit.largeImageURL}'); toggleSearch();"><img src="${hit.previewURL}" alt="${title}"><div class="search-item-info"><span class="search-item-title">${title}</span><span class="search-item-type">${translations[currentLang].wall_label}</span></div></div>`;
-                });
-            }
-            if (!html) html = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${translations[currentLang].no_images}</div>`;
-            resultsContainer.innerHTML = html;
-        } catch (e) { resultsContainer.innerHTML = `<div style="text-align:center; color:#ef4444; padding:20px;">${translations[currentLang].conn_failed}</div>`; }
-    }, 500);
-}
-
-function executeSearch(query) {
-    toggleSearch(); fetchWallpapers(query); 
-    document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
-    const homeTab = document.querySelector('.nav-item-center');
-    if(homeTab) homeTab.classList.add('active'); 
-}
-
-function handlePhotoUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) { openImageViewer(e.target.result); }
-        reader.readAsDataURL(file);
-    }
-}
-
-function toggleOptionsMenu() { document.getElementById('optionsMenu').classList.toggle('show'); }
-
-function toggleFavorite() {
-    const url = viewerImage.src;
-    const index = favoritesList.indexOf(url);
-    const heartIcon = document.getElementById('favHeartIcon');
-    
-    if (index > -1) {
-        favoritesList.splice(index, 1);
-        showToast('fav_removed');
-        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'var(--text-color)';
-    } else {
-        favoritesList.push(url);
-        showToast('fav_added');
-        heartIcon.className = 'ph-fill ph-heart'; heartIcon.style.color = '#ef4444';
-    }
-    localStorage.setItem('myFavorites', JSON.stringify(favoritesList));
-    toggleOptionsMenu();
-}
-
-function displayFavorites() {
-    toggleMenu();
-    document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
-    mainContainer.className = 'grid'; mainContainer.innerHTML = '';
-    
-    if (favoritesList.length === 0) {
-        mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 40px;">${translations[currentLang].fav_empty}</p>`;
-        return;
-    }
-    favoritesList.forEach(url => {
-        const card = document.createElement('div'); card.className = 'wallpaper-card';
-        card.innerHTML = `<img src="${url}" alt="Favorite" loading="lazy">`;
-        card.onclick = () => openImageViewer(url);
-        mainContainer.appendChild(card);
-    });
-}
-
-async function shareApp() {
-    toggleMenu();
-    try {
-        const shareData = {
-            title: translations[currentLang].app_title,
-            text: translations[currentLang].share_text,
-            url: 'https://play.google.com/store/apps/details?id=com.tijanim.arabicwalls'
-        };
-
-        if (window.Capacitor && window.Capacitor.Plugins.Share) {
-            await window.Capacitor.Plugins.Share.share(shareData);
-        } else if (navigator.share) {
-            await navigator.share(shareData);
-        } else {
-            showToast('conn_failed');
-        }
-    } catch (err) { console.log('Share canceled', err); }
-}
-
-function openAbout() { toggleMenu(); document.getElementById('aboutModal').classList.add('show'); }
-function closeAbout() { document.getElementById('aboutModal').classList.remove('show'); }
-
-function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
-function openSettings() { toggleMenu(); document.getElementById('settingsModal').classList.add('show'); }
-function closeSettings() { document.getElementById('settingsModal').classList.remove('show'); }
-
-let autoChangeInterval = null;
-function setAutoWallpaper(minutes) {
-    localStorage.setItem('autoWallpaper', minutes);
-    const sourceContainer = document.getElementById('autoSourceContainer');
-    
-    if (minutes !== 'off') {
-        sourceContainer.style.display = 'flex';
-        const ms = parseInt(minutes) * 60 * 1000;
-        if (autoChangeInterval) clearInterval(autoChangeInterval);
-        autoChangeInterval = setInterval(changeWallpaperAuto, ms);
-    } else {
-        sourceContainer.style.display = 'none';
-        if (autoChangeInterval) clearInterval(autoChangeInterval);
-    }
-}
-
-function setAutoSource(val) { localStorage.setItem('autoSource', val); }
-
-async function changeWallpaperAuto() {
-    if (window.plugins && window.plugins.wallpaper) {
-        const source = localStorage.getItem('autoSource') || 'random';
-        let imgUrl = '';
-        
-        if (source === 'favorites' && favoritesList.length > 0) {
-            imgUrl = favoritesList[Math.floor(Math.random() * favoritesList.length)];
-        } else {
-            try {
-                const res = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=nature&image_type=photo&orientation=vertical`);
-                const data = await res.json();
-                if(data.hits && data.hits.length > 0) {
-                    imgUrl = data.hits[Math.floor(Math.random() * data.hits.length)].largeImageURL;
-                }
-            } catch(e) {}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rawnaq</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg-color: #1e2235;
+            --surface-color: #2a2f45;
+            --surface-light: #363c59;
+            --text-color: #ffffff;
+            --text-muted: #a0a4b8;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --sidebar-bg: #212536;
         }
 
-        if(imgUrl) {
-            try {
-                const response = await fetch(imgUrl);
-                const blob = await response.blob();
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function() {
-                    const base64data = reader.result.split(',')[1];
-                    window.plugins.wallpaper.setImageBase64(base64data, ()=>{}, ()=>{});
-                }
-            } catch (e) {}
+        body.dark-theme {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --surface-light: #2c2c2c;
+            --text-color: #f1f1f1;
+            --text-muted: #9e9e9e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --sidebar-bg: #181818;
         }
-    }
-}
 
-function checkAutoWallpaperOnLoad() {
-    const minutes = localStorage.getItem('autoWallpaper');
-    if (!minutes || minutes === 'off') return;
-    
-    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
-    const now = Date.now();
-    const ms = parseInt(minutes) * 60 * 1000;
-    
-    if (!lastChange || now - parseInt(lastChange) > ms) {
-        changeWallpaperAuto();
-        localStorage.setItem('lastAutoWallpaperTime', now.toString());
-    }
-    setAutoWallpaper(minutes); 
-}
+        body.glass-theme .top-bar-box, 
+        body.glass-theme .sidebar, 
+        body.glass-theme .bottom-nav, 
+        body.glass-theme .apply-menu,
+        body.glass-theme .options-menu {
+            background-color: rgba(30, 34, 53, 0.4) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-async function fetchWallpapers(query = 'nature') {
-    const loadingText = translations[currentLang].loading;
-    mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 20px;">${loadingText}</p>`;
-    try {
-        const langParam = (currentLang === 'en' || currentLang === 'fr') ? `&lang=${currentLang}` : '';
-        const response = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}${langParam}&image_type=photo&orientation=vertical&min_width=1080&min_height=1920&per_page=18`);
-        const data = await response.json();
-        if (data.hits && data.hits.length > 0) displayWallpapers(data.hits);
-        else mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted);">${translations[currentLang].no_images}</p>`;
-    } catch (error) { mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: #ef4444;">${translations[currentLang].conn_failed}</p>`; }
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { 
+            background-color: var(--bg-color); color: var(--text-color); 
+            overflow-x: hidden; transition: background-color 0.3s ease; 
+            padding-bottom: 90px; 
+        }
 
-function displayWallpapers(images) {
-    mainContainer.className = 'grid'; mainContainer.innerHTML = '';
-    images.forEach(image => {
-        const card = document.createElement('div'); card.className = 'wallpaper-card';
-        card.innerHTML = `<img src="${image.webformatURL}" alt="Wallpaper" loading="lazy">`;
-        card.onclick = () => openImageViewer(image.largeImageURL);
-        mainContainer.appendChild(card);
-    });
-}
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-function displayCategories() {
-    mainContainer.className = 'categories-grid';
-    mainContainer.innerHTML = '';
-    categoriesData.forEach(cat => {
-        const catCard = document.createElement('div');
-        catCard.className = 'category-card';
+        .header-container { padding: 15px 20px; }
+        .top-bar-box {
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--surface-color); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: background-color 0.3s ease;
+        }
+        .top-bar-box i { cursor: pointer; color: var(--text-color); }
+        .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
+
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            z-index: 2500; display: none; flex-direction: column; padding: 20px;
+        }
+        .search-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
         
-        catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url("${cat.bg}")`;
-        catCard.style.backgroundSize = 'cover';
-        catCard.style.backgroundPosition = 'center';
+        .search-bar-modern {
+            display: flex; align-items: center; background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 12px 20px;
+            gap: 15px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .search-bar-modern input { flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none; }
+        .search-bar-modern input::placeholder { color: #d1d5db; }
         
-        catCard.innerHTML = `<span>${translations[currentLang][cat.id]}</span>`;
-        catCard.onclick = () => {
-            fetchWallpapers(cat.query);
-            document.querySelectorAll('.nav-item, .nav-item-center').forEach(t => t.classList.remove('active'));
-            const homeTab = document.querySelector('.nav-item-center');
-            if(homeTab) homeTab.classList.add('active');
-        };
-        mainContainer.appendChild(catCard);
-    });
-}
+        .search-results { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 75vh; padding-bottom: 20px; }
+        .search-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px; background: var(--surface-color);
+            border-radius: 16px; cursor: pointer; transition: background 0.2s, transform 0.1s;
+        }
+        .search-item:active { transform: scale(0.98); }
+        .search-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
+        .search-item-info { display: flex; flex-direction: column; gap: 4px;}
+        .search-item-title { font-size: 15px; color: white; font-weight: bold; text-transform: capitalize; }
+        .search-item-type { font-size: 12px; color: #10b981; }
 
-function switchTab(tabName, element) {
-    document.querySelectorAll('.nav-item, .nav-item-center').forEach(tab => tab.classList.remove('active'));
-    if(element) element.classList.add('active');
-    
-    if (tabName === 'home') fetchWallpapers('nature');
-    else if (tabName === 'categories') displayCategories();
-    else if (tabName === 'premium') fetchWallpapers('luxury');
-    else if (tabName === 'community') fetchWallpapers('people');
-    else if (tabName === 'desktop') fetchWallpapers('4k');
-}
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .wallpaper-card { border-radius: 12px; overflow: hidden; height: 180px; position: relative; background-color: var(--surface-color); cursor: pointer; }
+        .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
+        .category-card {
+            border-radius: 16px; height: 120px; position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; padding: 15px; cursor: pointer;
+        }
+        .category-card span { font-weight: bold; font-size: 20px; z-index: 2; color: white;}
 
-const imageViewer = document.getElementById('imageViewer');
-const viewerImage = document.getElementById('viewerImage');
-const applyMenu = document.getElementById('applyMenu');
-const toastMsg = document.getElementById('toastMsg');
+        .sidebar {
+            position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
+            background-color: var(--sidebar-bg); z-index: 1500;
+            transition: left 0.3s ease, right 0.3s ease, background-color 0.3s ease; 
+            display: flex; flex-direction: column; box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+        }
+        html[dir="rtl"] .sidebar { left: auto; right: -320px; }
+        html[dir="rtl"] .sidebar.open { right: 0; }
+        html[dir="ltr"] .sidebar.open { left: 0; }
 
-function openImageViewer(imgUrl) {
-    viewerImage.src = imgUrl; imageViewer.classList.add('show');
-    
-    const heartIcon = document.getElementById('favHeartIcon');
-    if (favoritesList.indexOf(imgUrl) > -1) {
-        heartIcon.className = 'ph-fill ph-heart'; heartIcon.style.color = '#ef4444';
-    } else {
-        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'var(--text-color)';
-    }
-    document.getElementById('saveIcon').innerHTML = '<i class="ph ph-download-simple"></i>';
-    document.getElementById('saveText').innerText = translations[currentLang].save;
-    document.getElementById('saveIcon').style.color = "var(--text-color)";
-}
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1499; display: none; }
+        .overlay.show { display: block; }
+        
+        .pro-banner {
+            background-color: rgba(251, 191, 36, 0.1); margin: 20px; padding: 15px 20px;
+            border-radius: 16px; display: flex; align-items: center; gap: 15px; cursor: pointer;
+        }
+        .pro-icon-box { border: 2px solid #fbbf24; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; }
+        .pro-icon-box i { color: #fbbf24; font-size: 22px; }
+        .pro-text h4 { color: var(--text-color); margin: 0; font-size: 16px; font-weight: 600;}
+        .pro-text p { color: var(--text-muted); font-size: 13px; margin: 4px 0 0 0; }
 
-function closeImageViewer() {
-    imageViewer.classList.remove('show'); imageViewer.classList.remove('fullscreen');
-    applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); toastMsg.classList.remove('show');
-    // إخفاء المخطوطة عند الخروج
-    document.getElementById('quoteOverlay').style.display = 'none';
-    document.getElementById('quoteMenu').classList.remove('show');
-}
+        .menu-items-container { overflow-y: auto; flex-grow: 1; padding: 0 20px; }
+        .menu-item { 
+            padding: 18px 0; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); border-bottom: 1px solid var(--border-color);
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item i { width: 35px; font-size: 22px; color: var(--text-color); }
+        .new-badge { background-color: #14b8a6; color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; margin-left: auto; font-weight: bold;}
+        html[dir="rtl"] .new-badge { margin-left: 0; margin-right: auto; }
+        
+        .sidebar-bottom { padding: 15px 20px; border-top: 1px solid var(--border-color); }
+        .sidebar-bottom .menu-item { border-bottom: none; }
 
-function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); document.getElementById('quoteMenu').classList.remove('show'); }
-function toggleApplyMenu() { applyMenu.classList.toggle('show'); document.getElementById('optionsMenu').classList.remove('show'); document.getElementById('quoteMenu').classList.remove('show'); }
+        .image-viewer, .modal-viewer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color); z-index: 2000;
+            display: none; flex-direction: column; overflow: hidden; transition: background-color 0.3s ease;
+        }
+        .image-viewer.show, .modal-viewer.show { display: flex; }
+        
+        .viewer-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 20px;
+            position: absolute; top: 0; width: 100%; z-index: 10;
+            background: linear-gradient(to bottom, var(--bg-color) 80%, transparent);
+        }
+        .header-icons-left { display: flex; gap: 20px; position: relative; }
+        .viewer-header i { font-size: 24px; cursor: pointer; }
+        
+        .options-menu {
+            position: absolute; top: 40px; left: 0; background-color: var(--surface-color); border-radius: 12px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden; min-width: 200px;
+        }
+        .options-menu.show { display: flex; }
+        .options-option {
+            padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-color); cursor: pointer; font-size: 15px; border-bottom: 1px solid var(--border-color);
+        }
+        .options-option:last-child { border-bottom: none; }
+        .options-option:hover { background-color: var(--surface-light); }
+        html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
-function showToast(messageKey) {
-    const text = document.getElementById('toastText');
-    text.innerText = translations[currentLang][messageKey] || messageKey;
-    toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
-}
+        .viewer-image-container { flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 0; position: relative; }
+        .viewer-image-container img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        
+        .viewer-actions {
+            display: flex; justify-content: space-around; padding: 20px;
+            background: linear-gradient(to top, var(--bg-color) 80%, transparent); position: absolute; bottom: 0; width: 100%; z-index: 15;
+        }
+        
+        .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
+        .image-viewer.fullscreen .viewer-actions { opacity: 0; transform: translateY(100%); pointer-events: none; }
+        .image-viewer.fullscreen .viewer-image-container img { object-fit: cover; }
 
-// --- نظام المخطوطات والدمج ---
-const quoteOverlay = document.getElementById('quoteOverlay');
-let isDraggingQuote = false;
+        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); }
+        .action-icon { background-color: var(--surface-color); padding: 15px; border-radius: 12px; font-size: 24px; color: var(--text-color); transition: background-color 0.3s ease;}
+        .action-btn span { font-size: 12px; }
 
-function addQuote(src) {
-    quoteOverlay.src = src;
-    quoteOverlay.style.display = 'block';
-    quoteOverlay.style.top = '50%';
-    quoteOverlay.style.left = '50%';
-    quoteOverlay.style.transform = 'translate(-50%, -50%)';
-    document.getElementById('quoteMenu').classList.remove('show');
-}
+        .apply-menu {
+            position: absolute; bottom: 110px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 16px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
+        }
+        .apply-menu.show { display: flex; }
+        .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); }
+        .apply-option:last-child { border-bottom: none; }
+        .apply-option:hover { background-color: var(--surface-light); }
 
-quoteOverlay.addEventListener('touchstart', () => isDraggingQuote = true);
-document.addEventListener('touchend', () => isDraggingQuote = false);
-document.addEventListener('touchmove', (e) => {
-    if (isDraggingQuote) {
-        const touch = e.touches[0];
-        quoteOverlay.style.left = touch.clientX + 'px';
-        quoteOverlay.style.top = touch.clientY + 'px';
-        quoteOverlay.style.transform = 'translate(-50%, -50%)';
-    }
-});
+        .apply-action-btn { background-color: #10b981; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
 
-async function getFinalImageData() {
-    if (quoteOverlay.style.display === 'none') return viewerImage.src; 
-    
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    img.src = viewerImage.src;
-    await new Promise(r => img.onload = r);
-    
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-    
-    const qImg = new Image();
-    qImg.crossOrigin = "Anonymous";
-    qImg.src = quoteOverlay.src;
-    await new Promise(r => qImg.onload = r);
-    
-    const rect = viewerImage.getBoundingClientRect();
-    const imageRatio = img.width / img.height;
-    const containerRatio = rect.width / rect.height;
-    
-    let renderedWidth = rect.width, renderedHeight = rect.height;
-    let offsetX = 0, offsetY = 0;
+        .toast-msg {
+            position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background-color: var(--surface-light); color: var(--text-color); padding: 10px 20px; border-radius: 30px; font-size: 14px; z-index: 3000;
+            display: none; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
+        }
+        .toast-msg.show { display: flex; }
 
-    if (imageRatio > containerRatio) {
-        renderedHeight = rect.width / imageRatio;
-        offsetY = (rect.height - renderedHeight) / 2;
-    } else {
-        renderedWidth = rect.height * imageRatio;
-        offsetX = (rect.width - renderedWidth) / 2;
-    }
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--surface-color);
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
+            border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000; transition: background-color 0.3s ease;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; font-size: 26px; flex: 1; transition: color 0.3s ease; }
+        .nav-item.active { color: var(--text-color); }
+        
+        .nav-item-center-wrapper { position: relative; flex: 1; display: flex; justify-content: center; height: 40px; }
+        .nav-item-center {
+            position: absolute; top: -35px; width: 65px; height: 65px; background-color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 30px; border: 6px solid var(--bg-color); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); cursor: pointer; transition: transform 0.2s, border-color 0.3s ease;
+        }
+        .nav-item-center:active { transform: scale(0.95); }
+        select option { background-color: var(--bg-color); color: white; }
+    </style>
+</head>
+<body>
+    <!-- شاشة البداية وتحميل البيانات -->
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color, #1e2235); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;">
+        <div style="text-align: center;">
+            <img src="img/icon.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 20px;">
+            <h2 style="color: var(--text-color, #fff); font-family: sans-serif; font-size: 24px; margin-bottom: 40px;">Rawnaq</h2>
+        </div>
+        <div style="position: absolute; bottom: 50px; width: 80%; text-align: center;">
+            <p style="color: #a0a4b8; font-size: 14px; margin-bottom: 10px;">Please wait..</p>
+            <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                <div id="loading-bar" style="width: 0%; height: 100%; background: #26d0ce; transition: width 2s ease-in-out;"></div>
+            </div>
+        </div>
+    </div>
 
-    const scaleX = img.width / renderedWidth;
-    const scaleY = img.height / renderedHeight;
-    
-    const qRect = quoteOverlay.getBoundingClientRect();
-    const x = (qRect.left - rect.left - offsetX) * scaleX;
-    const y = (qRect.top - rect.top - offsetY) * scaleY;
-    const w = qRect.width * scaleX;
-    const h = qRect.height * scaleY;
-    
-    ctx.drawImage(qImg, x, y, w, h);
-    return canvas.toDataURL('image/jpeg', 0.9);
-}
+    <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-// دالة التعيين النهائية الداعمة للدمج والشاشات
-async function processWallpaper(mode) {
-    applyMenu.classList.remove('show');
-    showToast('loading'); 
-    
-    try {
-        const finalImageSrc = await getFinalImageData();
-        const response = await fetch(finalImageSrc);
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
+    <!-- نافذة البحث -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-bar-modern">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search wallpapers..." oninput="handleSearch(this.value)">
+            <i class="ph-bold ph-x" onclick="toggleSearch()" style="cursor:pointer; color: #ef4444;"></i>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
 
-        reader.onloadend = function() {
-            const base64data = reader.result.split(',')[1];
-            if (window.plugins && window.plugins.wallpaper) {
-                const wp = window.plugins.wallpaper;
+    <!-- القائمة الجانبية -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="pro-banner">
+            <div class="pro-icon-box"><i class="ph-fill ph-crown"></i></div>
+            <div class="pro-text">
+                <h4 data-i18n="go_pro">Go Pro!</h4>
+                <p data-i18n="unlock">Unlock everything.</p>
+            </div>
+        </div>
+
+        <div class="menu-items-container">
+            <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
+            <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="blur">Glass Theme</span></div>
+            <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
+            
+            <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
+            <div class="menu-item"><i class="ph ph-star"></i> <span data-i18n="rate">Rate the app</span></div>
+            
+            <div class="menu-item" onclick="shareApp()"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
+            <div class="menu-item"><i class="ph ph-storefront"></i> <span data-i18n="more_apps">More apps</span></div>
+            <div class="menu-item" onclick="document.getElementById('photoInput').click(); toggleMenu();">
+                <i class="ph ph-image-square"></i> <span data-i18n="use_photo">Use your photo</span> <span class="new-badge" data-i18n="new_badge">New</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-bottom">
+            <div class="menu-item" onclick="openSettings()"><i class="ph ph-gear"></i> <span data-i18n="settings">Settings</span></div>
+        </div>
+    </div>
+
+    <!-- نافذة عن التطبيق -->
+    <div class="modal-viewer" id="aboutModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 22px;" data-i18n="about_app">About the app</div>
+            <i class="ph ph-x" onclick="closeAbout()" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div style="padding: 100px 30px 30px 30px; text-align: center; overflow-y: auto;">
+            <div style="background-color: var(--surface-color); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <i class="ph-fill ph-images" style="font-size: 60px; color: #10b981; margin-bottom: 20px;"></i>
+                <h2 style="margin-bottom: 15px; color: var(--text-color);" data-i18n="about_title">Welcome to MyWalls</h2>
+                <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;" data-i18n="about_desc">
+                    MyWalls is your ultimate destination for high-quality, stunning wallpapers. 
+                    Carefully crafted to bring beauty to your screen every single day.
+                </p>
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                    <p style="color: #10b981; font-weight: bold; font-size: 14px;" data-i18n="developed_by">Developed by Mahammed Tijani</p>
+                    <p style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Version 1.0.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الإعدادات -->
+    <div class="modal-viewer" id="settingsModal" style="z-index: 3000;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 22px;" data-i18n="settings">Settings</div>
+            <i class="ph ph-x" onclick="closeSettings()" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        
+        <div style="padding: 80px 20px 20px 20px; overflow-y: auto; height: 100%;">
+            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;" data-i18n="display">Display</div>
+            <div style="background-color: var(--surface-color); border-radius: 16px; padding: 0 15px; margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span data-i18n="app_lang">App language</span>
+                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px; cursor: pointer;">
+                        <option value="en">English</option><option value="ar">العربية</option><option value="fr">Français</option>
+                    </select>
+                </div>
                 
-                let success = () => showToast('wallpaper_success');
-                let error = () => showToast('conn_failed');
+                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+                    <span data-i18n="auto_change">Auto Change Wallpaper</span>
+                    <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
+                        <option value="off" data-i18n="off">Off</option><option value="15" data-i18n="mins_15">15 Mins</option><option value="30" data-i18n="mins_30">30 Mins</option>
+                        <option value="60" data-i18n="hour_1">1 Hour</option><option value="180" data-i18n="hours_3">3 Hours</option><option value="720" data-i18n="hours_12">12 Hours</option><option value="1440" data-i18n="hours_24">24 Hours</option>
+                    </select>
+                </div>
+                <div id="autoSourceContainer" style="display: none; justify-content: space-between; padding: 18px 0;">
+                    <span data-i18n="auto_source">Wallpaper Source</span>
+                    <select id="autoSource" onchange="setAutoSource(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
+                        <option value="random" data-i18n="source_random">Random (Home)</option>
+                        <option value="favorites" data-i18n="source_fav">My Favorites</option>
+                    </select>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
+                <p style="margin-bottom: 5px;" data-i18n="developed_by">Developed by Mahammed Tijani</p>
+                <p data-i18n="all_rights">© 2026 All rights reserved</p>
+            </div>
+        </div>
+    </div>
 
-                if (mode === 2) { 
-                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
-                } else if (mode === 1) { 
-                    if(wp.setImageBase64) wp.setImageBase64(base64data, 1, success, error);
-                } else { 
-                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, success, error);
-                    else {
-                        wp.setImageBase64(base64data, 1, () => {
-                            if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
-                        }, error);
-                    }
-                }
-            }
-        }
-    } catch (e) { showToast('conn_failed'); }
-}
+    <!-- عارض الصورة -->
+    <div class="image-viewer" id="imageViewer">
+        <div class="viewer-header">
+            <div class="header-icons-left">
+                <i class="ph ph-dots-three-vertical" onclick="toggleOptionsMenu()"></i>
+                <div class="options-menu" id="optionsMenu">
+                    <div class="options-option" onclick="toggleFavorite()"><i class="ph ph-heart" id="favHeartIcon"></i> <span data-i18n="add_fav">Add to favourites</span></div>
+                    <div class="options-option" onclick="toggleOptionsMenu()"><i class="ph ph-grid-nine"></i> <span data-i18n="turn_off_snapping">Turn off snapping</span></div>
+                </div>
+                <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
+            </div>
+            <i class="ph ph-x" onclick="closeImageViewer()"></i>
+        </div>
 
-async function saveWallpaper() {
-    try {
-        showToast('loading');
-        const finalImageSrc = await getFinalImageData(); // استخدام الدمج في الحفظ أيضاً
-        const response = await fetch(finalImageSrc);
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
+        <div class="viewer-image-container" id="viewerImageContainer"> 
+            <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
+            <!-- المخطوطة القابلة للسحب والتكبير -->
+            <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.5);">
+        </div>
+
+        <!-- قائمة اختيار وتطبيق المخطوطات -->
+        <div class="apply-menu" id="quoteMenu" style="bottom: 110px;">
+            <div style="padding: 15px; color: white;">
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;">
+                    <button class="quote-btn" onclick="addQuote('img/quran1.png')">قرآن 1</button>
+                    <button class="quote-btn" onclick="addQuote('img/wisdom1.png')">حكمة 1</button>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-size: 14px;">تكبير / تصغير المخطوطة</label>
+                    <input type="range" id="quoteScaleSlider" min="50" max="300" value="100" style="width:100%;" oninput="updateQuoteScale()">
+                </div>
+                <button class="apply-action-btn" onclick="burnImageQuote()">تطبيق الاقتباس</button>
+            </div>
+        </div>
+
+        <!-- قائمة تطبيق الضباب (Blur) -->
+        <div class="apply-menu" id="blurMenu" style="bottom: 110px;">
+            <div style="padding: 15px; color: white;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-size: 14px;">نسبة الضباب (0 - 100)</label>
+                    <input type="range" id="blurSlider" min="0" max="100" value="0" style="width:100%;" oninput="previewBlur()">
+                </div>
+                <button class="apply-action-btn" onclick="applyBlur()">تطبيق التأثير</button>
+            </div>
+        </div>
+       
+        <!-- قائمة التعيين -->
+        <div class="apply-menu" id="applyMenu">
+            <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
+            <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
+            <div class="apply-option" onclick="processWallpaper(0)"><i class="ph ph-devices"></i> <span data-i18n="both_screens">Home and lock screens</span></div>
+        </div>
+
+        <div class="toast-msg" id="toastMsg">
+            <div style="background-color: #14b8a6; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                <i class="ph-bold ph-image" id="toastIcon" style="color: white; font-size: 16px;"></i>
+            </div>
+            <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
+        </div>
         
-        reader.onloadend = async function() {
-            const base64data = reader.result;
-            if (window.Capacitor && window.Capacitor.Plugins.Filesystem) {
-                const { Filesystem } = window.Capacitor.Plugins;
-                const fileName = 'Rawnaq_' + new Date().getTime() + '.jpg';
-                await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
-            } else {
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
-            }
-        }
-    } catch (error) { showToast('conn_failed'); }
-}
+        <!-- الأزرار السفلية الخاصة بالصورة -->
+        <div class="viewer-actions">
+            <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
+            <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
+            <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
+        </div>
+    </div>
 
-// --- أحداث شاشة البداية والتوجيه للرئيسية ---
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingBar = document.getElementById('loading-bar');
-    const splash = document.getElementById('splash-screen');
+    <!-- الواجهة الرئيسية -->
+    <div class="header-container">
+        <div class="top-bar-box">
+            <i class="ph ph-list" onclick="toggleMenu()"></i>
+            <div class="title" data-i18n="app_title">MyWalls</div>
+            <i class="ph ph-magnifying-glass" onclick="toggleSearch()"></i>
+        </div>
+    </div>
     
-    if(loadingBar) {
-        setTimeout(() => { loadingBar.style.width = '100%'; }, 100);
-    }
-    
-    setTimeout(() => {
-        if(splash) {
-            splash.style.opacity = '0';
-            setTimeout(() => {
-                splash.remove();
-                const homeTab = document.querySelector('.nav-item-center');
-                switchTab('home', homeTab);
-            }, 500);
-        }
-    }, 2500);
-    
-    checkAutoWallpaperOnLoad();
-});
+    <div id="mainContainer" class="grid"></div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i></div>
+        <div class="nav-item" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i></div>
+        <div class="nav-item-center-wrapper">
+            <div class="nav-item-center active" onclick="switchTab('home', this)"><i class="ph-fill ph-house"></i></div>
+        </div>
+        <div class="nav-item" onclick="switchTab('community', this)"><i class="ph ph-users"></i></div>
+        <div class="nav-item" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 2px solid var(--text-muted); padding: 1px 5px; border-radius: 6px;">4K</span></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
