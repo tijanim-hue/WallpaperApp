@@ -27,9 +27,9 @@ const translations = {
 
 let currentLang = localStorage.getItem('appLang') || 'en';
 let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true'; // تعريف واحد فقط هنا
 let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
 
-// تصنيفات عالمية قوية مع صور خلفيات عالية الجودة من Pixabay
 const categoriesData = [
     { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'img/nature.jpg' },
     { id: 'cat_abstract', query: 'abstract background texture', bg: 'img/abstract.jpg' },
@@ -40,6 +40,7 @@ const categoriesData = [
     { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
     { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
 ];
+
 function changeLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('appLang', lang);
@@ -55,7 +56,6 @@ function changeLanguage(lang) {
 }
 
 function toggleTheme() { isDarkMode = !isDarkMode; localStorage.setItem('isDarkMode', isDarkMode); applyTheme(); }
-
 function applyTheme() {
     const themeIcon = document.getElementById('themeIcon');
     const themeText = document.getElementById('themeText');
@@ -70,6 +70,20 @@ function applyTheme() {
         themeText.innerText = translations[currentLang][themeText.getAttribute('data-i18n')];
     }
 }
+
+function toggleGlassTheme() {
+    isGlassTheme = !isGlassTheme;
+    localStorage.setItem('isGlassTheme', isGlassTheme);
+    applyGlassTheme();
+}
+function applyGlassTheme() {
+    if (isGlassTheme) document.body.classList.add('glass-theme');
+    else document.body.classList.remove('glass-theme');
+}
+
+// تطبيق الثيمات عند البداية
+applyTheme();
+applyGlassTheme();
 
 function toggleSearch() {
     const searchOverlay = document.getElementById('searchOverlay');
@@ -188,34 +202,6 @@ async function shareApp() {
         }
     } catch (err) { console.log('Share canceled', err); }
 }
-function checkAutoWallpaperOnLoad() {
-    const minutes = localStorage.getItem('autoWallpaper');
-    if (!minutes || minutes === 'off') return;
-    
-    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
-    const now = Date.now();
-    const ms = parseInt(minutes) * 60 * 1000;
-    
-    if (!lastChange || now - parseInt(lastChange) > ms) {
-        changeWallpaperAuto();
-        localStorage.setItem('lastAutoWallpaperTime', now.toString());
-    }
-    setAutoWallpaper(minutes); // إعادة تفعيل العداد أثناء فتح التطبيق
-}
-let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true';
-
-function toggleGlassTheme() {
-    isGlassTheme = !isGlassTheme;
-    localStorage.setItem('isGlassTheme', isGlassTheme);
-    applyGlassTheme();
-}
-
-function applyGlassTheme() {
-    if (isGlassTheme) document.body.classList.add('glass-theme');
-    else document.body.classList.remove('glass-theme');
-}
-// تشغيلها عند فتح التطبيق
-applyGlassTheme();
 
 function openAbout() { toggleMenu(); document.getElementById('aboutModal').classList.add('show'); }
 function closeAbout() { document.getElementById('aboutModal').classList.remove('show'); }
@@ -274,6 +260,21 @@ async function changeWallpaperAuto() {
     }
 }
 
+function checkAutoWallpaperOnLoad() {
+    const minutes = localStorage.getItem('autoWallpaper');
+    if (!minutes || minutes === 'off') return;
+    
+    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
+    const now = Date.now();
+    const ms = parseInt(minutes) * 60 * 1000;
+    
+    if (!lastChange || now - parseInt(lastChange) > ms) {
+        changeWallpaperAuto();
+        localStorage.setItem('lastAutoWallpaperTime', now.toString());
+    }
+    setAutoWallpaper(minutes); 
+}
+
 async function fetchWallpapers(query = 'nature') {
     const loadingText = translations[currentLang].loading;
     mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 20px;">${loadingText}</p>`;
@@ -303,8 +304,6 @@ function displayCategories() {
         const catCard = document.createElement('div');
         catCard.className = 'category-card';
         
-        // إصلاح طريقة تعيين صورة الخلفية
-        // تأكد من أن الروابط تعمل بشكل صحيح ولا يتم حظرها بواسطة سياسات الأمان (CORS) أو قيود الشبكة
         catCard.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.8), transparent), url("${cat.bg}")`;
         catCard.style.backgroundSize = 'cover';
         catCard.style.backgroundPosition = 'center';
@@ -353,110 +352,18 @@ function openImageViewer(imgUrl) {
 function closeImageViewer() {
     imageViewer.classList.remove('show'); imageViewer.classList.remove('fullscreen');
     applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); toastMsg.classList.remove('show');
+    // إخفاء المخطوطة عند الخروج
+    document.getElementById('quoteOverlay').style.display = 'none';
+    document.getElementById('quoteMenu').classList.remove('show');
 }
-function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); }
-function toggleApplyMenu() { applyMenu.classList.toggle('show'); document.getElementById('optionsMenu').classList.remove('show'); }
+
+function toggleFullscreen() { imageViewer.classList.toggle('fullscreen'); applyMenu.classList.remove('show'); document.getElementById('optionsMenu').classList.remove('show'); document.getElementById('quoteMenu').classList.remove('show'); }
+function toggleApplyMenu() { applyMenu.classList.toggle('show'); document.getElementById('optionsMenu').classList.remove('show'); document.getElementById('quoteMenu').classList.remove('show'); }
 
 function showToast(messageKey) {
     const text = document.getElementById('toastText');
     text.innerText = translations[currentLang][messageKey] || messageKey;
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
-}
-
-async function processWallpaper(mode) {
-    applyMenu.classList.remove('show');
-    showToast('loading'); // إظهار رسالة التحميل أولاً
-    
-    try {
-        // استدعاء دالة الدمج (إذا كانت هناك مخطوطة سيتم دمجها، وإلا ستعيد الصورة الأصلية)
-        const finalImageSrc = await getFinalImageData();
-        
-        const response = await fetch(finalImageSrc);
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-
-        reader.onloadend = function() {
-            const base64data = reader.result.split(',')[1];
-            if (window.plugins && window.plugins.wallpaper) {
-                const wp = window.plugins.wallpaper;
-                
-                let success = () => showToast('wallpaper_success');
-                let error = () => showToast('conn_failed');
-
-                if (mode === 2) { 
-                    // Lock Screen
-                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
-                } else if (mode === 1) { 
-                    // Home Screen
-                    if(wp.setImageBase64) wp.setImageBase64(base64data, 1, success, error);
-                } else { 
-                    // Both
-                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, success, error);
-                    else {
-                        wp.setImageBase64(base64data, 1, () => {
-                            if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
-                        }, error);
-                    }
-                }
-            }
-        }
-    } catch (e) { showToast('conn_failed'); }
-}
-
-async function saveWallpaper() {
-    try {
-        const response = await fetch(viewerImage.src);
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        
-        reader.onloadend = async function() {
-            const base64data = reader.result;
-            if (window.Capacitor && window.Capacitor.Plugins.Filesystem) {
-                const { Filesystem } = window.Capacitor.Plugins;
-                const fileName = 'MyWalls_' + new Date().getTime() + '.jpg';
-                await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
-            } else {
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
-            }
-        }
-    } catch (error) { showToast('conn_failed'); }
-}
-
-// تشغيل شريط التحميل وإخفاء شاشة البداية
-/* ================= الأكواد الجديدة ================= */
-
-// --- المظهر الزجاجي ---
-let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true';
-function toggleGlassTheme() {
-    isGlassTheme = !isGlassTheme;
-    localStorage.setItem('isGlassTheme', isGlassTheme);
-    applyGlassTheme();
-}
-function applyGlassTheme() {
-    if (isGlassTheme) document.body.classList.add('glass-theme');
-    else document.body.classList.remove('glass-theme');
-}
-applyGlassTheme();
-
-// --- التحقق من التغيير التلقائي للخلفية ---
-function checkAutoWallpaperOnLoad() {
-    const minutes = localStorage.getItem('autoWallpaper');
-    if (!minutes || minutes === 'off') return;
-    
-    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
-    const now = Date.now();
-    const ms = parseInt(minutes) * 60 * 1000;
-    
-    if (!lastChange || now - parseInt(lastChange) > ms) {
-        changeWallpaperAuto();
-        localStorage.setItem('lastAutoWallpaperTime', now.toString());
-    }
-    setAutoWallpaper(minutes); 
 }
 
 // --- نظام المخطوطات والدمج ---
@@ -531,6 +438,68 @@ async function getFinalImageData() {
     return canvas.toDataURL('image/jpeg', 0.9);
 }
 
+// دالة التعيين النهائية الداعمة للدمج والشاشات
+async function processWallpaper(mode) {
+    applyMenu.classList.remove('show');
+    showToast('loading'); 
+    
+    try {
+        const finalImageSrc = await getFinalImageData();
+        const response = await fetch(finalImageSrc);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+
+        reader.onloadend = function() {
+            const base64data = reader.result.split(',')[1];
+            if (window.plugins && window.plugins.wallpaper) {
+                const wp = window.plugins.wallpaper;
+                
+                let success = () => showToast('wallpaper_success');
+                let error = () => showToast('conn_failed');
+
+                if (mode === 2) { 
+                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
+                } else if (mode === 1) { 
+                    if(wp.setImageBase64) wp.setImageBase64(base64data, 1, success, error);
+                } else { 
+                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, success, error);
+                    else {
+                        wp.setImageBase64(base64data, 1, () => {
+                            if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
+                        }, error);
+                    }
+                }
+            }
+        }
+    } catch (e) { showToast('conn_failed'); }
+}
+
+async function saveWallpaper() {
+    try {
+        showToast('loading');
+        const finalImageSrc = await getFinalImageData(); // استخدام الدمج في الحفظ أيضاً
+        const response = await fetch(finalImageSrc);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        
+        reader.onloadend = async function() {
+            const base64data = reader.result;
+            if (window.Capacitor && window.Capacitor.Plugins.Filesystem) {
+                const { Filesystem } = window.Capacitor.Plugins;
+                const fileName = 'Rawnaq_' + new Date().getTime() + '.jpg';
+                await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
+                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
+            } else {
+                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
+            }
+        }
+    } catch (error) { showToast('conn_failed'); }
+}
+
 // --- أحداث شاشة البداية والتوجيه للرئيسية ---
 document.addEventListener('DOMContentLoaded', () => {
     const loadingBar = document.getElementById('loading-bar');
@@ -545,7 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
             splash.style.opacity = '0';
             setTimeout(() => {
                 splash.remove();
-                // فتح الصفحة الرئيسية تلقائياً 
                 const homeTab = document.querySelector('.nav-item-center');
                 switchTab('home', homeTab);
             }, 500);
