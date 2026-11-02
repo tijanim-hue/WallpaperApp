@@ -6,16 +6,6 @@
     <title>Rawnaq</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        body.glass-theme .top-bar-box, 
-body.glass-theme .sidebar, 
-body.glass-theme .bottom-nav, 
-body.glass-theme .apply-menu {
-    background-color: rgba(30, 34, 53, 0.4) !important;
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
         :root {
             --bg-color: #1e2235;
             --surface-color: #2a2f45;
@@ -34,6 +24,18 @@ body.glass-theme .apply-menu {
             --text-muted: #9e9e9e;
             --border-color: rgba(255, 255, 255, 0.08);
             --sidebar-bg: #181818;
+        }
+
+        /* المظهر الزجاجي */
+        body.glass-theme .top-bar-box, 
+        body.glass-theme .sidebar, 
+        body.glass-theme .bottom-nav, 
+        body.glass-theme .apply-menu,
+        body.glass-theme .options-menu {
+            background-color: rgba(30, 34, 53, 0.4) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
@@ -156,7 +158,7 @@ body.glass-theme .apply-menu {
         
         .viewer-actions {
             display: flex; justify-content: space-around; padding: 20px;
-            background: linear-gradient(to top, var(--bg-color) 80%, transparent); position: absolute; bottom: 0; width: 100%;
+            background: linear-gradient(to top, var(--bg-color) 80%, transparent); position: absolute; bottom: 0; width: 100%; z-index: 15;
         }
         
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
@@ -201,23 +203,23 @@ body.glass-theme .apply-menu {
     </style>
 </head>
 <body>
-<!-- شاشة البداية وتحميل البيانات -->
-<div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color, #1e2235); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;">
-    <div style="text-align: center;">
-        <img src="img/icon.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 20px;">
-        <h2 style="color: var(--text-color, #fff); font-family: sans-serif; font-size: 24px; margin-bottom: 40px;">Rawnaq</h2>
-    </div>
-    <div style="position: absolute; bottom: 50px; width: 80%; text-align: center;">
-        <p style="color: #a0a4b8; font-size: 14px; margin-bottom: 10px;">Please wait..</p>
-        <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-            <div id="loading-bar" style="width: 0%; height: 100%; background: #26d0ce; transition: width 2s ease-in-out;"></div>
+    <!-- شاشة البداية وتحميل البيانات -->
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color, #1e2235); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;">
+        <div style="text-align: center;">
+            <img src="img/icon.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 20px;">
+            <h2 style="color: var(--text-color, #fff); font-family: sans-serif; font-size: 24px; margin-bottom: 40px;">Rawnaq</h2>
+        </div>
+        <div style="position: absolute; bottom: 50px; width: 80%; text-align: center;">
+            <p style="color: #a0a4b8; font-size: 14px; margin-bottom: 10px;">Please wait..</p>
+            <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                <div id="loading-bar" style="width: 0%; height: 100%; background: #26d0ce; transition: width 2s ease-in-out;"></div>
+            </div>
         </div>
     </div>
-</div>
-
 
     <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
+    <!-- نافذة البحث -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-bar-modern">
             <i class="ph ph-magnifying-glass"></i>
@@ -241,7 +243,6 @@ body.glass-theme .apply-menu {
         <div class="menu-items-container">
             <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
             <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="blur">Glass Theme</span></div>
-
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             
             <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
@@ -333,21 +334,20 @@ body.glass-theme .apply-menu {
             </div>
             <i class="ph ph-x" onclick="closeImageViewer()"></i>
         </div>
+
         <div class="viewer-image-container" id="viewerImageContainer"> 
-    <img id="viewerImage" src="" alt="Full Wallpaper"> 
-    <!-- المخطوطة القابلة للسحب -->
-    <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none;">
-</div>
+            <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
+            <!-- المخطوطة القابلة للسحب -->
+            <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none;">
+        </div>
 
-<!-- قائمة اختيار المخطوطات (تظهر عند الضغط على زر Quote) -->
-<div class="apply-menu" id="quoteMenu" style="bottom: 110px; max-height: 250px; overflow-y: auto;">
-    <div class="apply-option" onclick="addQuote('img/quran1.png')">قرآن 1</div>
-    <div class="apply-option" onclick="addQuote('img/wisdom1.png')">حكمة 1</div>
-    <!-- يمكنك إضافة الصور المحلية للمخطوطات هنا -->
-</div>
-
- <div class="action-btn" onclick="document.getElementById('quoteMenu').classList.toggle('show'); applyMenu.classList.remove('show');"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
+        <!-- قائمة اختيار المخطوطات (تظهر عند الضغط على زر Quote) -->
+        <div class="apply-menu" id="quoteMenu" style="bottom: 110px; max-height: 250px; overflow-y: auto;">
+            <div class="apply-option" onclick="addQuote('img/quran1.png')">قرآن 1</div>
+            <div class="apply-option" onclick="addQuote('img/wisdom1.png')">حكمة 1</div>
+        </div>
        
+        <!-- قائمة التعيين -->
         <div class="apply-menu" id="applyMenu">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
             <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
@@ -361,10 +361,15 @@ body.glass-theme .apply-menu {
             <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
         </div>
         
+        <!-- الأزرار السفلية الخاصة بالصورة -->
         <div class="viewer-actions">
             <div class="action-btn" onclick="toggleApplyMenu()"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
             <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
-            <div class="action-btn"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
+            
+            <div class="action-btn" onclick="document.getElementById('quoteMenu').classList.toggle('show'); document.getElementById('applyMenu').classList.remove('show');">
+                <div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span>
+            </div>
+            
             <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
         </div>
