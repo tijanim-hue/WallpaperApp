@@ -26,7 +26,6 @@
             --sidebar-bg: #181818;
         }
 
-        /* المظهر الزجاجي */
         body.glass-theme .top-bar-box, 
         body.glass-theme .sidebar, 
         body.glass-theme .bottom-nav, 
@@ -45,6 +44,9 @@
             padding-bottom: 90px; 
         }
 
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .header-container { padding: 15px 20px; }
         .top-bar-box {
             display: flex; justify-content: space-between; align-items: center;
@@ -60,7 +62,6 @@
             z-index: 2500; display: none; flex-direction: column; padding: 20px;
         }
         .search-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .search-bar-modern {
             display: flex; align-items: center; background: rgba(255,255,255,0.15);
@@ -177,6 +178,9 @@
         .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); }
         .apply-option:last-child { border-bottom: none; }
         .apply-option:hover { background-color: var(--surface-light); }
+
+        .apply-action-btn { background-color: #10b981; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
 
         .toast-msg {
             position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
@@ -337,14 +341,34 @@
 
         <div class="viewer-image-container" id="viewerImageContainer"> 
             <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
-            <!-- المخطوطة القابلة للسحب -->
-            <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none;">
+            <!-- المخطوطة القابلة للسحب والتكبير -->
+            <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.5);">
         </div>
 
-        <!-- قائمة اختيار المخطوطات (تظهر عند الضغط على زر Quote) -->
-        <div class="apply-menu" id="quoteMenu" style="bottom: 110px; max-height: 250px; overflow-y: auto;">
-            <div class="apply-option" onclick="addQuote('img/quran1.png')">قرآن 1</div>
-            <div class="apply-option" onclick="addQuote('img/wisdom1.png')">حكمة 1</div>
+        <!-- قائمة اختيار وتطبيق المخطوطات -->
+        <div class="apply-menu" id="quoteMenu" style="bottom: 110px;">
+            <div style="padding: 15px; color: white;">
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;">
+                    <button class="quote-btn" onclick="addQuote('img/quran1.png')">قرآن 1</button>
+                    <button class="quote-btn" onclick="addQuote('img/wisdom1.png')">حكمة 1</button>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-size: 14px;">تكبير / تصغير المخطوطة</label>
+                    <input type="range" id="quoteScaleSlider" min="50" max="300" value="100" style="width:100%;" oninput="updateQuoteScale()">
+                </div>
+                <button class="apply-action-btn" onclick="burnImageQuote()">تطبيق الاقتباس</button>
+            </div>
+        </div>
+
+        <!-- قائمة تطبيق الضباب (Blur) -->
+        <div class="apply-menu" id="blurMenu" style="bottom: 110px;">
+            <div style="padding: 15px; color: white;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-size: 14px;">نسبة الضباب (0 - 100)</label>
+                    <input type="range" id="blurSlider" min="0" max="100" value="0" style="width:100%;" oninput="previewBlur()">
+                </div>
+                <button class="apply-action-btn" onclick="applyBlur()">تطبيق التأثير</button>
+            </div>
         </div>
        
         <!-- قائمة التعيين -->
@@ -355,23 +379,19 @@
         </div>
 
         <div class="toast-msg" id="toastMsg">
-            <div style="background-color: #14b8a6; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                <i class="ph-bold ph-image" style="color: white; font-size: 14px;"></i>
+            <div style="background-color: #14b8a6; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                <i class="ph-bold ph-image" id="toastIcon" style="color: white; font-size: 16px;"></i>
             </div>
             <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
         </div>
         
         <!-- الأزرار السفلية الخاصة بالصورة -->
         <div class="viewer-actions">
-            <div class="action-btn" onclick="toggleApplyMenu()"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
             <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
-            
-            <div class="action-btn" onclick="document.getElementById('quoteMenu').classList.toggle('show'); document.getElementById('applyMenu').classList.remove('show');">
-                <div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span>
-            </div>
-            
+            <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
             <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
-            <div class="action-btn"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
         </div>
     </div>
 
