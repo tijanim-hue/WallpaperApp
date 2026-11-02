@@ -172,18 +172,50 @@ function displayFavorites() {
 
 async function shareApp() {
     toggleMenu();
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: translations[currentLang].app_title,
-                text: translations[currentLang].share_text,
-                url: 'https://mahammedtijani.com' 
-            });
-        } catch (err) {}
-    } else {
-        showToast('conn_failed');
-    }
+    try {
+        const shareData = {
+            title: translations[currentLang].app_title,
+            text: translations[currentLang].share_text,
+            url: 'https://play.google.com/store/apps/details?id=com.tijanim.arabicwalls'
+        };
+
+        if (window.Capacitor && window.Capacitor.Plugins.Share) {
+            await window.Capacitor.Plugins.Share.share(shareData);
+        } else if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            showToast('conn_failed');
+        }
+    } catch (err) { console.log('Share canceled', err); }
 }
+function checkAutoWallpaperOnLoad() {
+    const minutes = localStorage.getItem('autoWallpaper');
+    if (!minutes || minutes === 'off') return;
+    
+    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
+    const now = Date.now();
+    const ms = parseInt(minutes) * 60 * 1000;
+    
+    if (!lastChange || now - parseInt(lastChange) > ms) {
+        changeWallpaperAuto();
+        localStorage.setItem('lastAutoWallpaperTime', now.toString());
+    }
+    setAutoWallpaper(minutes); // إعادة تفعيل العداد أثناء فتح التطبيق
+}
+let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true';
+
+function toggleGlassTheme() {
+    isGlassTheme = !isGlassTheme;
+    localStorage.setItem('isGlassTheme', isGlassTheme);
+    applyGlassTheme();
+}
+
+function applyGlassTheme() {
+    if (isGlassTheme) document.body.classList.add('glass-theme');
+    else document.body.classList.remove('glass-theme');
+}
+// تشغيلها عند فتح التطبيق
+applyGlassTheme();
 
 function openAbout() { toggleMenu(); document.getElementById('aboutModal').classList.add('show'); }
 function closeAbout() { document.getElementById('aboutModal').classList.remove('show'); }
@@ -333,9 +365,13 @@ function showToast(messageKey) {
 
 async function processWallpaper(mode) {
     applyMenu.classList.remove('show');
-    showToast('wallpaper_success'); 
+    showToast('loading'); // إظهار رسالة التحميل أولاً
+    
     try {
-        const response = await fetch(viewerImage.src);
+        // استدعاء دالة الدمج (إذا كانت هناك مخطوطة سيتم دمجها، وإلا ستعيد الصورة الأصلية)
+        const finalImageSrc = await getFinalImageData();
+        
+        const response = await fetch(finalImageSrc);
         const blob = await response.blob();
         const reader = new FileReader();
         reader.readAsDataURL(blob);
@@ -345,14 +381,23 @@ async function processWallpaper(mode) {
             if (window.plugins && window.plugins.wallpaper) {
                 const wp = window.plugins.wallpaper;
                 
+                let success = () => showToast('wallpaper_success');
+                let error = () => showToast('conn_failed');
+
                 if (mode === 2) { 
-                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, ()=>{}, ()=>{});
-                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 2, ()=>{}, ()=>{}); 
+                    // Lock Screen
+                    if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
                 } else if (mode === 1) { 
-                    if(wp.setImageBase64) wp.setImageBase64(base64data, 1, ()=>{}, ()=>{});
+                    // Home Screen
+                    if(wp.setImageBase64) wp.setImageBase64(base64data, 1, success, error);
                 } else { 
-                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, ()=>{}, ()=>{});
-                    else if(wp.setImageBase64) wp.setImageBase64(base64data, 0, ()=>{}, ()=>{});
+                    // Both
+                    if(wp.setBothScreensBase64) wp.setBothScreensBase64(base64data, success, error);
+                    else {
+                        wp.setImageBase64(base64data, 1, () => {
+                            if(wp.setLockScreenBase64) wp.setLockScreenBase64(base64data, success, error);
+                        }, error);
+                    }
                 }
             }
         }
@@ -383,22 +428,129 @@ async function saveWallpaper() {
 }
 
 // تشغيل شريط التحميل وإخفاء شاشة البداية
+/* ================= الأكواد الجديدة ================= */
+
+// --- المظهر الزجاجي ---
+let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true';
+function toggleGlassTheme() {
+    isGlassTheme = !isGlassTheme;
+    localStorage.setItem('isGlassTheme', isGlassTheme);
+    applyGlassTheme();
+}
+function applyGlassTheme() {
+    if (isGlassTheme) document.body.classList.add('glass-theme');
+    else document.body.classList.remove('glass-theme');
+}
+applyGlassTheme();
+
+// --- التحقق من التغيير التلقائي للخلفية ---
+function checkAutoWallpaperOnLoad() {
+    const minutes = localStorage.getItem('autoWallpaper');
+    if (!minutes || minutes === 'off') return;
+    
+    const lastChange = localStorage.getItem('lastAutoWallpaperTime');
+    const now = Date.now();
+    const ms = parseInt(minutes) * 60 * 1000;
+    
+    if (!lastChange || now - parseInt(lastChange) > ms) {
+        changeWallpaperAuto();
+        localStorage.setItem('lastAutoWallpaperTime', now.toString());
+    }
+    setAutoWallpaper(minutes); 
+}
+
+// --- نظام المخطوطات والدمج ---
+const quoteOverlay = document.getElementById('quoteOverlay');
+let isDraggingQuote = false;
+
+function addQuote(src) {
+    quoteOverlay.src = src;
+    quoteOverlay.style.display = 'block';
+    quoteOverlay.style.top = '50%';
+    quoteOverlay.style.left = '50%';
+    quoteOverlay.style.transform = 'translate(-50%, -50%)';
+    document.getElementById('quoteMenu').classList.remove('show');
+}
+
+quoteOverlay.addEventListener('touchstart', () => isDraggingQuote = true);
+document.addEventListener('touchend', () => isDraggingQuote = false);
+document.addEventListener('touchmove', (e) => {
+    if (isDraggingQuote) {
+        const touch = e.touches[0];
+        quoteOverlay.style.left = touch.clientX + 'px';
+        quoteOverlay.style.top = touch.clientY + 'px';
+        quoteOverlay.style.transform = 'translate(-50%, -50%)';
+    }
+});
+
+async function getFinalImageData() {
+    if (quoteOverlay.style.display === 'none') return viewerImage.src; 
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = viewerImage.src;
+    await new Promise(r => img.onload = r);
+    
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    
+    const qImg = new Image();
+    qImg.crossOrigin = "Anonymous";
+    qImg.src = quoteOverlay.src;
+    await new Promise(r => qImg.onload = r);
+    
+    const rect = viewerImage.getBoundingClientRect();
+    const imageRatio = img.width / img.height;
+    const containerRatio = rect.width / rect.height;
+    
+    let renderedWidth = rect.width, renderedHeight = rect.height;
+    let offsetX = 0, offsetY = 0;
+
+    if (imageRatio > containerRatio) {
+        renderedHeight = rect.width / imageRatio;
+        offsetY = (rect.height - renderedHeight) / 2;
+    } else {
+        renderedWidth = rect.height * imageRatio;
+        offsetX = (rect.width - renderedWidth) / 2;
+    }
+
+    const scaleX = img.width / renderedWidth;
+    const scaleY = img.height / renderedHeight;
+    
+    const qRect = quoteOverlay.getBoundingClientRect();
+    const x = (qRect.left - rect.left - offsetX) * scaleX;
+    const y = (qRect.top - rect.top - offsetY) * scaleY;
+    const w = qRect.width * scaleX;
+    const h = qRect.height * scaleY;
+    
+    ctx.drawImage(qImg, x, y, w, h);
+    return canvas.toDataURL('image/jpeg', 0.9);
+}
+
+// --- أحداث شاشة البداية والتوجيه للرئيسية ---
 document.addEventListener('DOMContentLoaded', () => {
     const loadingBar = document.getElementById('loading-bar');
     const splash = document.getElementById('splash-screen');
     
-    // تحريك شريط التحميل فوراً
     if(loadingBar) {
-        setTimeout(() => { 
-            loadingBar.style.width = '100%'; 
-        }, 100);
+        setTimeout(() => { loadingBar.style.width = '100%'; }, 100);
     }
     
-    // إخفاء الشاشة بالكامل بعد ثانيتين ونصف لضمان تحميل التطبيق
     setTimeout(() => {
         if(splash) {
             splash.style.opacity = '0';
-            setTimeout(() => splash.remove(), 500); // حذف العنصر بعد تلاشيه
+            setTimeout(() => {
+                splash.remove();
+                // فتح الصفحة الرئيسية تلقائياً 
+                const homeTab = document.querySelector('.nav-item-center');
+                switchTab('home', homeTab);
+            }, 500);
         }
     }, 2500);
+    
+    checkAutoWallpaperOnLoad();
 });
