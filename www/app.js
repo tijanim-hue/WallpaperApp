@@ -4,37 +4,42 @@ const mainContainer = document.getElementById('mainContainer');
 const translations = {
     en: {
         app_title: "Rawnaq", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
-        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change", off: "Off", mins_15: "15 Mins", hour_1: "1 Hour", hours_24: "24 Hours", developed_by: "Developed by Mohammed Tijani", all_rights: "© 2026 All rights reserved", apply: "Apply", save: "Save", quote: "Quote", blur: "Blur", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
+        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change", off: "Off", mins_15: "15 Mins", hour_1: "1 Hour", hours_24: "24 Hours", developed_by: "Developed by Tijani Mohammed", all_rights: "All rights reserved", apply: "Apply", save: "Save", quote: "Quote", ai_gen: "AI Generator", glass: "Glass", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
         cat_nature: "Nature", cat_abstract: "Abstract", cat_space: "Space", cat_architecture: "Architecture", cat_cars: "Cars", cat_animals: "Animals", cat_minimalist: "Minimalist", cat_neon: "Neon",
         add_fav: "Add to favourites", turn_off_snapping: "Turn off snapping", fav_added: "Added to favorites", fav_removed: "Removed from favorites", fav_empty: "No favorites yet",
         about: "About", terms_of_use: "Terms of use", privacy_policy: "Privacy policy", version: "Version",
         about_desc: "Rawnaq is your ultimate destination for high-quality, stunning wallpapers. Carefully crafted to bring beauty to your screen every single day.",
-        terms_content: "Welcome to Rawnaq! By downloading and using this application, you agree to these terms and conditions. The wallpapers provided are for personal use only. The application requires an internet connection to fetch the latest high-quality images. We reserve the right to update or modify these terms at any time to enhance user experience.",
-        privacy_content: "Your privacy is important to us. Rawnaq does not collect, store, or share your personal data. We only request permission to access your device's storage temporarily to save wallpapers directly to your gallery. All network requests are made securely to fetch image data. If you have any concerns regarding your privacy, please contact the developer."
+        terms_content: "Welcome to Rawnaq! By downloading and using this application, you agree to these terms and conditions.",
+        privacy_content: "Your privacy is important to us. Rawnaq does not collect, store, or share your personal data.",
+        quote_hint: "Pinch to zoom and drag to move.",
+        ai_desc: "Describe the image you imagine and the AI will draw it for you as a unique wallpaper!", ai_prompt_placeholder: "A futuristic city in the desert...", generate: "Generate"
     },
     ar: {
         app_title: "رونق", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
-        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "عن التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير تلقائي", off: "إيقاف", mins_15: "15 دقيقة", hour_1: "ساعة واحدة", hours_24: "24 ساعة", developed_by: "تطوير Mohammed Tijani", all_rights: "© 2026 جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", blur: "ضباب", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
+        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "حول التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير تلقائي", off: "إيقاف", mins_15: "15 دقيقة", hour_1: "ساعة واحدة", hours_24: "24 ساعة", developed_by: "تطوير Tijani Mohammed", all_rights: "جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", ai_gen: "المولد الذكي", glass: "الزجاج", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
         cat_nature: "الطبيعة", cat_abstract: "تجريدي", cat_space: "الفضاء", cat_architecture: "عمارة", cat_cars: "سيارات", cat_animals: "حيوانات", cat_minimalist: "بسيط", cat_neon: "نيون",
         add_fav: "إضافة للمفضلة", turn_off_snapping: "إيقاف الجذب", fav_added: "تمت الإضافة للمفضلة", fav_removed: "تمت الإزالة من المفضلة", fav_empty: "لا توجد مفضلات بعد",
         about: "حول", terms_of_use: "شروط الاستخدام", privacy_policy: "سياسة الخصوصية", version: "الإصدار",
         about_desc: "تطبيق رونق هو وجهتك الأولى للحصول على صور عالية الجودة. تم تصميمه بعناية ليضفي لمسة من الجمال على شاشتك كل يوم.",
-        terms_content: "مرحباً بك في تطبيق رونق! باستخدامك لهذا التطبيق، فإنك توافق على هذه الشروط والأحكام. الخلفيات المقدمة مخصصة للاستخدام الشخصي فقط. يتطلب التطبيق اتصالاً بالإنترنت لجلب أحدث الصور عالية الجودة. نحتفظ بالحق في تحديث أو تعديل هذه الشروط في أي وقت لتحسين تجربة المستخدم.",
-        privacy_content: "خصوصيتك تهمنا. لا يقوم تطبيق رونق بجمع أو تخزين أو مشاركة بياناتك الشخصية. نطلب فقط الإذن للوصول إلى مساحة تخزين جهازك مؤقتًا لحفظ الخلفيات مباشرة في معرض الصور الخاص بك. تتم جميع طلبات الشبكة بشكل آمن لجلب بيانات الصور. إذا كانت لديك أي مخاوف بشأن خصوصيتك، يرجى التواصل مع المطور."
+        terms_content: "مرحباً بك في تطبيق رونق! باستخدامك لهذا التطبيق، فإنك توافق على هذه الشروط والأحكام.",
+        privacy_content: "خصوصيتك تهمنا. لا يقوم تطبيق رونق بجمع أو تخزين أو مشاركة بياناتك الشخصية.",
+        quote_hint: "استخدم إصبعين للتكبير والتصغير وحرّك الاقتباس للمكان المناسب.",
+        ai_desc: "اكتب وصفاً للصورة التي تتخيلها وسيقوم الذكاء الاصطناعي برسمها لك كخلفية فريدة!", ai_prompt_placeholder: "مدينة مستقبلية في الصحراء...", generate: "إنشاء الصورة"
     },
     fr: {
         app_title: "Rawnaq", tab_category: "Catégorie", tab_premium: "Premium", tab_home: "Accueil", tab_community: "Communauté", tab_desktop: "Bureau",
-        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos de l'appli", rate: "Évaluer l'appli", share: "Partager", use_photo: "Utiliser votre photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue", auto_change: "Changement auto", off: "Désactivé", mins_15: "15 Mins", hour_1: "1 Heure", hours_24: "24 Heures", developed_by: "Développé par Mohammed Tijani", all_rights: "© 2026 Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", blur: "Flou", lock_screen: "Écran de verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher des fonds...", cat_label: "Catégorie", wall_label: "Fond d'écran",
+        go_pro: "Passez Pro!", unlock: "Tout débloquer.", favorites: "Favoris", about_app: "À propos", rate: "Évaluer l'appli", share: "Partager", use_photo: "Utiliser photo", new_badge: "Nouveau", settings: "Paramètres", display: "Affichage", app_lang: "Langue", auto_change: "Changement auto", off: "Désactivé", mins_15: "15 Mins", hour_1: "1 Heure", hours_24: "24 Heures", developed_by: "Développé par Tijani Mohammed", all_rights: "Tous droits réservés", apply: "Appliquer", save: "Enregistrer", quote: "Citation", ai_gen: "Générateur IA", glass: "Verre", lock_screen: "Verrouillage", home_screen: "Écran d'accueil", both_screens: "Les deux écrans", wallpaper_success: "Fond d'écran défini avec succès", loading: "Chargement...", no_images: "Aucune image", conn_failed: "Échec de connexion", theme_dark: "Mode sombre", theme_light: "Mode clair", search_placeholder: "Rechercher...", cat_label: "Catégorie", wall_label: "Fond d'écran",
         cat_nature: "Nature", cat_abstract: "Abstrait", cat_space: "Espace", cat_architecture: "Architecture", cat_cars: "Voitures", cat_animals: "Animaux", cat_minimalist: "Minimaliste", cat_neon: "Néon",
-        add_fav: "Ajouter aux favoris", turn_off_snapping: "Désactiver l'accrochage", fav_added: "Ajouté aux favoris", fav_removed: "Retiré des favoris", fav_empty: "Aucun favori pour le moment",
-        about: "À propos", terms_of_use: "Conditions d'utilisation", privacy_policy: "Politique de confidentialité", version: "Version",
-        about_desc: "Rawnaq est votre destination ultime pour des fonds d'écran de haute qualité, conçus pour apporter de la beauté à votre écran.",
-        terms_content: "Bienvenue sur Rawnaq ! En utilisant cette application, vous acceptez ces conditions. Les fonds d'écran sont destinés à un usage personnel uniquement. L'application nécessite une connexion Internet.",
-        privacy_content: "Votre confidentialité est importante. Rawnaq ne collecte pas vos données personnelles. Nous demandons uniquement l'accès au stockage pour enregistrer les fonds d'écran."
+        add_fav: "Ajouter aux favoris", turn_off_snapping: "Désactiver l'accrochage", fav_added: "Ajouté aux favoris", fav_removed: "Retiré des favoris", fav_empty: "Aucun favori",
+        about: "À propos", terms_of_use: "Conditions d'utilisation", privacy_policy: "Confidentialité", version: "Version",
+        about_desc: "Rawnaq est votre destination ultime pour des fonds d'écran de haute qualité.",
+        terms_content: "Bienvenue sur Rawnaq ! En utilisant cette application, vous acceptez ces conditions.",
+        privacy_content: "Votre confidentialité est importante. Rawnaq ne collecte pas vos données.",
+        quote_hint: "Pincez pour zoomer et glissez pour déplacer.",
+        ai_desc: "Décrivez l'image que vous imaginez et l'IA la dessinera pour vous !", ai_prompt_placeholder: "Une ville futuriste dans le désert...", generate: "Générer"
     }
 };
 
-// --- قائمة الحكم العربية الأنيقة والمشهورة ---
 const predefinedQuotes = [
     "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
     "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ",
@@ -45,26 +50,31 @@ const predefinedQuotes = [
     "وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",
     "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
     "مَنْ جَدَّ وَجَدَ، وَمَنْ زَرَعَ حَصَدَ",
-    "كُنْ مَعَ اللَّهِ يَكُنْ مَعَكَ",
-    "تفائل بما تهوى يكن",
-    "يُدَبِّرُ الْأَمْرَ مِنَ السَّمَاءِ إِلَى الْأَرْضِ"
+    "كُنْ مَعَ اللَّهِ يَكُنْ مَعَكَ"
 ];
+
+// --- نظام الألوان العشوائية الإبداعية ---
+const palettes = [
+    { bg: '#0b1310', surface: '#121f1a', light: '#1d332a', accent: '#10b981' }, // Emerald
+    { bg: '#09111a', surface: '#101d2b', light: '#192b3f', accent: '#0ea5e9' }, // Ocean
+    { bg: '#110b17', surface: '#1d1226', light: '#2e1c3d', accent: '#a855f7' }, // Amethyst
+    { bg: '#170a0a', surface: '#261010', light: '#3d1a1a', accent: '#f43f5e' }, // Crimson
+    { bg: '#121212', surface: '#1e1e1e', light: '#2e2e2e', accent: '#fbbf24' }, // Obsidian Gold
+    { bg: '#0f172a', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }  // Slate Blue
+];
+
+function applyRandomTheme() {
+    const p = palettes[Math.floor(Math.random() * palettes.length)];
+    document.documentElement.style.setProperty('--bg-color', p.bg);
+    document.documentElement.style.setProperty('--surface-color', p.surface);
+    document.documentElement.style.setProperty('--surface-light', p.light);
+    document.documentElement.style.setProperty('--accent', p.accent);
+}
 
 let currentLang = localStorage.getItem('appLang') || 'en';
 let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
 let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true'; 
 let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
-
-const categoriesData = [
-    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'img/nature.jpg' },
-    { id: 'cat_abstract', query: 'abstract background texture', bg: 'img/abstract.jpg' },
-    { id: 'cat_space', query: 'space galaxy stars', bg: 'img/space.jpg' },
-    { id: 'cat_architecture', query: 'architecture city building', bg: 'img/architecture.jpg' },
-    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'img/cars.jpg' },
-    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'img/animals.jpg' },
-    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
-    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
-];
 
 function changeLanguage(lang) {
     currentLang = lang;
@@ -78,6 +88,24 @@ function changeLanguage(lang) {
         const key = el.getAttribute('data-i18n-placeholder');
         if (translations[lang] && translations[lang][key]) el.setAttribute('placeholder', translations[lang][key]);
     });
+    const hint = document.getElementById('quoteHint');
+    if(hint) hint.innerText = translations[currentLang].quote_hint;
+    
+    // تغيير خط العنوان حسب اللغة
+    const appTitle = document.getElementById('mainAppTitle');
+    const splashTitle = document.getElementById('splashTitle');
+    const aboutTitleText = document.getElementById('aboutTitleText');
+    if(appTitle && splashTitle && aboutTitleText) {
+        if(lang === 'ar') {
+            appTitle.style.fontFamily = "'Aref Ruqaa', serif"; appTitle.style.fontSize = "26px";
+            splashTitle.style.fontFamily = "'Aref Ruqaa', serif"; splashTitle.style.fontSize = "40px";
+            aboutTitleText.style.fontFamily = "'Aref Ruqaa', serif"; aboutTitleText.style.fontSize = "32px";
+        } else {
+            appTitle.style.fontFamily = "'Cinzel', serif"; appTitle.style.fontSize = "22px";
+            splashTitle.style.fontFamily = "'Cinzel', serif"; splashTitle.style.fontSize = "36px";
+            aboutTitleText.style.fontFamily = "'Cinzel', serif"; aboutTitleText.style.fontSize = "30px";
+        }
+    }
 }
 changeLanguage(currentLang);
 
@@ -109,8 +137,20 @@ function applyGlassTheme() {
     else document.body.classList.remove('glass-theme');
 }
 
+applyRandomTheme();
 applyTheme();
 applyGlassTheme();
+
+const categoriesData = [
+    { id: 'cat_nature', query: 'nature landscape beautiful', bg: 'img/nature.jpg' },
+    { id: 'cat_abstract', query: 'abstract background texture', bg: 'img/abstract.jpg' },
+    { id: 'cat_space', query: 'space galaxy stars', bg: 'img/space.jpg' },
+    { id: 'cat_architecture', query: 'architecture city building', bg: 'img/architecture.jpg' },
+    { id: 'cat_cars', query: 'cars sports car automotive', bg: 'img/cars.jpg' },
+    { id: 'cat_animals', query: 'wildlife animals cute', bg: 'img/animals.jpg' },
+    { id: 'cat_minimalist', query: 'minimalist minimal clean', bg: 'img/minimalist.jpg' },
+    { id: 'cat_neon', query: 'neon cyberpunk lights', bg: 'img/neon.jpg' }
+];
 
 function toggleSearch() {
     const searchOverlay = document.getElementById('searchOverlay');
@@ -124,7 +164,6 @@ let searchTimeout;
 async function handleSearch(query) {
     const resultsContainer = document.getElementById('searchResults');
     if (query.trim().length < 2) { resultsContainer.innerHTML = ''; return; }
-    
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(async () => {
         resultsContainer.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${translations[currentLang].loading}</div>`;
@@ -188,7 +227,7 @@ function toggleFavorite() {
     } else {
         favoritesList.push(url);
         showToast('fav_added');
-        heartIcon.className = 'ph-fill ph-heart'; heartIcon.style.color = '#ef4444';
+        heartIcon.className = 'ph-fill ph-heart'; heartIcon.style.color = 'var(--accent)';
     }
     localStorage.setItem('myFavorites', JSON.stringify(favoritesList));
     toggleOptionsMenu();
@@ -211,30 +250,53 @@ function displayFavorites() {
     });
 }
 
+// --- نظام مشاركة التطبيق الاحترافي ---
 async function shareApp() {
     toggleMenu();
     try {
         const shareData = {
             title: translations[currentLang].app_title,
-            text: "اكتشف أفضل تطبيق للخلفيات العربية الأصيلة!",
+            text: currentLang === 'ar' ? "اكتشف أفضل تطبيق للخلفيات العربية الأصيلة!" : "Check out this amazing wallpaper app!",
             url: 'https://play.google.com/store/apps/details?id=com.tijanim.arabicwalls'
         };
-
-        if (window.Capacitor && window.Capacitor.Plugins.Share) {
-            await window.Capacitor.Plugins.Share.share(shareData);
-        } else if (navigator.share) {
+        if (navigator.share) {
             await navigator.share(shareData);
+        } else if (window.Capacitor && window.Capacitor.Plugins.Share) {
+            await window.Capacitor.Plugins.Share.share(shareData);
         } else {
             showToast('conn_failed');
         }
-    } catch (err) { console.log('Share canceled', err); }
+    } catch (err) {}
 }
 
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
 function openSettings() { toggleMenu(); document.getElementById('settingsModal').classList.add('show'); }
-function closeSettings() { document.getElementById('settingsModal').classList.remove('show'); }
-function openModal(modalId) { document.getElementById(modalId).classList.add('show'); }
 function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
+function openModal(modalId) { 
+    if(modalId === 'aiModal') {
+        toggleViewerMenu('');
+        closeImageViewer();
+    }
+    document.getElementById(modalId).classList.add('show'); 
+}
+
+// --- نظام توليد الصور بالذكاء الاصطناعي ---
+async function generateAiImage() {
+    const prompt = document.getElementById('aiPromptInput').value.trim();
+    if(!prompt) return;
+    
+    closeModal('aiModal');
+    showToast('loading');
+    
+    const encoded = encodeURIComponent(prompt + ", highly detailed, masterpiece, 4k resolution");
+    const seed = Math.floor(Math.random() * 1000000);
+    const url = `https://image.pollinations.ai/prompt/${encoded}?width=1080&height=1920&nologo=true&seed=${seed}`;
+    
+    const img = new Image();
+    img.src = url;
+    img.onload = () => { openImageViewer(url); };
+    img.onerror = () => { showToast('conn_failed'); };
+}
 
 let autoChangeInterval = null;
 function setAutoWallpaper(minutes) {
@@ -277,7 +339,6 @@ async function changeWallpaperAuto() {
 function checkAutoWallpaperOnLoad() {
     const minutes = localStorage.getItem('autoWallpaper');
     if (!minutes || minutes === 'off') return;
-    
     const lastChange = localStorage.getItem('lastAutoWallpaperTime');
     const now = Date.now();
     const ms = parseInt(minutes) * 60 * 1000;
@@ -348,8 +409,11 @@ const applyMenu = document.getElementById('applyMenu');
 const toastMsg = document.getElementById('toastMsg');
 
 function openImageViewer(imgUrl) {
-    viewerImage.src = imgUrl; imageViewer.classList.add('show');
-    viewerImage.style.filter = 'none'; document.getElementById('blurSlider').value = 0;
+    viewerImage.src = imgUrl; 
+    imageViewer.classList.add('show');
+    imageViewer.classList.remove('fullscreen'); 
+    viewerImage.style.filter = 'none'; 
+    document.getElementById('blurSlider').value = 0;
     
     const heartIcon = document.getElementById('favHeartIcon');
     if (favoritesList.indexOf(imgUrl) > -1) {
@@ -357,14 +421,11 @@ function openImageViewer(imgUrl) {
     } else {
         heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'var(--text-color)';
     }
-    document.getElementById('saveIcon').innerHTML = '<i class="ph ph-download-simple"></i>';
-    document.getElementById('saveText').innerText = translations[currentLang].save;
-    document.getElementById('saveIcon').style.color = "var(--text-color)";
 }
 
 function closeImageViewer() {
-    imageViewer.classList.remove('show'); imageViewer.classList.remove('fullscreen');
-    document.getElementById('optionsMenu').classList.remove('show');
+    imageViewer.classList.remove('show'); 
+    imageViewer.classList.remove('fullscreen');
     toastMsg.classList.remove('show');
     toggleViewerMenu(''); 
     document.getElementById('quoteOverlay').style.display = 'none';
@@ -390,7 +451,7 @@ function showToast(messageKey) {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- نظام دمج النصوص (اقتباسات/حكم) باللمس والتكبير والتصغير (Pinch-to-zoom) ---
+// --- نظام دمج النصوص (Pinch-to-zoom) الاحترافي باللمس ---
 const quoteOverlay = document.getElementById('quoteOverlay');
 let isDraggingQuote = false;
 let currentScale = 1;
@@ -450,7 +511,7 @@ document.addEventListener('touchmove', (e) => {
             e.touches[0].clientY - e.touches[1].clientY
         );
         currentScale = initialScale * (currentDistance / initialPinchDistance);
-        currentScale = Math.max(0.4, Math.min(currentScale, 3.5)); // حدود التكبير والتصغير
+        currentScale = Math.max(0.5, Math.min(currentScale, 4.0));
         quoteOverlay.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
     }
 });
@@ -460,7 +521,6 @@ async function getFinalImageData() {
     
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = viewerImage.src;
@@ -487,19 +547,17 @@ async function getFinalImageData() {
 
     const scaleX = img.width / renderedWidth;
     const scaleY = img.height / renderedHeight;
-    
     const qRect = quoteOverlay.getBoundingClientRect();
     
-    // رسم النص على الكانفاس بنفس أبعاد الصورة الأصلية
     const centerX = (qRect.left + qRect.width/2 - rect.left - offsetX) * scaleX;
     const centerY = (qRect.top + qRect.height/2 - rect.top - offsetY) * scaleY;
     
-    ctx.font = `bold ${28 * currentScale * scaleY}px 'Tajawal', sans-serif`;
+    ctx.font = `bold ${32 * currentScale * scaleY}px 'Aref Ruqaa', sans-serif`;
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.9)";
-    ctx.shadowBlur = 12 * scaleY;
+    ctx.shadowBlur = 15 * scaleY;
     
     ctx.fillText(quoteOverlay.innerText, centerX, centerY);
     return canvas.toDataURL('image/jpeg', 0.95);
@@ -508,7 +566,6 @@ async function getFinalImageData() {
 async function burnTextQuote() {
     if (quoteOverlay.style.display === 'none') return;
     toggleViewerMenu('');
-    
     const finalImgUrl = await getFinalImageData();
     viewerImage.src = finalImgUrl;
     quoteOverlay.style.display = 'none';
@@ -566,7 +623,7 @@ async function processWallpaper(mode) {
     toast.classList.add('show');
     
     try {
-        const finalImageSrc = await getFinalImageData(); // استخدام الصورة بعد الدمج
+        const finalImageSrc = await getFinalImageData(); 
         const response = await fetch(finalImageSrc);
         const blob = await response.blob();
         const reader = new FileReader();
@@ -632,25 +689,51 @@ async function saveWallpaper() {
                 const { Filesystem } = window.Capacitor.Plugins;
                 const fileName = 'Rawnaq_' + new Date().getTime() + '.jpg';
                 await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: var(--accent);"></i>';
                 showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
             } else {
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: #10b981;"></i>';
+                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: var(--accent);"></i>';
                 showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
             }
         }
     } catch (error) { showToast('conn_failed'); }
 }
 
+// --- نظام زر الرجوع الذكي (Hardware Back Button) ---
+if (window.Capacitor && window.Capacitor.Plugins.App) {
+    window.Capacitor.Plugins.App.addListener('backButton', () => {
+        // إغلاق أي نوافذ منبثقة أو شاشات عرض أولاً
+        const openModals = document.querySelectorAll('.modal-viewer.show, .image-viewer.show, .search-overlay.show');
+        if (openModals.length > 0) {
+            openModals.forEach(m => m.classList.remove('show'));
+            toggleViewerMenu('');
+            return;
+        }
+        
+        // إغلاق القائمة الجانبية إذا كانت مفتوحة
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar && sidebar.classList.contains('open')) {
+            toggleMenu();
+            return;
+        }
+
+        // إذا كنا في قسم غير الرئيسية، نعود للرئيسية
+        const homeTab = document.querySelector('.nav-item-center');
+        if (homeTab && !homeTab.classList.contains('active')) {
+            switchTab('home', homeTab);
+            return;
+        }
+
+        // إذا كنا في الرئيسية ولا توجد نوافذ مفتوحة، نخرج من التطبيق
+        window.Capacitor.Plugins.App.exitApp();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    renderQuotesList(); // إنشاء أزرار الحكم تلقائياً
+    renderQuotesList(); 
     
     const langSelect = document.getElementById('langSelect');
     if(langSelect) langSelect.value = currentLang;
-
-    const savedAutoWallpaper = localStorage.getItem('autoWallpaper');
-    const autoWallpaperSelect = document.getElementById('autoWallpaper');
-    if(savedAutoWallpaper && autoWallpaperSelect) autoWallpaperSelect.value = savedAutoWallpaper;
 
     const loadingBar = document.getElementById('loading-bar');
     const splash = document.getElementById('splash-screen');
