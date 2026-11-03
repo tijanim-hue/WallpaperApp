@@ -5,46 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rawnaq</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1e2235;
-            --surface-color: #2a2f45;
-            --surface-light: #363c59;
-            --text-color: #ffffff;
-            --text-muted: #a0a4b8;
+            /* ثيم احترافي جديد (رمادي أردوازي داكن مع لمسات زمردية) */
+            --bg-color: #12181b;
+            --surface-color: #1a2227;
+            --surface-light: #242f36;
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
             --border-color: rgba(255, 255, 255, 0.05);
-            --sidebar-bg: #212536;
+            --sidebar-bg: #161c20;
+            --accent: #10b981;
         }
 
         body.dark-theme {
-            --bg-color: #121212;
-            --surface-color: #1e1e1e;
-            --surface-light: #2c2c2c;
-            --text-color: #f1f1f1;
-            --text-muted: #9e9e9e;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --sidebar-bg: #181818;
+            --bg-color: #0d1113;
+            --surface-color: #151b1e;
+            --surface-light: #1f272c;
+            --text-color: #e5e7eb;
+            --text-muted: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.03);
+            --sidebar-bg: #0f1417;
         }
 
         body.glass-theme .top-bar-box, 
         body.glass-theme .sidebar, 
         body.glass-theme .bottom-nav, 
         body.glass-theme .apply-menu,
-        body.glass-theme .options-menu {
-            background-color: rgba(30, 34, 53, 0.4) !important;
+        body.glass-theme .options-menu,
+        body.glass-theme .settings-card {
+            background-color: rgba(26, 34, 39, 0.5) !important;
             backdrop-filter: blur(15px) !important;
             -webkit-backdrop-filter: blur(15px) !important;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { 
             background-color: var(--bg-color); color: var(--text-color); 
             overflow-x: hidden; transition: background-color 0.3s ease; 
             padding-bottom: 90px; 
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .header-container { padding: 15px 20px; }
@@ -54,18 +57,18 @@
             border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: background-color 0.3s ease;
         }
         .top-bar-box i { cursor: pointer; color: var(--text-color); }
-        .top-bar-box .title { font-weight: bold; font-size: 18px; letter-spacing: 0.5px; }
+        .top-bar-box .title { font-weight: 800; font-size: 18px; letter-spacing: 0.5px; color: var(--accent); }
 
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            background-color: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
             z-index: 2500; display: none; flex-direction: column; padding: 20px;
         }
         .search-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
         
         .search-bar-modern {
-            display: flex; align-items: center; background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 12px 20px;
+            display: flex; align-items: center; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 12px 20px;
             gap: 15px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .search-bar-modern input { flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none; }
@@ -80,7 +83,7 @@
         .search-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
         .search-item-info { display: flex; flex-direction: column; gap: 4px;}
         .search-item-title { font-size: 15px; color: white; font-weight: bold; text-transform: capitalize; }
-        .search-item-type { font-size: 12px; color: #10b981; }
+        .search-item-type { font-size: 12px; color: var(--accent); }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
         .wallpaper-card { border-radius: 12px; overflow: hidden; height: 180px; position: relative; background-color: var(--surface-color); cursor: pointer; }
@@ -108,24 +111,21 @@
         
         .pro-banner {
             background-color: rgba(251, 191, 36, 0.1); margin: 20px; padding: 15px 20px;
-            border-radius: 16px; display: flex; align-items: center; gap: 15px; cursor: pointer;
+            border-radius: 16px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(251, 191, 36, 0.2);
         }
         .pro-icon-box { border: 2px solid #fbbf24; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; }
         .pro-icon-box i { color: #fbbf24; font-size: 22px; }
-        .pro-text h4 { color: var(--text-color); margin: 0; font-size: 16px; font-weight: 600;}
+        .pro-text h4 { color: var(--text-color); margin: 0; font-size: 16px; font-weight: 700;}
         .pro-text p { color: var(--text-muted); font-size: 13px; margin: 4px 0 0 0; }
 
         .menu-items-container { overflow-y: auto; flex-grow: 1; padding: 0 20px; }
         .menu-item { 
-            padding: 18px 0; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); border-bottom: 1px solid var(--border-color);
+            padding: 18px 0; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); border-bottom: 1px solid var(--border-color); font-weight: 500;
         }
         .menu-item:last-child { border-bottom: none; }
         .menu-item i { width: 35px; font-size: 22px; color: var(--text-color); }
-        .new-badge { background-color: #14b8a6; color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; margin-left: auto; font-weight: bold;}
+        .new-badge { background-color: var(--accent); color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; margin-left: auto; font-weight: bold;}
         html[dir="rtl"] .new-badge { margin-left: 0; margin-right: auto; }
-        
-        .sidebar-bottom { padding: 15px 20px; border-top: 1px solid var(--border-color); }
-        .sidebar-bottom .menu-item { border-bottom: none; }
 
         .image-viewer, .modal-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -137,86 +137,119 @@
         .viewer-header {
             display: flex; justify-content: space-between; align-items: center; padding: 20px;
             position: absolute; top: 0; width: 100%; z-index: 10;
-            background: linear-gradient(to bottom, var(--bg-color) 80%, transparent);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
         }
         .header-icons-left { display: flex; gap: 20px; position: relative; }
-        .viewer-header i { font-size: 24px; cursor: pointer; }
+        .viewer-header i { font-size: 24px; cursor: pointer; color: white; }
         
+        /* تصميم الإعدادات الجديد (نظام البطاقات) */
+        .settings-group-title { color: var(--text-muted); font-size: 14px; font-weight: 700; margin: 25px 0 10px 5px; text-transform: uppercase; }
+        html[dir="rtl"] .settings-group-title { margin: 25px 5px 10px 0; }
+        .settings-card { background-color: var(--surface-color); border-radius: 20px; padding: 0 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-color); font-size: 16px; font-weight: 500; cursor: pointer; }
+        .settings-row:last-child { border-bottom: none; }
+        .settings-row select { background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 15px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; text-align: right; }
+        html[dir="ltr"] .settings-row select { text-align: left; }
+        .settings-footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px; line-height: 1.8; }
+        .dev-badge { display: inline-flex; align-items: center; gap: 8px; background-color: var(--surface-color); padding: 8px 16px; border-radius: 20px; margin-top: 15px; font-weight: 500; border: 1px solid var(--border-color); color: var(--text-color); }
+        
+        .modal-text-content { padding: 80px 25px 30px 25px; overflow-y: auto; height: 100%; font-size: 16px; line-height: 1.8; color: var(--text-color); }
+        .modal-text-content h3 { color: var(--accent); margin-bottom: 15px; font-size: 20px; }
+        .modal-text-content p { margin-bottom: 15px; color: var(--text-muted); }
+
         .options-menu {
             position: absolute; top: 40px; left: 0; background-color: var(--surface-color); border-radius: 12px;
             display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden; min-width: 200px;
         }
         .options-menu.show { display: flex; }
-        .options-option {
-            padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-color); cursor: pointer; font-size: 15px; border-bottom: 1px solid var(--border-color);
-        }
+        .options-option { padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-color); cursor: pointer; font-size: 15px; border-bottom: 1px solid var(--border-color); font-weight: 500;}
         .options-option:last-child { border-bottom: none; }
-        .options-option:hover { background-color: var(--surface-light); }
         html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
-        .viewer-image-container { flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 0; position: relative; }
+        .viewer-image-container { flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 0; position: relative; background: #000; }
         .viewer-image-container img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
         
         .viewer-actions {
             display: flex; justify-content: space-around; padding: 20px;
-            background: linear-gradient(to top, var(--bg-color) 80%, transparent); position: absolute; bottom: 0; width: 100%; z-index: 15;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); position: absolute; bottom: 0; width: 100%; z-index: 15;
         }
         
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
         .image-viewer.fullscreen .viewer-actions { opacity: 0; transform: translateY(100%); pointer-events: none; }
         .image-viewer.fullscreen .viewer-image-container img { object-fit: cover; }
 
-        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); }
-        .action-icon { background-color: var(--surface-color); padding: 15px; border-radius: 12px; font-size: 24px; color: var(--text-color); transition: background-color 0.3s ease;}
-        .action-btn span { font-size: 12px; }
+        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: #d1d5db; }
+        .action-icon { background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; font-size: 24px; color: white; transition: background-color 0.3s ease;}
+        .action-btn span { font-size: 13px; font-weight: 500; }
 
         .apply-menu {
-            position: absolute; bottom: 110px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 16px;
-            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden;
+            position: absolute; bottom: 110px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 20px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid var(--border-color);
         }
         .apply-menu.show { display: flex; }
-        .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); }
+        .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); font-weight: 500;}
         .apply-option:last-child { border-bottom: none; }
-        .apply-option:hover { background-color: var(--surface-light); }
 
-        .apply-action-btn { background-color: #10b981; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
+        .apply-action-btn { background-color: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Tajawal', sans-serif;}
+        .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 12px 15px; border-radius: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; border: 1px solid var(--border-color); margin-bottom: 8px; text-align: right;}
+        
+        /* أشرطة التمرير الاحترافية (Slider) */
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent; margin: 15px 0;
+        }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 5px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 24px; width: 24px; border-radius: 50%; background: var(--accent); cursor: pointer; -webkit-appearance: none; margin-top: -9px; box-shadow: 0 0 15px rgba(16,185,129,0.7); border: 2px solid white;
+        }
 
         .toast-msg {
             position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
-            background-color: var(--surface-light); color: var(--text-color); padding: 10px 20px; border-radius: 30px; font-size: 14px; z-index: 3000;
-            display: none; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
+            background-color: var(--accent); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; z-index: 3000;
+            display: none; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); white-space: nowrap; font-weight: 600;
         }
         .toast-msg.show { display: flex; }
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--surface-color);
             display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
-            border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000; transition: background-color 0.3s ease;
+            border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000; transition: background-color 0.3s ease; border-top: 1px solid var(--border-color);
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; font-size: 26px; flex: 1; transition: color 0.3s ease; }
         .nav-item.active { color: var(--text-color); }
         
         .nav-item-center-wrapper { position: relative; flex: 1; display: flex; justify-content: center; height: 40px; }
         .nav-item-center {
-            position: absolute; top: -35px; width: 65px; height: 65px; background-color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 30px; border: 6px solid var(--bg-color); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); cursor: pointer; transition: transform 0.2s, border-color 0.3s ease;
+            position: absolute; top: -35px; width: 65px; height: 65px; background-color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 30px; border: 6px solid var(--bg-color); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); cursor: pointer; transition: transform 0.2s, border-color 0.3s ease;
         }
         .nav-item-center:active { transform: scale(0.95); }
-        select option { background-color: var(--bg-color); color: white; }
+        select option { background-color: var(--surface-color); color: white; }
     </style>
 </head>
 <body>
-    <!-- شاشة البداية وتحميل البيانات -->
-    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color, #1e2235); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;">
-        <div style="text-align: center;">
-            <img src="img/icon.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 20px;">
-            <h2 style="color: var(--text-color, #fff); font-family: sans-serif; font-size: 24px; margin-bottom: 40px;">Rawnaq</h2>
+    <!-- شاشة البداية الإبداعية والاحترافية -->
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b1013; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; overflow: hidden;">
+        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at top right, rgba(16,185,129,0.15), transparent 50%), radial-gradient(circle at bottom left, rgba(14,165,233,0.1), transparent 50%); z-index: 0;"></div>
+        <div style="position:absolute; width: 200vw; height: 200vw; border-radius: 40%; background: rgba(16,185,129,0.03); top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); z-index: 0;"></div>
+        
+        <div style="text-align: center; z-index: 1;">
+            <div style="width: 110px; height: 110px; background: linear-gradient(135deg, #2dd4bf, #10b981); border-radius: 28px; box-shadow: 0 15px 35px rgba(16,185,129,0.4); display: flex; justify-content: center; align-items: center; margin: 0 auto 25px auto;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+            <h2 style="color: white; font-size: 32px; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 5px;">Rawnaq</h2>
+            <p style="color: #9ca3af; font-size: 14px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;">Wallpapers & Art</p>
         </div>
-        <div style="position: absolute; bottom: 50px; width: 80%; text-align: center;">
-            <p style="color: #a0a4b8; font-size: 14px; margin-bottom: 10px;">Please wait..</p>
-            <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                <div id="loading-bar" style="width: 0%; height: 100%; background: #26d0ce; transition: width 2s ease-in-out;"></div>
+        <div style="position: absolute; bottom: 60px; width: 70%; text-align: center; z-index: 1;">
+            <p style="color: #6b7280; font-size: 13px; margin-bottom: 12px; font-weight: 500;">Loading amazing content..</p>
+            <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);">
+                <div id="loading-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px rgba(16,185,129,0.5);"></div>
             </div>
         </div>
     </div>
@@ -249,39 +282,12 @@
             <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="blur">Glass Theme</span></div>
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             
-            <div class="menu-item" onclick="openAbout()"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
+            <div class="menu-item" onclick="openSettings()"><i class="ph ph-gear"></i> <span data-i18n="settings">Settings</span></div>
             <div class="menu-item"><i class="ph ph-star"></i> <span data-i18n="rate">Rate the app</span></div>
             
             <div class="menu-item" onclick="shareApp()"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
-            <div class="menu-item"><i class="ph ph-storefront"></i> <span data-i18n="more_apps">More apps</span></div>
             <div class="menu-item" onclick="document.getElementById('photoInput').click(); toggleMenu();">
                 <i class="ph ph-image-square"></i> <span data-i18n="use_photo">Use your photo</span> <span class="new-badge" data-i18n="new_badge">New</span>
-            </div>
-        </div>
-        
-        <div class="sidebar-bottom">
-            <div class="menu-item" onclick="openSettings()"><i class="ph ph-gear"></i> <span data-i18n="settings">Settings</span></div>
-        </div>
-    </div>
-
-    <!-- نافذة عن التطبيق -->
-    <div class="modal-viewer" id="aboutModal" style="z-index: 3100;">
-        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
-            <div class="title" style="font-size: 22px;" data-i18n="about_app">About the app</div>
-            <i class="ph ph-x" onclick="closeAbout()" style="font-size: 24px; cursor: pointer;"></i>
-        </div>
-        <div style="padding: 100px 30px 30px 30px; text-align: center; overflow-y: auto;">
-            <div style="background-color: var(--surface-color); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <i class="ph-fill ph-images" style="font-size: 60px; color: #10b981; margin-bottom: 20px;"></i>
-                <h2 style="margin-bottom: 15px; color: var(--text-color);" data-i18n="about_title">Welcome to MyWalls</h2>
-                <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;" data-i18n="about_desc">
-                    MyWalls is your ultimate destination for high-quality, stunning wallpapers. 
-                    Carefully crafted to bring beauty to your screen every single day.
-                </p>
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                    <p style="color: #10b981; font-weight: bold; font-size: 14px;" data-i18n="developed_by">Developed by Mahammed Tijani</p>
-                    <p style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Version 1.0.0</p>
-                </div>
             </div>
         </div>
     </div>
@@ -289,39 +295,101 @@
     <!-- الإعدادات -->
     <div class="modal-viewer" id="settingsModal" style="z-index: 3000;">
         <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
-            <div class="title" style="font-size: 22px;" data-i18n="settings">Settings</div>
+            <div class="title" style="font-size: 22px; font-weight: 700;" data-i18n="settings">Settings</div>
             <i class="ph ph-x" onclick="closeSettings()" style="font-size: 24px; cursor: pointer;"></i>
         </div>
         
-        <div style="padding: 80px 20px 20px 20px; overflow-y: auto; height: 100%;">
-            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;" data-i18n="display">Display</div>
-            <div style="background-color: var(--surface-color); border-radius: 16px; padding: 0 15px; margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
+        <div style="padding: 90px 20px 20px 20px; overflow-y: auto; height: 100%;">
+            <div class="settings-group-title" data-i18n="display">Display</div>
+            <div class="settings-card">
+                <div class="settings-row">
                     <span data-i18n="app_lang">App language</span>
-                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px; cursor: pointer;">
+                    <select id="langSelect" onchange="changeLanguage(this.value)">
                         <option value="en">English</option><option value="ar">العربية</option><option value="fr">Français</option>
                     </select>
                 </div>
-                
-                <div style="display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border-color);">
-                    <span data-i18n="auto_change">Auto Change Wallpaper</span>
-                    <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option value="off" data-i18n="off">Off</option><option value="15" data-i18n="mins_15">15 Mins</option><option value="30" data-i18n="mins_30">30 Mins</option>
-                        <option value="60" data-i18n="hour_1">1 Hour</option><option value="180" data-i18n="hours_3">3 Hours</option><option value="720" data-i18n="hours_12">12 Hours</option><option value="1440" data-i18n="hours_24">24 Hours</option>
-                    </select>
-                </div>
-                <div id="autoSourceContainer" style="display: none; justify-content: space-between; padding: 18px 0;">
-                    <span data-i18n="auto_source">Wallpaper Source</span>
-                    <select id="autoSource" onchange="setAutoSource(this.value)" style="background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 14px;">
-                        <option value="random" data-i18n="source_random">Random (Home)</option>
-                        <option value="favorites" data-i18n="source_fav">My Favorites</option>
+                <div class="settings-row" style="border-bottom: none;">
+                    <span data-i18n="auto_change">Auto Change</span>
+                    <select id="autoWallpaper" onchange="setAutoWallpaper(this.value)">
+                        <option value="off" data-i18n="off">Off</option><option value="15" data-i18n="mins_15">15 Mins</option><option value="60" data-i18n="hour_1">1 Hour</option><option value="1440" data-i18n="hours_24">24 Hours</option>
                     </select>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
-                <p style="margin-bottom: 5px;" data-i18n="developed_by">Developed by Mahammed Tijani</p>
-                <p data-i18n="all_rights">© 2026 All rights reserved</p>
+
+            <div class="settings-group-title" data-i18n="about">About</div>
+            <div class="settings-card">
+                <div class="settings-row" onclick="openModal('aboutAppModal')">
+                    <span data-i18n="about_app">About the app</span>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted)"></i>
+                </div>
+                <div class="settings-row" onclick="openModal('termsModal')">
+                    <span data-i18n="terms_of_use">Terms of use</span>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted)"></i>
+                </div>
+                <div class="settings-row" onclick="openModal('privacyModal')">
+                    <span data-i18n="privacy_policy">Privacy policy</span>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted)"></i>
+                </div>
+                <div class="settings-row" style="border-bottom: none;">
+                    <span data-i18n="version">Version</span>
+                    <span style="color: var(--text-muted);">1.0.0</span>
+                </div>
             </div>
+
+            <div class="settings-footer">
+                <p>Developed by Mohammed Tijani<br>© 2026 All rights reserved</p>
+                <div class="dev-badge">
+                    <div style="width:8px; height:8px; background:var(--accent); border-radius:50%;"></div>
+                    mohammedtijani.com
+                    <i class="ph ph-arrow-up-right" style="font-size:16px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة حول التطبيق (الاحترافية) -->
+    <div class="modal-viewer" id="aboutAppModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="about_app">About the app</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('aboutAppModal')" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div class="modal-text-content" style="text-align: center;">
+            <div style="width: 90px; height: 90px; background: linear-gradient(135deg, #2dd4bf, #10b981); border-radius: 22px; box-shadow: 0 10px 30px rgba(16,185,129,0.4); display: flex; justify-content: center; align-items: center; margin: 20px auto;">
+                <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+            <h2 style="color: var(--text-color); font-weight: 800; font-size: 26px; margin-bottom: 5px;">Rawnaq</h2>
+            <p style="color: var(--accent); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Wallpapers & Art</p>
+            
+            <p data-i18n="about_desc" style="color: var(--text-muted); line-height: 1.8; font-size: 15px; padding: 0 10px;">
+                Rawnaq is your ultimate destination for high-quality, stunning wallpapers. Carefully crafted to bring beauty to your screen every single day.
+            </p>
+        </div>
+    </div>
+
+    <!-- نوافذ الشروط والخصوصية -->
+    <div class="modal-viewer" id="termsModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="terms_of_use">Terms of use</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('termsModal')" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div class="modal-text-content">
+            <h3 data-i18n="terms_of_use">Terms of Use</h3>
+            <p data-i18n="terms_content">Welcome to Rawnaq! By downloading and using this application, you agree to these terms and conditions. The wallpapers provided are for personal use only. The application requires an internet connection to fetch the latest high-quality images. We reserve the right to update or modify these terms at any time to enhance user experience.</p>
+        </div>
+    </div>
+
+    <div class="modal-viewer" id="privacyModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="privacy_policy">Privacy policy</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('privacyModal')" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div class="modal-text-content">
+            <h3 data-i18n="privacy_policy">Privacy Policy</h3>
+            <p data-i18n="privacy_content">Your privacy is important to us. Rawnaq does not collect, store, or share your personal data. We only request permission to access your device's storage temporarily to save wallpapers directly to your gallery. All network requests are made securely to fetch image data. If you have any concerns regarding your privacy, please contact the developer.</p>
         </div>
     </div>
 
@@ -341,33 +409,27 @@
 
         <div class="viewer-image-container" id="viewerImageContainer"> 
             <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
-            <!-- المخطوطة القابلة للسحب والتكبير -->
-            <img id="quoteOverlay" src="" style="position: absolute; width: 180px; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.5);">
+            <!-- الحكمة القابلة للسحب والتكبير باللمس (Touch Gestures) -->
+            <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.4); padding: 15px; color: white; text-align: center; text-shadow: 1px 1px 8px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 80%; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 12px; background: rgba(0,0,0,0.1);"></div>
         </div>
 
-        <!-- قائمة اختيار وتطبيق المخطوطات -->
+        <!-- قائمة اختيار الحكم -->
         <div class="apply-menu" id="quoteMenu" style="bottom: 110px;">
             <div style="padding: 15px; color: white;">
-                <div style="display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;">
-                    <button class="quote-btn" onclick="addQuote('img/quran1.png')">قرآن 1</button>
-                    <button class="quote-btn" onclick="addQuote('img/wisdom1.png')">حكمة 1</button>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px; text-align: center;">اختر حكمة (يمكنك تكبيرها وتصغيرها باستخدام إصبعين على الشاشة)</p>
+                <div id="quotesList" style="display: flex; flex-direction: column; max-height: 200px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;">
+                    <!-- سيتم تعبئة الحكم من الجافاسكريبت -->
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block; margin-bottom:5px; font-size: 14px;">تكبير / تصغير المخطوطة</label>
-                    <input type="range" id="quoteScaleSlider" min="50" max="300" value="100" style="width:100%;" oninput="updateQuoteScale()">
-                </div>
-                <button class="apply-action-btn" onclick="burnImageQuote()">تطبيق الاقتباس</button>
+                <button class="apply-action-btn" onclick="burnTextQuote()">تطبيق الاقتباس</button>
             </div>
         </div>
 
-        <!-- قائمة تطبيق الضباب (Blur) -->
+        <!-- قائمة تطبيق الضباب (Blur) الاحترافي -->
         <div class="apply-menu" id="blurMenu" style="bottom: 110px;">
-            <div style="padding: 15px; color: white;">
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block; margin-bottom:5px; font-size: 14px;">نسبة الضباب (0 - 100)</label>
-                    <input type="range" id="blurSlider" min="0" max="100" value="0" style="width:100%;" oninput="previewBlur()">
-                </div>
-                <button class="apply-action-btn" onclick="applyBlur()">تطبيق التأثير</button>
+            <div style="padding: 20px; color: white; text-align: center;">
+                <label style="display:block; margin-bottom:10px; font-size: 15px; font-weight:700;">نسبة الضباب (0 - 100)</label>
+                <input type="range" id="blurSlider" min="0" max="100" value="0" oninput="previewBlur()">
+                <button class="apply-action-btn" onclick="applyBlur()" style="margin-top: 20px;">تطبيق التأثير</button>
             </div>
         </div>
        
@@ -379,7 +441,7 @@
         </div>
 
         <div class="toast-msg" id="toastMsg">
-            <div style="background-color: #14b8a6; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+            <div style="background-color: var(--accent); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
                 <i class="ph-bold ph-image" id="toastIcon" style="color: white; font-size: 16px;"></i>
             </div>
             <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
@@ -390,7 +452,6 @@
             <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
             <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
             <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
-            <div class="action-btn"><div class="action-icon"><i class="ph ph-squares-four"></i></div><span data-i18n="widgets">Widgets</span></div>
             <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="blur">Blur</span></div>
         </div>
     </div>
@@ -399,7 +460,7 @@
     <div class="header-container">
         <div class="top-bar-box">
             <i class="ph ph-list" onclick="toggleMenu()"></i>
-            <div class="title" data-i18n="app_title">MyWalls</div>
+            <div class="title" data-i18n="app_title">Rawnaq</div>
             <i class="ph ph-magnifying-glass" onclick="toggleSearch()"></i>
         </div>
     </div>
