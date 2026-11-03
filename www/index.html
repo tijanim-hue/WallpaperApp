@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cinzel:wght@600;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
             --surface-color: #1e293b;
             --surface-light: #334155;
             --text-color: #f8fafc;
@@ -19,7 +19,28 @@
             --accent: #38bdf8;
         }
 
-        /* تأثير الزجاج الشامل لكل التطبيق */
+        body.dark-theme {
+            --text-color: #e5e7eb;
+            --text-muted: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        
+        body { 
+            background: var(--bg-gradient); color: var(--text-color); 
+            background-attachment: fixed;
+            overflow-x: hidden; transition: background 0.5s ease; 
+            padding-bottom: 90px; 
+            position: relative;
+        }
+
+        /* تأثير الزجاج البلوري الشامل لكل واجهة التطبيق */
+        body.glass-theme::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: inherit; filter: blur(25px) saturate(1.3); z-index: -1; opacity: 0.8;
+        }
+
         body.glass-theme .top-bar-box, 
         body.glass-theme .sidebar, 
         body.glass-theme .bottom-nav, 
@@ -35,13 +56,6 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { 
-            background-color: var(--bg-color); color: var(--text-color); 
-            overflow-x: hidden; transition: background-color 0.5s ease; 
-            padding-bottom: 90px; 
-        }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .header-container { padding: 15px 20px; position: sticky; top: 0; z-index: 100; }
@@ -50,8 +64,10 @@
             background-color: var(--surface-color); border: 1px solid var(--border-color);
             border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: all 0.3s ease;
         }
-        .top-bar-box i { cursor: pointer; color: var(--text-color); }
-        .top-bar-box .title { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); transition: font-family 0.3s; }
+        .top-bar-box i { cursor: pointer; color: #ffffff; }
+        
+        /* جعل الاسم أبيضا دائماً */
+        .top-bar-box .title { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: #ffffff !important; transition: font-family 0.3s, font-size 0.3s; }
 
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -123,7 +139,7 @@
 
         .image-viewer, .modal-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 2000;
+            background-color: var(--bg-color); background: var(--bg-gradient); z-index: 2000;
             display: none; flex-direction: column; overflow: hidden; transition: background-color 0.3s ease;
         }
         .image-viewer.show, .modal-viewer.show { display: flex; }
@@ -159,23 +175,23 @@
         .options-option:last-child { border-bottom: none; }
         html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
-        /* البطاقة الدائرية لعرض الصورة */
         .viewer-image-container { 
             flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; 
-            padding: 80px 20px 140px 20px; position: relative; background: rgba(0,0,0,0.8); transition: padding 0.3s ease;
+            padding: 80px 20px 140px 20px; position: relative; background: rgba(0,0,0,0.85); transition: padding 0.3s ease;
         }
         .viewer-image-container img#viewerImage { 
             width: 100%; height: 100%; object-fit: cover; border-radius: 24px; 
             box-shadow: 0 15px 40px rgba(0,0,0,0.6); transition: all 0.3s ease; 
         }
         
+        /* تعديل مساحة وتناسق شريط حقوق الملكية */
         .copyright-bar {
-            position: absolute; bottom: 105px; left: 25px; right: 25px; display: flex; justify-content: space-between; 
-            color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; z-index: 10; transition: opacity 0.3s ease;
+            position: absolute; bottom: 135px; left: 25px; right: 25px; display: flex; justify-content: space-between; 
+            color: rgba(255,255,255,0.9); font-size: 13.5px; font-weight: 600; z-index: 10; transition: opacity 0.3s ease;
         }
 
         .viewer-actions {
-            display: flex; justify-content: space-around; padding: 20px;
+            display: flex; justify-content: space-around; align-items: flex-end; padding: 20px;
             background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); position: absolute; bottom: 0; width: 100%; z-index: 15;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
@@ -187,11 +203,18 @@
         .image-viewer.fullscreen .viewer-image-container img#viewerImage { border-radius: 0; }
 
         .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: #e5e7eb; }
-        .action-icon { background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; font-size: 24px; color: white; transition: background-color 0.3s ease;}
+        
+        /* تصميم الأزرار وتوسيط الأيقونات تماماً */
+        .action-icon { 
+            display: flex; align-items: center; justify-content: center;
+            width: 52px; height: 52px;
+            background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); 
+            border-radius: 16px; font-size: 24px; color: white; transition: background-color 0.3s ease;
+        }
         .action-btn span { font-size: 13px; font-weight: 600; }
 
         .apply-menu {
-            position: absolute; bottom: 110px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 20px;
+            position: absolute; bottom: 115px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 20px;
             display: none; flex-direction: column; z-index: 2010; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid var(--border-color);
         }
         .apply-menu.show { display: flex; }
@@ -242,7 +265,6 @@
     </style>
 </head>
 <body>
-    <!-- شاشة البداية -->
     <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b1013; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; overflow: hidden;">
         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%), radial-gradient(circle at bottom left, rgba(255,255,255,0.05), transparent 50%); z-index: 0;"></div>
         
@@ -265,7 +287,6 @@
 
     <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-    <!-- نافذة البحث -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-bar-modern">
             <i class="ph ph-magnifying-glass"></i>
@@ -275,7 +296,6 @@
         <div class="search-results" id="searchResults"></div>
     </div>
 
-    <!-- القائمة الجانبية -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="pro-banner">
@@ -291,7 +311,6 @@
             <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="glass">Glass Theme</span></div>
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
             
-            <!-- أرجعنا حول التطبيق للقائمة الجانبية -->
             <div class="menu-item" onclick="openModal('aboutAppModal')"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
             <div class="menu-item" onclick="openSettings()"><i class="ph ph-gear"></i> <span data-i18n="settings">Settings</span></div>
             
@@ -341,7 +360,6 @@
                     <span style="color: var(--text-muted);">1.0.0</span>
                 </div>
             </div>
-
             <div class="settings-footer">
                 <p>Developed by Tijani Mohammed<br>© 2026 All rights reserved</p>
             </div>
@@ -426,18 +444,18 @@
             <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.4); padding: 15px; color: white; text-align: center; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 80%; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 12px; font-family: 'Aref Ruqaa', serif;"></div>
         </div>
 
-        <!-- شريط حقوق الملكية والتصوير -->
+        <!-- شريط حقوق الملكية بتناسق مثالي -->
         <div class="copyright-bar" id="copyrightBar">
-            <div style="display:flex; align-items:center; gap:5px;">
-                <i class="ph-fill ph-seal-check" style="color: var(--accent); font-size: 16px;"></i> Tijani Mohammed
+            <div style="display:flex; align-items:center; gap:5px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                <i class="ph-fill ph-seal-check" style="color: var(--accent); font-size: 18px;"></i> Tijani Mohammed
             </div>
-            <div style="display:flex; align-items:center; gap:5px;">
-                <i class="ph ph-info" style="font-size: 16px;"></i> <span data-i18n="all_rights">All rights reserved</span>
+            <div style="display:flex; align-items:center; gap:5px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                <i class="ph ph-info" style="font-size: 18px;"></i> <span data-i18n="all_rights">All rights reserved</span>
             </div>
         </div>
 
         <!-- قائمة اختيار الحكم -->
-        <div class="apply-menu" id="quoteMenu" style="bottom: 110px;">
+        <div class="apply-menu" id="quoteMenu" style="bottom: 115px;">
             <div style="padding: 15px; color: white;">
                 <p id="quoteHint" style="color: var(--accent); font-size: 13px; margin-bottom: 12px; text-align: center; font-weight: 600;"></p>
                 <div id="quotesList" style="display: flex; flex-direction: column; max-height: 200px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;"></div>
@@ -445,17 +463,17 @@
             </div>
         </div>
 
-        <!-- قائمة تطبيق الضباب (Blur) -->
-        <div class="apply-menu" id="blurMenu" style="bottom: 110px;">
+        <!-- قائمة الزجاج (Blur) -->
+        <div class="apply-menu" id="blurMenu" style="bottom: 115px;">
             <div style="padding: 20px; color: white; text-align: center;">
-                <label style="display:block; margin-bottom:10px; font-size: 15px; font-weight:700;">نسبة الزجاج (0 - 100)</label>
+                <label style="display:block; margin-bottom:10px; font-size: 15px; font-weight:700;" data-i18n="glass">Glass</label>
                 <input type="range" id="blurSlider" min="0" max="100" value="0" oninput="previewBlur()">
                 <button class="apply-action-btn" onclick="applyBlur()" style="margin-top: 20px;" data-i18n="apply">Apply</button>
             </div>
         </div>
        
         <!-- قائمة التعيين -->
-        <div class="apply-menu" id="applyMenu">
+        <div class="apply-menu" id="applyMenu" style="bottom: 115px;">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
             <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
             <div class="apply-option" onclick="processWallpaper(0)"><i class="ph ph-devices"></i> <span data-i18n="both_screens">Home and lock screens</span></div>
@@ -468,14 +486,12 @@
             <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
         </div>
         
-        <!-- الأزرار السفلية (تم إضافة الذكاء الاصطناعي) -->
+        <!-- الأزرار السفلية بأيقونات متوسطة تماماً -->
         <div class="viewer-actions">
             <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
             <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
             <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
-            
-            <div class="action-btn" onclick="openModal('aiModal')"><div class="action-icon"><i class="ph ph-magic-wand"></i></div><span data-i18n="ai_gen">AI Generator</span></div>
-            
+            <div class="action-btn" onclick="openModal('aiModal')"><div class="action-icon"><i class="ph ph-magic-wand"></i></div><span data-i18n="ai_gen">AI</span></div>
             <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="glass">Glass</span></div>
         </div>
     </div>
@@ -498,7 +514,13 @@
             <div class="nav-item-center active" onclick="switchTab('home', this)"><i class="ph-fill ph-house"></i></div>
         </div>
         <div class="nav-item" onclick="switchTab('community', this)"><i class="ph ph-users"></i></div>
-        <div class="nav-item" onclick="switchTab('desktop', this)"><span style="font-size: 14px; font-weight: bold; border: 2px solid var(--text-muted); padding: 1px 5px; border-radius: 6px;">4K</span></div>
+        
+        <!-- زر 4K مع توسيط مثالي للاسم -->
+        <div class="nav-item" onclick="switchTab('desktop', this)" style="display:flex; align-items:center; justify-content:center;">
+            <div style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 2.5px solid currentColor; border-radius: 8px;">
+                <span style="font-size: 13px; font-weight: 800; line-height: 1;">4K</span>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
