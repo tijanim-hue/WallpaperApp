@@ -4,7 +4,7 @@ const mainContainer = document.getElementById('mainContainer');
 const translations = {
     en: {
         app_title: "Rawnaq", tab_category: "Category", tab_premium: "Premium", tab_home: "Home", tab_community: "Community", tab_desktop: "Desktop",
-        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change", off: "Off", mins_15: "15 Mins", hour_1: "1 Hour", hours_24: "24 Hours", developed_by: "Developed by Tijani Mohammed", all_rights: "All rights reserved", apply: "Apply", save: "Save", quote: "Quote", ai_gen: "AI Generator", glass: "Glass", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
+        go_pro: "Go Pro!", unlock: "Unlock everything.", favorites: "Favorites", about_app: "About the app", rate: "Rate the app", share: "Share with friends", use_photo: "Use your photo", new_badge: "New", settings: "Settings", display: "Display", app_lang: "App language", auto_change: "Auto Change", off: "Off", mins_15: "15 Mins", hour_1: "1 Hour", hours_24: "24 Hours", developed_by: "Developed by Tijani Mohammed", all_rights: "All rights reserved", apply: "Apply", save: "Save", quote: "Quote", ai_gen: "AI", glass: "Glass", lock_screen: "Lock screen", home_screen: "Home screen", both_screens: "Home and lock screens", wallpaper_success: "Wallpaper was set successfully", loading: "Loading...", no_images: "No images found", conn_failed: "Connection failed", theme_dark: "Dark Mode", theme_light: "Light Mode", search_placeholder: "Search wallpapers...", cat_label: "Category", wall_label: "Wallpaper",
         cat_nature: "Nature", cat_abstract: "Abstract", cat_space: "Space", cat_architecture: "Architecture", cat_cars: "Cars", cat_animals: "Animals", cat_minimalist: "Minimalist", cat_neon: "Neon",
         add_fav: "Add to favourites", turn_off_snapping: "Turn off snapping", fav_added: "Added to favorites", fav_removed: "Removed from favorites", fav_empty: "No favorites yet",
         about: "About", terms_of_use: "Terms of use", privacy_policy: "Privacy policy", version: "Version",
@@ -16,7 +16,7 @@ const translations = {
     },
     ar: {
         app_title: "رونق", tab_category: "الأقسام", tab_premium: "المميزة", tab_home: "الرئيسية", tab_community: "المجتمع", tab_desktop: "سطح المكتب",
-        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "حول التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير تلقائي", off: "إيقاف", mins_15: "15 دقيقة", hour_1: "ساعة واحدة", hours_24: "24 ساعة", developed_by: "تطوير Tijani Mohammed", all_rights: "جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", ai_gen: "المولد الذكي", glass: "الزجاج", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
+        go_pro: "النسخة الاحترافية", unlock: "افتح كل الميزات.", favorites: "المفضلة", about_app: "حول التطبيق", rate: "تقييم التطبيق", share: "شارك مع الأصدقاء", use_photo: "استخدم صورتك", new_badge: "جديد", settings: "الإعدادات", display: "العرض", app_lang: "لغة التطبيق", auto_change: "تغيير تلقائي", off: "إيقاف", mins_15: "15 دقيقة", hour_1: "ساعة واحدة", hours_24: "24 ساعة", developed_by: "تطوير Tijani Mohammed", all_rights: "جميع الحقوق محفوظة", apply: "تعيين", save: "حفظ", quote: "اقتباس", ai_gen: "الذكاء الاصطناعي", glass: "الزجاج", lock_screen: "شاشة القفل", home_screen: "الشاشة الرئيسية", both_screens: "الشاشة الرئيسية والقفل", wallpaper_success: "تم تعيين الخلفية بنجاح", loading: "جاري التحميل...", no_images: "لا توجد صور", conn_failed: "فشل الاتصال", theme_dark: "الوضع الداكن", theme_light: "الوضع الساطع", search_placeholder: "ابحث عن خلفيات...", cat_label: "قسم", wall_label: "خلفية",
         cat_nature: "الطبيعة", cat_abstract: "تجريدي", cat_space: "الفضاء", cat_architecture: "عمارة", cat_cars: "سيارات", cat_animals: "حيوانات", cat_minimalist: "بسيط", cat_neon: "نيون",
         add_fav: "إضافة للمفضلة", turn_off_snapping: "إيقاف الجذب", fav_added: "تمت الإضافة للمفضلة", fav_removed: "تمت الإزالة من المفضلة", fav_empty: "لا توجد مفضلات بعد",
         about: "حول", terms_of_use: "شروط الاستخدام", privacy_policy: "سياسة الخصوصية", version: "الإصدار",
@@ -53,19 +53,18 @@ const predefinedQuotes = [
     "كُنْ مَعَ اللَّهِ يَكُنْ مَعَكَ"
 ];
 
-// --- نظام الألوان العشوائية الإبداعية ---
+// --- نظام الألوان الإبداعية (تدرجات متناسقة وعميقة) ---
 const palettes = [
-    { bg: '#0b1310', surface: '#121f1a', light: '#1d332a', accent: '#10b981' }, // Emerald
-    { bg: '#09111a', surface: '#101d2b', light: '#192b3f', accent: '#0ea5e9' }, // Ocean
-    { bg: '#110b17', surface: '#1d1226', light: '#2e1c3d', accent: '#a855f7' }, // Amethyst
-    { bg: '#170a0a', surface: '#261010', light: '#3d1a1a', accent: '#f43f5e' }, // Crimson
-    { bg: '#121212', surface: '#1e1e1e', light: '#2e2e2e', accent: '#fbbf24' }, // Obsidian Gold
-    { bg: '#0f172a', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }  // Slate Blue
+    { gradient: 'linear-gradient(135deg, #0f172a, #1e293b)', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }, // Slate & Blue
+    { gradient: 'linear-gradient(135deg, #064e3b, #0f766e)', surface: '#0f766e', light: '#115e59', accent: '#10b981' }, // Deep Emerald
+    { gradient: 'linear-gradient(135deg, #2e1065, #4c1d95)', surface: '#4c1d95', light: '#5b21b6', accent: '#a855f7' }, // Royal Purple
+    { gradient: 'linear-gradient(135deg, #4c0519, #881337)', surface: '#881337', light: '#9f1239', accent: '#f43f5e' }, // Crimson
+    { gradient: 'linear-gradient(135deg, #1f1209, #431407)', surface: '#431407', light: '#7c2d12', accent: '#fbbf24' }  // Obsidian Gold
 ];
 
 function applyRandomTheme() {
     const p = palettes[Math.floor(Math.random() * palettes.length)];
-    document.documentElement.style.setProperty('--bg-color', p.bg);
+    document.documentElement.style.setProperty('--bg-gradient', p.gradient);
     document.documentElement.style.setProperty('--surface-color', p.surface);
     document.documentElement.style.setProperty('--surface-light', p.light);
     document.documentElement.style.setProperty('--accent', p.accent);
@@ -80,6 +79,7 @@ function changeLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('appLang', lang);
     document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
@@ -88,10 +88,11 @@ function changeLanguage(lang) {
         const key = el.getAttribute('data-i18n-placeholder');
         if (translations[lang] && translations[lang][key]) el.setAttribute('placeholder', translations[lang][key]);
     });
+    
     const hint = document.getElementById('quoteHint');
     if(hint) hint.innerText = translations[currentLang].quote_hint;
     
-    // تغيير خط العنوان حسب اللغة
+    // تغيير الخط للاسم بناءً على اللغة ليعطي طابعاً احترافياً كالشعار
     const appTitle = document.getElementById('mainAppTitle');
     const splashTitle = document.getElementById('splashTitle');
     const aboutTitleText = document.getElementById('aboutTitleText');
@@ -250,13 +251,13 @@ function displayFavorites() {
     });
 }
 
-// --- نظام مشاركة التطبيق الاحترافي ---
+// --- نظام مشاركة التطبيق الاحترافي المتوافق مع أنظمة الهاتف ---
 async function shareApp() {
     toggleMenu();
     try {
         const shareData = {
             title: translations[currentLang].app_title,
-            text: currentLang === 'ar' ? "اكتشف أفضل تطبيق للخلفيات العربية الأصيلة!" : "Check out this amazing wallpaper app!",
+            text: currentLang === 'ar' ? "اكتشف أفضل تطبيق للخلفيات العربية الأصيلة والذكاء الاصطناعي!" : "Check out this amazing wallpaper app!",
             url: 'https://play.google.com/store/apps/details?id=com.tijanim.arabicwalls'
         };
         if (navigator.share) {
@@ -280,7 +281,7 @@ function openModal(modalId) {
     document.getElementById(modalId).classList.add('show'); 
 }
 
-// --- نظام توليد الصور بالذكاء الاصطناعي ---
+// --- نظام توليد الصور بالذكاء الاصطناعي (AI Generator) ---
 async function generateAiImage() {
     const prompt = document.getElementById('aiPromptInput').value.trim();
     if(!prompt) return;
@@ -288,7 +289,7 @@ async function generateAiImage() {
     closeModal('aiModal');
     showToast('loading');
     
-    const encoded = encodeURIComponent(prompt + ", highly detailed, masterpiece, 4k resolution");
+    const encoded = encodeURIComponent(prompt + ", highly detailed, masterpiece, 4k resolution, cinematic lighting");
     const seed = Math.floor(Math.random() * 1000000);
     const url = `https://image.pollinations.ai/prompt/${encoded}?width=1080&height=1920&nologo=true&seed=${seed}`;
     
@@ -419,7 +420,7 @@ function openImageViewer(imgUrl) {
     if (favoritesList.indexOf(imgUrl) > -1) {
         heartIcon.className = 'ph-fill ph-heart'; heartIcon.style.color = '#ef4444';
     } else {
-        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'var(--text-color)';
+        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'white';
     }
 }
 
@@ -576,7 +577,7 @@ async function burnTextQuote() {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- نظام الضباب Blur ---
+// --- نظام الزجاج Blur ---
 function previewBlur() {
     const val = document.getElementById('blurSlider').value;
     viewerImage.style.filter = `blur(${val / 10}px)`;
@@ -605,7 +606,7 @@ async function applyBlur() {
     document.getElementById('blurSlider').value = 0;
 
     document.getElementById('toastIcon').className = 'ph-bold ph-check';
-    document.getElementById('toastText').innerText = currentLang === 'ar' ? 'تم تطبيق التأثير بنجاح' : 'Blur applied successfully';
+    document.getElementById('toastText').innerText = currentLang === 'ar' ? 'تم تطبيق التأثير بنجاح' : 'Glass effect applied successfully';
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
@@ -702,7 +703,6 @@ async function saveWallpaper() {
 // --- نظام زر الرجوع الذكي (Hardware Back Button) ---
 if (window.Capacitor && window.Capacitor.Plugins.App) {
     window.Capacitor.Plugins.App.addListener('backButton', () => {
-        // إغلاق أي نوافذ منبثقة أو شاشات عرض أولاً
         const openModals = document.querySelectorAll('.modal-viewer.show, .image-viewer.show, .search-overlay.show');
         if (openModals.length > 0) {
             openModals.forEach(m => m.classList.remove('show'));
@@ -710,21 +710,18 @@ if (window.Capacitor && window.Capacitor.Plugins.App) {
             return;
         }
         
-        // إغلاق القائمة الجانبية إذا كانت مفتوحة
         const sidebar = document.getElementById('sidebar');
         if (sidebar && sidebar.classList.contains('open')) {
             toggleMenu();
             return;
         }
 
-        // إذا كنا في قسم غير الرئيسية، نعود للرئيسية
         const homeTab = document.querySelector('.nav-item-center');
         if (homeTab && !homeTab.classList.contains('active')) {
             switchTab('home', homeTab);
             return;
         }
 
-        // إذا كنا في الرئيسية ولا توجد نوافذ مفتوحة، نخرج من التطبيق
         window.Capacitor.Plugins.App.exitApp();
     });
 }
