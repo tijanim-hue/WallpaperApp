@@ -68,10 +68,28 @@
             display: flex; justify-content: space-between; align-items: center;
             background-color: var(--surface-color); border: 1px solid var(--border-color);
             border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: all 0.3s ease;
+            position: relative;
         }
-        .top-bar-box i { cursor: pointer; color: #ffffff; }
+        .top-bar-box i { cursor: pointer; color: #ffffff; flex-shrink: 0; }
         
-        .top-bar-box .title { font-weight: 800; font-size: 24px; letter-spacing: 1px; color: #ffffff !important; transition: font-family 0.3s, font-size 0.3s; margin-top: 5px;}
+        /* الشعار الدائري المفتوح يتوسط البار تماماً */
+        .title-logo-wrapper {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            display: flex; justify-content: center; align-items: center;
+            width: 46px; height: 46px;
+        }
+        
+        .title-logo-wrapper::before, .title-logo-wrapper::after {
+            content: ''; position: absolute; border: 2px solid white; border-radius: 50%;
+            width: 100%; height: 100%; box-sizing: border-box;
+        }
+        .title-logo-wrapper::before { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
+        .title-logo-wrapper::after { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); }
+
+        .top-bar-box .title { 
+            font-weight: 800; font-size: 22px; color: #ffffff !important; 
+            transition: font-family 0.3s, font-size 0.3s; margin-top: 0; z-index: 2;
+        }
 
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -165,7 +183,6 @@
         .settings-row select { background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 15px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; text-align: right; }
         html[dir="ltr"] .settings-row select { text-align: left; }
         .settings-footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px; line-height: 1.8; }
-        .dev-badge { display: inline-flex; align-items: center; gap: 8px; background-color: var(--surface-color); padding: 8px 16px; border-radius: 20px; margin-top: 15px; font-weight: 500; border: 1px solid var(--border-color); color: var(--text-color); }
         
         .modal-text-content { padding: 80px 25px 30px 25px; overflow-y: auto; height: 100%; font-size: 16px; line-height: 1.8; color: var(--text-color); }
         .modal-text-content h3 { color: var(--accent); margin-bottom: 15px; font-size: 20px; }
@@ -180,12 +197,11 @@
         .options-option:last-child { border-bottom: none; }
         html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
-        /* تعديلات القالب الموحد للصور */
         .viewer-image-container { 
             flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; 
             padding: 80px 20px 140px 20px; position: relative; background: rgba(0,0,0,0.85); transition: padding 0.3s ease;
         }
-        /* إطار الصورة ذو الأبعاد الثابتة لضمان مكان النص أسفلها */
+        
         .image-wrapper {
             position: relative;
             width: 100%; max-width: 500px;
@@ -198,12 +214,6 @@
         .image-wrapper img#viewerImage { 
             width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; 
         }
-        
-        .copyright-bar {
-            position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; 
-            color: rgba(255,255,255,0.9); font-size: 13.5px; font-weight: 600; z-index: 10; transition: opacity 0.3s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8); background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); padding: 10px; border-radius: 12px;
-        }
 
         .viewer-actions {
             display: flex; justify-content: space-around; align-items: flex-end; padding: 20px;
@@ -213,7 +223,6 @@
         
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
         .image-viewer.fullscreen .viewer-actions { opacity: 0; transform: translateY(100%); pointer-events: none; }
-        .image-viewer.fullscreen .copyright-bar { opacity: 0; pointer-events: none; }
         .image-viewer.fullscreen .viewer-image-container { padding: 0; }
         .image-viewer.fullscreen .image-wrapper { max-width: 100%; max-height: 100%; border-radius: 0; }
 
@@ -236,8 +245,16 @@
         .apply-option:last-child { border-bottom: none; }
 
         .apply-action-btn { background-color: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Tajawal', sans-serif;}
+        
         .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 12px 15px; border-radius: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; border: 1px solid var(--border-color); margin-bottom: 8px; text-align: right;}
         
+        /* أدوات تنسيق الاقتباس */
+        .quote-tools { display: flex; justify-content: center; gap: 10px; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;}
+        .tool-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;}
+        .tool-btn.active { background: var(--accent); border-color: var(--accent); }
+        .color-picker { -webkit-appearance: none; width: 36px; height: 36px; border: none; border-radius: 8px; cursor: pointer; background: transparent;}
+        .color-picker::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.5); border-radius: 8px; }
+
         .ai-input-area textarea {
             width: 100%; background: var(--surface-light); border: 1px solid var(--border-color); border-radius: 12px;
             padding: 15px; color: white; font-family: 'Tajawal', sans-serif; font-size: 15px; outline: none; resize: none; min-height: 100px;
@@ -379,6 +396,7 @@
         </div>
     </div>
 
+    <!-- نافذة توليد الصور بالذكاء الاصطناعي (أبدع / AI) -->
     <div class="modal-viewer" id="aiModal" style="z-index: 3100;">
         <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
             <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="ai_gen">AI Generator</div>
@@ -436,7 +454,7 @@
         </div>
     </div>
 
-    <!-- عارض الصورة المحسّن بقالب ثابت الأبعاد -->
+    <!-- عارض الصورة المحسّن بقالب ثابت الأبعاد (بدون حقوق المطور) -->
     <div class="image-viewer" id="imageViewer">
         <div class="viewer-header">
             <div class="header-icons-left">
@@ -452,25 +470,25 @@
         <div class="viewer-image-container" id="viewerImageContainer"> 
             <div class="image-wrapper">
                 <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
-                <!-- الاقتباس -->
-                <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; border: 1px dashed rgba(255,255,255,0.4); padding: 15px; color: white; text-align: center; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 80%; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 12px; font-family: 'Aref Ruqaa', serif;"></div>
-                
-                <!-- شريط حقوق الملكية تم نقله لداخل الإطار ليبقى أسفل الصورة مباشرة -->
-                <div class="copyright-bar" id="copyrightBar">
-                    <div style="display:flex; align-items:center; gap:5px;">
-                        <i class="ph-fill ph-seal-check" style="color: var(--accent); font-size: 18px;"></i> Tijani Mohammed
-                    </div>
-                    <div style="display:flex; align-items:center; gap:5px;">
-                        <i class="ph ph-info" style="font-size: 18px;"></i> <span data-i18n="all_rights">All rights reserved</span>
-                    </div>
-                </div>
+                <!-- الاقتباس (نص فقط بدون إطار) -->
+                <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; padding: 5px; color: white; text-align: center; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 80%; left: 50%; top: 50%; transform: translate(-50%, -50%); line-height: 1.5;"></div>
             </div>
         </div>
 
+        <!-- قائمة اختيار الحكم وتنسيقها -->
         <div class="apply-menu" id="quoteMenu" style="bottom: 115px;">
             <div style="padding: 15px; color: white;">
                 <p id="quoteHint" style="color: var(--accent); font-size: 13px; margin-bottom: 12px; text-align: center; font-weight: 600;"></p>
-                <div id="quotesList" style="display: flex; flex-direction: column; max-height: 200px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;"></div>
+                <div id="quotesList" style="display: flex; flex-direction: column; max-height: 150px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;"></div>
+                
+                <!-- أدوات التنسيق -->
+                <div class="quote-tools">
+                    <input type="color" id="quoteColor" class="color-picker" value="#ffffff" onchange="updateQuoteStyle()">
+                    <button class="tool-btn" id="btnBold" onclick="toggleQuoteStyle('bold')"><i class="ph-bold ph-text-b"></i></button>
+                    <button class="tool-btn" id="btnItalic" onclick="toggleQuoteStyle('italic')"><i class="ph-bold ph-text-italic"></i></button>
+                    <button class="tool-btn" id="btnUnderline" onclick="toggleQuoteStyle('underline')"><i class="ph-bold ph-text-underline"></i></button>
+                </div>
+                
                 <button class="apply-action-btn" onclick="burnTextQuote()" data-i18n="apply">Apply</button>
             </div>
         </div>
@@ -505,12 +523,14 @@
         </div>
     </div>
 
-    <!-- الواجهة الرئيسية -->
+    <!-- الواجهة الرئيسية بالبار العلوي الذي يحتوي الشعار في المنتصف -->
     <div class="header-container">
         <div class="top-bar-box">
-            <i class="ph ph-list" onclick="toggleMenu()"></i>
-            <div class="title" id="mainAppTitle" data-i18n="app_title">Rawnaq</div>
             <i class="ph ph-magnifying-glass" onclick="toggleSearch()"></i>
+            <div class="title-logo-wrapper">
+                <div class="title" id="mainAppTitle" data-i18n="app_title">Rawnaq</div>
+            </div>
+            <i class="ph ph-list" onclick="toggleMenu()"></i>
         </div>
     </div>
     
@@ -524,7 +544,6 @@
         </div>
         <div class="nav-item" onclick="switchTab('community', this)"><i class="ph ph-users"></i></div>
         
-        <!-- زر 4K بخصائص توسيط تامة -->
         <div class="nav-item" onclick="switchTab('desktop', this)">
             <div style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 2.5px solid currentColor; border-radius: 8px; margin: auto;">
                 <span style="font-size: 13px; font-weight: 800; line-height: 0;">4K</span>
