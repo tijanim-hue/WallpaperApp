@@ -53,27 +53,27 @@ const predefinedQuotes = [
     "كُنْ مَعَ اللَّهِ يَكُنْ مَعَكَ"
 ];
 
-// --- نظام الألوان الإبداعية (تدرجات متناسقة وعميقة) ---
 const palettes = [
-    { gradient: 'linear-gradient(135deg, #0f172a, #1e293b)', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }, // Slate & Blue
-    { gradient: 'linear-gradient(135deg, #064e3b, #0f766e)', surface: '#0f766e', light: '#115e59', accent: '#10b981' }, // Deep Emerald
-    { gradient: 'linear-gradient(135deg, #2e1065, #4c1d95)', surface: '#4c1d95', light: '#5b21b6', accent: '#a855f7' }, // Royal Purple
-    { gradient: 'linear-gradient(135deg, #4c0519, #881337)', surface: '#881337', light: '#9f1239', accent: '#f43f5e' }, // Crimson
-    { gradient: 'linear-gradient(135deg, #1f1209, #431407)', surface: '#431407', light: '#7c2d12', accent: '#fbbf24' }  // Obsidian Gold
+    { gradient: 'linear-gradient(135deg, #0f172a, #1e293b)', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }, 
+    { gradient: 'linear-gradient(135deg, #064e3b, #0f766e)', surface: '#0f766e', light: '#115e59', accent: '#10b981' }, 
+    { gradient: 'linear-gradient(135deg, #2e1065, #4c1d95)', surface: '#4c1d95', light: '#5b21b6', accent: '#a855f7' }, 
+    { gradient: 'linear-gradient(135deg, #4c0519, #881337)', surface: '#881337', light: '#9f1239', accent: '#f43f5e' }, 
+    { gradient: 'linear-gradient(135deg, #1f1209, #431407)', surface: '#431407', light: '#7c2d12', accent: '#fbbf24' }  
 ];
 
+let currentLang = localStorage.getItem('appLang') || 'en';
+let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true'; 
+let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
+
 function applyRandomTheme() {
+    if (isDarkMode) return; // تعطيل الألوان العشوائية إذا كان الوضع الداكن مفعلاً
     const p = palettes[Math.floor(Math.random() * palettes.length)];
     document.documentElement.style.setProperty('--bg-gradient', p.gradient);
     document.documentElement.style.setProperty('--surface-color', p.surface);
     document.documentElement.style.setProperty('--surface-light', p.light);
     document.documentElement.style.setProperty('--accent', p.accent);
 }
-
-let currentLang = localStorage.getItem('appLang') || 'en';
-let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
-let isGlassTheme = localStorage.getItem('isGlassTheme') === 'true'; 
-let favoritesList = JSON.parse(localStorage.getItem('myFavorites')) || [];
 
 function changeLanguage(lang) {
     currentLang = lang;
@@ -92,15 +92,14 @@ function changeLanguage(lang) {
     const hint = document.getElementById('quoteHint');
     if(hint) hint.innerText = translations[currentLang].quote_hint;
     
-    // تغيير الخط للاسم بناءً على اللغة ليعطي طابعاً احترافياً كالشعار
     const appTitle = document.getElementById('mainAppTitle');
     const splashTitle = document.getElementById('splashTitle');
     const aboutTitleText = document.getElementById('aboutTitleText');
     if(appTitle && splashTitle && aboutTitleText) {
         if(lang === 'ar') {
-            appTitle.style.fontFamily = "'Aref Ruqaa', serif"; appTitle.style.fontSize = "26px";
-            splashTitle.style.fontFamily = "'Aref Ruqaa', serif"; splashTitle.style.fontSize = "40px";
-            aboutTitleText.style.fontFamily = "'Aref Ruqaa', serif"; aboutTitleText.style.fontSize = "32px";
+            appTitle.style.fontFamily = "'Reem Kufi', serif"; appTitle.style.fontSize = "32px";
+            splashTitle.style.fontFamily = "'Reem Kufi', serif"; splashTitle.style.fontSize = "46px";
+            aboutTitleText.style.fontFamily = "'Reem Kufi', serif"; aboutTitleText.style.fontSize = "38px";
         } else {
             appTitle.style.fontFamily = "'Cinzel', serif"; appTitle.style.fontSize = "22px";
             splashTitle.style.fontFamily = "'Cinzel', serif"; splashTitle.style.fontSize = "36px";
@@ -110,10 +109,16 @@ function changeLanguage(lang) {
 }
 changeLanguage(currentLang);
 
-function toggleTheme() { isDarkMode = !isDarkMode; localStorage.setItem('isDarkMode', isDarkMode); applyTheme(); }
+function toggleTheme() { 
+    isDarkMode = !isDarkMode; 
+    localStorage.setItem('isDarkMode', isDarkMode); 
+    applyTheme(); 
+}
+
 function applyTheme() {
     const themeIcon = document.getElementById('themeIcon');
     const themeText = document.getElementById('themeText');
+    
     if (isDarkMode) {
         document.body.classList.add('dark-theme');
         if(themeIcon) themeIcon.className = 'ph ph-sun'; 
@@ -122,6 +127,7 @@ function applyTheme() {
         document.body.classList.remove('dark-theme');
         if(themeIcon) themeIcon.className = 'ph ph-moon'; 
         if(themeText) themeText.setAttribute('data-i18n', 'theme_dark');
+        applyRandomTheme(); // استرجاع الألوان العشوائية عند إغلاق الداكن
     }
     if (themeText && translations[currentLang][themeText.getAttribute('data-i18n')]) {
         themeText.innerText = translations[currentLang][themeText.getAttribute('data-i18n')];
@@ -138,8 +144,8 @@ function applyGlassTheme() {
     else document.body.classList.remove('glass-theme');
 }
 
-applyRandomTheme();
 applyTheme();
+if(!isDarkMode) applyRandomTheme();
 applyGlassTheme();
 
 const categoriesData = [
@@ -251,7 +257,6 @@ function displayFavorites() {
     });
 }
 
-// --- نظام مشاركة التطبيق الاحترافي المتوافق مع أنظمة الهاتف ---
 async function shareApp() {
     toggleMenu();
     try {
@@ -281,7 +286,7 @@ function openModal(modalId) {
     document.getElementById(modalId).classList.add('show'); 
 }
 
-// --- نظام توليد الصور بالذكاء الاصطناعي (AI Generator) ---
+// توليد الصور بالذكاء الاصطناعي وتجهيز الأوامر العربية لتُقرأ كأمر سحري
 async function generateAiImage() {
     const prompt = document.getElementById('aiPromptInput').value.trim();
     if(!prompt) return;
@@ -289,7 +294,10 @@ async function generateAiImage() {
     closeModal('aiModal');
     showToast('loading');
     
-    const encoded = encodeURIComponent(prompt + ", highly detailed, masterpiece, 4k resolution, cinematic lighting");
+    // محرك الصور السحابي يفهم النصوص العربية عند إضافتها بشكل سليم للرابط
+    const magicPrompt = currentLang === 'ar' ? prompt + ", تحفة فنية، دقة 4K، إضاءة سينمائية، تفاصيل دقيقة" : prompt + ", highly detailed, masterpiece, 4k resolution, cinematic lighting";
+    
+    const encoded = encodeURIComponent(magicPrompt);
     const seed = Math.floor(Math.random() * 1000000);
     const url = `https://image.pollinations.ai/prompt/${encoded}?width=1080&height=1920&nologo=true&seed=${seed}`;
     
@@ -452,7 +460,6 @@ function showToast(messageKey) {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- نظام دمج النصوص (Pinch-to-zoom) الاحترافي باللمس ---
 const quoteOverlay = document.getElementById('quoteOverlay');
 let isDraggingQuote = false;
 let currentScale = 1;
@@ -531,6 +538,7 @@ async function getFinalImageData() {
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
     
+    // دمج النص في اللوحة بأبعاد متناسبة
     const rect = viewerImage.getBoundingClientRect();
     const imageRatio = img.width / img.height;
     const containerRatio = rect.width / rect.height;
@@ -553,7 +561,7 @@ async function getFinalImageData() {
     const centerX = (qRect.left + qRect.width/2 - rect.left - offsetX) * scaleX;
     const centerY = (qRect.top + qRect.height/2 - rect.top - offsetY) * scaleY;
     
-    ctx.font = `bold ${32 * currentScale * scaleY}px 'Aref Ruqaa', sans-serif`;
+    ctx.font = `bold ${32 * currentScale * scaleY}px 'Aref Ruqaa', serif`;
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -577,7 +585,6 @@ async function burnTextQuote() {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- نظام الزجاج Blur ---
 function previewBlur() {
     const val = document.getElementById('blurSlider').value;
     viewerImage.style.filter = `blur(${val / 10}px)`;
@@ -610,7 +617,6 @@ async function applyBlur() {
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- التعيين النهائي للخلفية ---
 async function processWallpaper(mode) {
     toggleViewerMenu('');
     
@@ -700,7 +706,7 @@ async function saveWallpaper() {
     } catch (error) { showToast('conn_failed'); }
 }
 
-// --- نظام زر الرجوع الذكي (Hardware Back Button) ---
+// زر الرجوع الذكي
 if (window.Capacitor && window.Capacitor.Plugins.App) {
     window.Capacitor.Plugins.App.addListener('backButton', () => {
         const openModals = document.querySelectorAll('.modal-viewer.show, .image-viewer.show, .search-overlay.show');
