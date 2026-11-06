@@ -2,247 +2,233 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rawnaq</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&family=Cinzel:wght@600;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- Premium Root Variables --- */
         :root {
-            --bg-gradient: linear-gradient(135deg, #09090b, #18181b);
-            --surface-color: rgba(39, 39, 42, 0.6);
-            --surface-light: rgba(63, 63, 70, 0.8);
+            --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+            --surface-color: #1e293b;
+            --surface-light: #334155;
             --text-color: #f8fafc;
-            --text-muted: #a1a1aa;
-            --border-color: rgba(255, 255, 255, 0.05);
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --sidebar-bg: #0f172a;
             --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --glass-blur: blur(25px);
-            --border-radius-lg: 24px;
-            --border-radius-md: 16px;
         }
 
         body.dark-theme {
-            --bg-gradient: #000000 !important;
-            --bg-color: #000000 !important;
-            --surface-color: #0f0f11 !important;
-            --surface-light: #18181b !important;
-            --border-color: rgba(255, 255, 255, 0.03) !important;
+            --bg-gradient: none !important;
+            --bg-color: #050505 !important;
+            background-color: #050505 !important;
+            --surface-color: #121212 !important;
+            --surface-light: #1e1e1e !important;
+            --text-color: #e5e7eb !important;
+            --text-muted: #6b7280 !important;
+            --border-color: rgba(255, 255, 255, 0.05) !important;
+            --sidebar-bg: #0a0a0a !important;
             --accent: #10b981 !important;
-            --accent-glow: rgba(16, 185, 129, 0.2) !important;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         
         body { 
             background: var(--bg-gradient); color: var(--text-color); 
-            background-attachment: fixed; overflow-x: hidden; transition: background 0.6s ease-out; 
-            padding-bottom: 100px; padding-top: 85px; position: relative;
+            background-attachment: fixed;
+            overflow-x: hidden; transition: background 0.5s ease, background-color 0.5s ease; 
+            padding-bottom: 90px; 
+            position: relative;
         }
 
-        /* --- Premium Global Glass Effect --- */
+        /* تعديل الخلفية الزجاجية الشاملة للصفحة الرئيسية حتى في الوضع الداكن */
+        body.glass-theme {
+            background: radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.15), transparent 50%),
+                        radial-gradient(circle at 85% 100%, rgba(16, 185, 129, 0.15), transparent 50%),
+                        #0a0f16 !important;
+            background-attachment: fixed !important;
+        }
+
         body.glass-theme::before {
             content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: inherit; filter: blur(35px) saturate(1.5); z-index: -1; opacity: 0.85;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px) saturate(1.5);
+            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            z-index: -1; pointer-events: none;
         }
 
-        .glass-panel {
-            background-color: var(--surface-color);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        body.glass-theme .top-bar-box, 
+        body.glass-theme .sidebar, 
+        body.glass-theme .bottom-nav, 
+        body.glass-theme .apply-menu,
+        body.glass-theme .options-menu,
+        body.glass-theme .settings-card,
+        body.glass-theme .search-bar-modern,
+        body.glass-theme .modal-viewer .viewer-header {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
-        body.glass-theme .glass-panel {
-            background-color: rgba(255, 255, 255, 0.03) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeInScale { 
-            0% { opacity: 0; transform: scale(0.95); } 
-            100% { opacity: 1; transform: scale(1); } 
-        }
-
-        /* --- Floating Top Bar --- */
-        .header-container { 
-            position: fixed; top: 15px; left: 15px; right: 15px; z-index: 100; 
-            display: flex; justify-content: center;
-        }
+        .header-container { padding: 15px 20px; position: sticky; top: 0; z-index: 100; }
         .top-bar-box {
             display: flex; justify-content: space-between; align-items: center;
-            width: 100%; max-width: 500px;
-            border-radius: 100px; padding: 12px 24px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background-color: var(--surface-color); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px 20px; font-size: 22px; transition: all 0.3s ease;
+            position: relative;
         }
-        .top-bar-box i { font-size: 22px; cursor: pointer; color: #ffffff; transition: color 0.3s; }
-        .top-bar-box i:hover { color: var(--accent); }
+        .top-bar-box i { cursor: pointer; color: #ffffff; flex-shrink: 0; }
         
         .title-logo-wrapper {
             position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
             display: flex; justify-content: center; align-items: center;
+            width: 46px; height: 46px;
         }
+        
+        .title-logo-wrapper::before, .title-logo-wrapper::after {
+            content: ''; position: absolute; border: 2px solid white; border-radius: 50%;
+            width: 100%; height: 100%; box-sizing: border-box;
+        }
+        .title-logo-wrapper::before { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
+        .title-logo-wrapper::after { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); }
+
         .top-bar-box .title { 
-            font-weight: 800; color: #ffffff !important; 
-            transition: font-family 0.3s, font-size 0.3s, transform 0.3s; margin-top: 0; z-index: 2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            font-weight: 800; font-size: 22px; color: #ffffff !important; 
+            transition: font-family 0.3s, font-size 0.3s; margin-top: 0; z-index: 2;
         }
 
-        /* --- Search Modern --- */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
+            background-color: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
             z-index: 2500; display: none; flex-direction: column; padding: 20px;
         }
-        .search-overlay.show { display: flex; animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .search-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
         
         .search-bar-modern {
-            display: flex; align-items: center; border-radius: 100px; padding: 15px 25px; gap: 15px; margin-top: 10px;
+            display: flex; align-items: center; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 12px 20px;
+            gap: 15px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .search-bar-modern input { flex-grow: 1; background: transparent; border: none; color: white; font-size: 16px; outline: none; }
-        .search-bar-modern input::placeholder { color: var(--text-muted); }
+        .search-bar-modern input::placeholder { color: #d1d5db; }
         
-        .search-results { margin-top: 25px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; max-height: 75vh; padding-bottom: 20px; }
+        .search-results { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 75vh; padding-bottom: 20px; }
         .search-item {
-            display: flex; align-items: center; gap: 18px; padding: 12px;
-            border-radius: var(--border-radius-lg); cursor: pointer; transition: transform 0.2s, background 0.3s;
+            display: flex; align-items: center; gap: 15px; padding: 12px; background: var(--surface-color);
+            border-radius: 16px; cursor: pointer; transition: background 0.2s, transform 0.1s;
         }
-        .search-item:active { transform: scale(0.97); }
-        .search-item img { width: 60px; height: 60px; border-radius: 18px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        .search-item-title { font-size: 16px; color: white; font-weight: 700; text-transform: capitalize; }
-        .search-item-type { font-size: 12px; color: var(--accent); font-weight: 500; text-transform: uppercase; letter-spacing: 1px;}
+        .search-item:active { transform: scale(0.98); }
+        .search-item img { width: 55px; height: 55px; border-radius: 10px; object-fit: cover; }
+        .search-item-info { display: flex; flex-direction: column; gap: 4px;}
+        .search-item-title { font-size: 15px; color: white; font-weight: bold; text-transform: capitalize; }
+        .search-item-type { font-size: 12px; color: var(--accent); }
 
-        /* --- Premium Grid --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; padding: 0 15px; }
-        .wallpaper-card { 
-            border-radius: 20px; overflow: hidden; aspect-ratio: 9/16; position: relative; 
-            cursor: pointer; transform: translateZ(0); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s; 
-        }
-        .wallpaper-card::after {
-            content: ''; position: absolute; inset: 0; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1); pointer-events: none;
-        }
-        .wallpaper-card:active { transform: scale(0.96); }
-        .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .wallpaper-card:hover img { transform: scale(1.05); }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .wallpaper-card { border-radius: 12px; overflow: hidden; height: 180px; position: relative; background-color: var(--surface-color); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .wallpaper-card img { width: 100%; height: 100%; object-fit: cover; }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 0 15px; }
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
         .category-card {
-            border-radius: var(--border-radius-lg); height: 140px; position: relative; overflow: hidden;
-            display: flex; align-items: flex-end; padding: 20px; cursor: pointer; transition: transform 0.3s;
+            border-radius: 16px; height: 120px; position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; padding: 15px; cursor: pointer;
         }
-        .category-card:active { transform: scale(0.98); }
-        .category-card span { font-weight: 800; font-size: 24px; z-index: 2; color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.9); letter-spacing: 1px;}
+        .category-card span { font-weight: bold; font-size: 22px; z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.8);}
 
-        /* --- Sidebar Modern --- */
         .sidebar {
             position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
             background-color: var(--sidebar-bg); z-index: 1500;
-            transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), right 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
-            display: flex; flex-direction: column; border-right: 1px solid var(--border-color);
+            transition: left 0.3s ease, right 0.3s ease, background-color 0.3s ease; 
+            display: flex; flex-direction: column; box-shadow: 2px 0 15px rgba(0,0,0,0.5);
         }
-        html[dir="rtl"] .sidebar { left: auto; right: -320px; border-right: none; border-left: 1px solid var(--border-color); }
-        html[dir="rtl"] .sidebar.open { right: 0; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
-        html[dir="ltr"] .sidebar.open { left: 0; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
+        html[dir="rtl"] .sidebar { left: auto; right: -320px; }
+        html[dir="rtl"] .sidebar.open { right: 0; }
+        html[dir="ltr"] .sidebar.open { left: 0; }
 
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 1499; display: none; opacity: 0; transition: opacity 0.3s; }
-        .overlay.show { display: block; opacity: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1499; display: none; }
+        .overlay.show { display: block; }
         
         .pro-banner {
-            margin: 25px 20px; padding: 18px 20px; border-radius: var(--border-radius-lg); 
-            display: flex; align-items: center; gap: 15px; cursor: pointer; 
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
-            border: 1px solid rgba(251, 191, 36, 0.3); position: relative; overflow: hidden;
+            background-color: rgba(251, 191, 36, 0.1); margin: 20px; padding: 15px 20px;
+            border-radius: 16px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(251, 191, 36, 0.2);
         }
-        .pro-banner::before {
-            content:''; position:absolute; top:0; left:-100%; width:50%; height:100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-            transform: skewX(-20deg); animation: shine 3s infinite;
-        }
-        @keyframes shine { 100% { left: 200%; } }
-        .pro-icon-box { background: rgba(251, 191, 36, 0.2); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
-        .pro-icon-box i { color: #fbbf24; font-size: 24px; }
-        .pro-text h4 { color: white; margin: 0; font-size: 17px; font-weight: 800; letter-spacing: 0.5px;}
-        .pro-text p { color: rgba(255,255,255,0.7); font-size: 13px; margin: 4px 0 0 0; font-weight: 500;}
+        .pro-icon-box { border: 2px solid #fbbf24; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; }
+        .pro-icon-box i { color: #fbbf24; font-size: 22px; }
+        .pro-text h4 { color: var(--text-color); margin: 0; font-size: 16px; font-weight: 700;}
+        .pro-text p { color: var(--text-muted); font-size: 13px; margin: 4px 0 0 0; }
 
-        .menu-items-container { overflow-y: auto; flex-grow: 1; padding: 0 15px; }
+        .menu-items-container { overflow-y: auto; flex-grow: 1; padding: 0 20px; }
         .menu-item { 
-            padding: 16px 15px; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); font-weight: 600; border-radius: 16px; transition: background 0.2s; margin-bottom: 5px;
+            padding: 18px 0; font-size: 16px; cursor:pointer; display: flex; align-items: center; color: var(--text-color); border-bottom: 1px solid var(--border-color); font-weight: 500;
         }
-        .menu-item:hover { background: rgba(255,255,255,0.05); }
-        .menu-item i { width: 35px; font-size: 22px; color: var(--text-muted); transition: color 0.2s; }
-        .menu-item:hover i { color: var(--accent); }
-        .new-badge { background-color: var(--accent); color: #000; font-size: 10px; padding: 4px 10px; border-radius: 20px; margin-left: auto; font-weight: 800; text-transform: uppercase;}
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item i { width: 35px; font-size: 22px; color: var(--text-color); }
+        .new-badge { background-color: var(--accent); color: white; font-size: 11px; padding: 3px 8px; border-radius: 12px; margin-left: auto; font-weight: bold;}
         html[dir="rtl"] .new-badge { margin-left: 0; margin-right: auto; }
 
-        /* --- Modal Settings & Info --- */
-        .modal-viewer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;
-            display: none; flex-direction: column; overflow: hidden; background: var(--bg-color);
+        .image-viewer, .modal-viewer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color); background: var(--bg-gradient); z-index: 2000;
+            display: none; flex-direction: column; overflow: hidden; transition: background-color 0.3s ease;
         }
-        body.glass-theme .modal-viewer { background: var(--bg-gradient); }
-        .modal-viewer.show { display: flex; animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        
-        .modal-viewer .viewer-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 20px;
-            position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--border-color);
-        }
-        .modal-viewer .title { font-size: 20px; font-weight: 800; color: white;}
-        .modal-viewer i.ph-x, .modal-viewer i.ph-arrow-left { font-size: 24px; cursor: pointer; color: var(--text-muted); transition: color 0.3s; }
-        .modal-viewer i:hover { color: white; }
-        
-        .settings-group-title { color: var(--accent); font-size: 13px; font-weight: 800; margin: 30px 0 10px 10px; text-transform: uppercase; letter-spacing: 1px; }
-        html[dir="rtl"] .settings-group-title { margin: 30px 10px 10px 0; }
-        .settings-card { border-radius: var(--border-radius-lg); padding: 0 20px; }
-        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--border-color); font-size: 16px; font-weight: 600; cursor: pointer; color: white;}
-        .settings-row:last-child { border-bottom: none; }
-        .settings-row select { background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 15px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 600; text-align: right; appearance: none; -webkit-appearance: none;}
-        html[dir="ltr"] .settings-row select { text-align: left; }
-        .settings-footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px; line-height: 1.8; font-weight: 500;}
-        
-        .modal-text-content { padding: 40px 25px 30px 25px; overflow-y: auto; height: 100%; font-size: 16px; line-height: 1.8; color: var(--text-muted); font-weight: 500;}
-        .modal-text-content h3 { color: white; margin-bottom: 20px; font-size: 22px; font-weight: 800; }
-
-        /* --- Immersive Image Viewer --- */
-        .image-viewer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000;
-            display: none; flex-direction: column; overflow: hidden; background: #000;
-        }
-        .image-viewer.show { display: flex; animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        body.dark-theme .image-viewer, body.dark-theme .modal-viewer { background: var(--bg-color); }
+        .image-viewer.show, .modal-viewer.show { display: flex; }
         
         .viewer-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 40px 25px 20px 25px;
+            display: flex; justify-content: space-between; align-items: center; padding: 20px;
             position: absolute; top: 0; width: 100%; z-index: 10;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%); transition: opacity 0.3s;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
         }
-        .header-icons-left { display: flex; gap: 25px; position: relative; }
-        .viewer-header i { font-size: 28px; cursor: pointer; color: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));}
+        .header-icons-left { display: flex; gap: 20px; position: relative; }
+        .viewer-header i { font-size: 24px; cursor: pointer; color: white; }
+        
+        .settings-group-title { color: var(--text-muted); font-size: 14px; font-weight: 700; margin: 25px 0 10px 5px; text-transform: uppercase; }
+        html[dir="rtl"] .settings-group-title { margin: 25px 5px 10px 0; }
+        .settings-card { background-color: var(--surface-color); border-radius: 20px; padding: 0 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-color); font-size: 16px; font-weight: 500; cursor: pointer; }
+        .settings-row:last-child { border-bottom: none; }
+        .settings-row select { background: transparent; color: var(--text-muted); border: none; outline: none; font-size: 15px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; text-align: right; }
+        html[dir="ltr"] .settings-row select { text-align: left; }
+        .settings-footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px; line-height: 1.8; }
+        
+        .modal-text-content { padding: 80px 25px 30px 25px; overflow-y: auto; height: 100%; font-size: 16px; line-height: 1.8; color: var(--text-color); }
+        .modal-text-content h3 { color: var(--accent); margin-bottom: 15px; font-size: 20px; }
+        .modal-text-content p { margin-bottom: 15px; color: var(--text-muted); }
 
         .options-menu {
-            position: absolute; top: 40px; left: 0; border-radius: var(--border-radius-md);
-            display: none; flex-direction: column; z-index: 2010; overflow: hidden; min-width: 220px;
+            position: absolute; top: 40px; left: 0; background-color: var(--surface-color); border-radius: 12px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow: hidden; min-width: 200px;
         }
-        .options-menu.show { display: flex; animation: fadeInScale 0.2s; }
-        .options-option { padding: 18px; display: flex; align-items: center; gap: 15px; color: white; cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); font-weight: 600;}
+        .options-menu.show { display: flex; }
+        .options-option { padding: 16px; display: flex; align-items: center; gap: 12px; color: var(--text-color); cursor: pointer; font-size: 15px; border-bottom: 1px solid var(--border-color); font-weight: 500;}
         .options-option:last-child { border-bottom: none; }
         html[dir="rtl"] .options-menu { left: auto; right: 0; }
 
         .viewer-image-container { 
             flex-grow: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; 
-            padding: 90px 20px 140px 20px; position: relative; transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 80px 20px 140px 20px; position: relative; background: rgba(0,0,0,0.85); transition: padding 0.3s ease;
         }
         
         .image-wrapper {
-            position: relative; width: 100%; max-width: 450px; height: 100%; max-height: 75vh;
-            border-radius: 32px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); overflow: hidden; background-color: #111; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            width: 100%; max-width: 500px;
+            height: 100%; max-height: 75vh;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+            background-color: var(--surface-color);
         }
-        .image-wrapper img#viewerImage { width: 100%; height: 100%; object-fit: cover; }
+        .image-wrapper img#viewerImage { 
+            width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; 
+        }
 
-        /* Floating Actions - Premium Bottom Menu */
         .viewer-actions {
-            display: flex; justify-content: space-evenly; align-items: center; padding: 25px 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 70%, transparent 100%); 
-            position: absolute; bottom: 0; width: 100%; z-index: 15; transition: transform 0.4s ease, opacity 0.4s ease;
+            display: flex; justify-content: space-around; align-items: flex-end; padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); position: absolute; bottom: 0; width: 100%; z-index: 15;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
         
         .image-viewer.fullscreen .viewer-header { opacity: 0; pointer-events: none; }
@@ -250,114 +236,108 @@
         .image-viewer.fullscreen .viewer-image-container { padding: 0; }
         .image-viewer.fullscreen .image-wrapper { max-width: 100%; max-height: 100%; border-radius: 0; }
 
-        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: rgba(255,255,255,0.7); transition: color 0.2s;}
-        .action-btn:hover { color: white; }
+        .action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: #e5e7eb; }
+        
         .action-icon { 
-            display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;
-            background-color: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50%; font-size: 24px; color: white; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; align-items: center; justify-content: center;
+            width: 52px; height: 52px;
+            background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); 
+            border-radius: 16px; font-size: 24px; color: white; transition: background-color 0.3s ease;
         }
-        .action-btn:active .action-icon { transform: scale(0.9); background-color: rgba(255,255,255,0.2); }
-        .action-btn span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        .action-btn span { font-size: 13px; font-weight: 600; }
 
-        /* Apply / Quote / Blur Menus (Floating Panels) */
         .apply-menu {
-            position: absolute; bottom: 120px; left: 20px; right: 20px; border-radius: var(--border-radius-lg);
-            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden; 
+            position: absolute; bottom: 115px; left: 20px; right: 20px; background-color: var(--surface-color); border-radius: 20px;
+            display: none; flex-direction: column; z-index: 2010; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid var(--border-color);
         }
-        .apply-menu.show { display: flex; animation: fadeInScale 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .apply-option { padding: 22px; display: flex; align-items: center; gap: 15px; color: white; cursor: pointer; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600;}
+        .apply-menu.show { display: flex; }
+        .apply-option { padding: 20px; display: flex; align-items: center; gap: 15px; color: var(--text-color); cursor: pointer; font-size: 16px; border-bottom: 1px solid var(--border-color); font-weight: 500;}
         .apply-option:last-child { border-bottom: none; }
-        .apply-option i { color: var(--accent); font-size: 24px; }
 
-        .apply-action-btn { background-color: white; color: black; border: none; padding: 16px; border-radius: 100px; width: 100%; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 15px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(255,255,255,0.2);}
-        .apply-action-btn:active { transform: scale(0.97); }
+        .apply-action-btn { background-color: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Tajawal', sans-serif;}
         
-        .quote-btn { background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 14px 18px; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; margin-bottom: 8px; text-align: right; font-size: 15px; transition: background 0.2s;}
-        .quote-btn:hover { background: rgba(255,255,255,0.2); }
+        .quote-btn { background-color: var(--surface-light); color: white; border: none; padding: 12px 15px; border-radius: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif; font-weight: 500; border: 1px solid var(--border-color); margin-bottom: 8px; text-align: right;}
         
-        .quote-tools { display: flex; justify-content: center; gap: 12px; margin-top: 10px; padding: 5px; }
-        .tool-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;}
-        .tool-btn.active { background: white; color: black; border-color: white; }
-        .color-picker { -webkit-appearance: none; width: 44px; height: 44px; border: none; border-radius: 50%; cursor: pointer; background: transparent;}
-        .color-picker::-webkit-color-swatch { border: 2px solid white; border-radius: 50%; }
-
-        /* Modern Range Slider */
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 20px 0; }
-        input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.2); border-radius: 4px; }
-        input[type=range]::-webkit-slider-thumb { height: 28px; width: 28px; border-radius: 50%; background: white; cursor: pointer; -webkit-appearance: none; margin-top: -12px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .quote-tools { display: flex; justify-content: center; gap: 10px; margin-top: 10px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;}
+        .tool-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;}
+        .tool-btn.active { background: var(--accent); border-color: var(--accent); }
+        .color-picker { -webkit-appearance: none; width: 36px; height: 36px; border: none; border-radius: 8px; cursor: pointer; background: transparent;}
+        .color-picker::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.5); border-radius: 8px; }
 
         .ai-input-area textarea {
-            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-md);
-            padding: 20px; color: white; font-size: 16px; outline: none; resize: none; min-height: 120px;
+            width: 100%; background: var(--surface-light); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 15px; color: white; font-family: 'Tajawal', sans-serif; font-size: 15px; outline: none; resize: none; min-height: 100px;
         }
-        .ai-input-area textarea:focus { border-color: var(--accent); }
+
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent; margin: 15px 0;
+        }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 5px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 24px; width: 24px; border-radius: 50%; background: var(--accent); cursor: pointer; -webkit-appearance: none; margin-top: -9px; box-shadow: 0 0 15px var(--accent); border: 2px solid white;
+        }
 
         .toast-msg {
-            position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
-            background-color: white; color: black; padding: 14px 28px; border-radius: 100px; font-size: 15px; z-index: 4000;
-            display: none; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); white-space: nowrap; font-weight: 700;
+            position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background-color: var(--accent); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; z-index: 3000;
+            display: none; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); white-space: nowrap; font-weight: 600;
         }
-        .toast-msg.show { display: flex; animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .toast-msg.show { display: flex; }
 
-        /* --- Floating Bottom Nav --- */
         .bottom-nav {
-            position: fixed; bottom: 15px; left: 15px; right: 15px; z-index: 1000;
-            display: flex; justify-content: space-around; align-items: center; padding: 12px 10px;
-            border-radius: 100px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--surface-color);
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
+            border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); z-index: 1000; transition: background-color 0.3s ease; border-top: 1px solid var(--border-color);
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; font-size: 26px; flex: 1; transition: all 0.3s ease; }
-        .nav-item.active { color: var(--accent); filter: drop-shadow(0 0 8px var(--accent-glow)); transform: translateY(-3px);}
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; font-size: 26px; flex: 1; transition: color 0.3s ease; }
+        .nav-item.active { color: var(--text-color); }
         
-        .nav-item-center-wrapper { position: relative; flex: 1; display: flex; justify-content: center; height: 100%; align-items: center;}
+        .nav-item-center-wrapper { position: relative; flex: 1; display: flex; justify-content: center; height: 40px; }
         .nav-item-center {
-            width: 55px; height: 55px; background: linear-gradient(135deg, var(--accent), #fff); border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #000; font-size: 28px; box-shadow: 0 10px 20px var(--accent-glow); cursor: pointer; transition: transform 0.2s;
+            position: absolute; top: -35px; width: 65px; height: 65px; background-color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 30px; border: 6px solid var(--bg-color); box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s, border-color 0.3s ease, background-color 0.3s ease;
         }
-        .nav-item-center:active { transform: scale(0.9); }
-        
-        /* Splash Screen */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.6s ease; overflow: hidden;
-        }
-        #splash-screen .logo-box {
-            width: 120px; height: 120px; background: linear-gradient(135deg, var(--accent), #fff); border-radius: 32px; box-shadow: 0 20px 50px var(--accent-glow); display: flex; justify-content: center; align-items: center; margin-bottom: 30px;
-        }
-        select option { background-color: #111; color: white; }
+        .nav-item-center:active { transform: scale(0.95); }
+        select option { background-color: var(--surface-color); color: white; }
     </style>
 </head>
 <body>
-    <div id="splash-screen">
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; overflow: hidden;">
         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%), radial-gradient(circle at bottom left, rgba(255,255,255,0.05), transparent 50%); z-index: 0;"></div>
+        
         <div style="text-align: center; z-index: 1;">
-            <div class="logo-box">
-                <svg width="65" height="65" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path>
+            <div style="width: 110px; height: 110px; background: linear-gradient(135deg, var(--accent), #fff); border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; margin: 0 auto 25px auto;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
                 </svg>
             </div>
-            <h2 id="splashTitle" style="color: white; font-weight: 700; margin-bottom: 5px; text-shadow: 0 4px 20px rgba(255,255,255,0.3);">Rawnaq</h2>
+            <h2 id="splashTitle" style="color: white; font-weight: 700; margin-bottom: 5px;">Rawnaq</h2>
         </div>
-        <div style="position: absolute; bottom: 80px; width: 60%; text-align: center; z-index: 1;">
+        <div style="position: absolute; bottom: 60px; width: 70%; text-align: center; z-index: 1;">
             <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                <div id="loading-bar" style="width: 0%; height: 100%; background: var(--accent); transition: width 2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                <div id="loading-bar" style="width: 0%; height: 100%; background: var(--accent); transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);"></div>
             </div>
         </div>
     </div>
 
     <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-    <div class="search-overlay glass-panel" id="searchOverlay">
+    <div class="search-overlay" id="searchOverlay">
         <div class="search-bar-modern">
             <i class="ph ph-magnifying-glass"></i>
             <input type="text" id="searchInput" data-i18n-placeholder="search_placeholder" placeholder="Search wallpapers..." oninput="handleSearch(this.value)">
-            <i class="ph-bold ph-x" onclick="toggleSearch()" style="cursor:pointer; color: white;"></i>
+            <i class="ph-bold ph-x" onclick="toggleSearch()" style="cursor:pointer; color: #ef4444;"></i>
         </div>
         <div class="search-results" id="searchResults"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-    <div class="sidebar glass-panel" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="pro-banner">
             <div class="pro-icon-box"><i class="ph-fill ph-crown"></i></div>
             <div class="pro-text">
@@ -365,12 +345,15 @@
                 <p data-i18n="unlock">Unlock everything.</p>
             </div>
         </div>
+
         <div class="menu-items-container">
             <div class="menu-item" onclick="toggleTheme()"><i class="ph ph-moon" id="themeIcon"></i> <span data-i18n="theme_dark" id="themeText">Dark Mode</span></div>
             <div class="menu-item" onclick="toggleGlassTheme()"><i class="ph ph-drop" id="glassIcon"></i> <span data-i18n="glass">Glass Theme</span></div>
             <div class="menu-item" onclick="displayFavorites()"><i class="ph ph-heart"></i> <span data-i18n="favorites">Favorites</span></div>
+            
             <div class="menu-item" onclick="openModal('aboutAppModal')"><i class="ph ph-info"></i> <span data-i18n="about_app">About the app</span></div>
             <div class="menu-item" onclick="openSettings()"><i class="ph ph-gear"></i> <span data-i18n="settings">Settings</span></div>
+            
             <div class="menu-item" onclick="shareApp()"><i class="ph ph-share-network"></i> <span data-i18n="share">Share with friends</span></div>
             <div class="menu-item" onclick="document.getElementById('photoInput').click(); toggleMenu();">
                 <i class="ph ph-image-square"></i> <span data-i18n="use_photo">Use your photo</span> <span class="new-badge" data-i18n="new_badge">New</span>
@@ -378,14 +361,15 @@
         </div>
     </div>
 
-    <div class="modal-viewer" id="settingsModal">
-        <div class="viewer-header glass-panel" style="background: transparent;">
-            <div class="title" style="font-size: 22px; font-weight: 800;" data-i18n="settings">Settings</div>
-            <i class="ph ph-x" onclick="closeModal('settingsModal')"></i>
+    <div class="modal-viewer" id="settingsModal" style="z-index: 3000;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 22px; font-weight: 700;" data-i18n="settings">Settings</div>
+            <i class="ph ph-x" onclick="closeModal('settingsModal')" style="font-size: 24px; cursor: pointer;"></i>
         </div>
+        
         <div style="padding: 90px 20px 20px 20px; overflow-y: auto; height: 100%;">
             <div class="settings-group-title" data-i18n="display">Display</div>
-            <div class="settings-card glass-panel">
+            <div class="settings-card">
                 <div class="settings-row">
                     <span data-i18n="app_lang">App language</span>
                     <select id="langSelect" onchange="changeLanguage(this.value)">
@@ -399,81 +383,90 @@
                     </select>
                 </div>
             </div>
+
             <div class="settings-group-title" data-i18n="about">About</div>
-            <div class="settings-card glass-panel">
+            <div class="settings-card">
                 <div class="settings-row" onclick="openModal('termsModal')">
                     <span data-i18n="terms_of_use">Terms of use</span>
-                    <i class="ph ph-caret-right"></i>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted)"></i>
                 </div>
                 <div class="settings-row" onclick="openModal('privacyModal')">
                     <span data-i18n="privacy_policy">Privacy policy</span>
-                    <i class="ph ph-caret-right"></i>
+                    <i class="ph ph-arrow-up-right" style="color: var(--text-muted)"></i>
                 </div>
                 <div class="settings-row" style="border-bottom: none;">
                     <span data-i18n="version">Version</span>
-                    <span style="color: var(--accent);">1.0.0</span>
+                    <span style="color: var(--text-muted);">1.0.0</span>
                 </div>
+            </div>
+            <div class="settings-footer">
+                <p>Developed by Tijani Mohammed<br>© 2026 All rights reserved</p>
             </div>
         </div>
     </div>
 
-    <!-- AI Generator -->
-    <div class="modal-viewer" id="aiModal">
-        <div class="viewer-header glass-panel" style="background: transparent;">
-            <div class="title" style="font-size: 20px; font-weight: 800;" data-i18n="ai_gen">AI Generator</div>
-            <i class="ph ph-x" onclick="closeModal('aiModal')"></i>
+    <div class="modal-viewer" id="aiModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="ai_gen">AI Generator</div>
+            <i class="ph ph-x" onclick="closeModal('aiModal')" style="font-size: 24px; cursor: pointer;"></i>
         </div>
-        <div style="padding: 100px 25px 20px 25px; text-align: center; height: 100%;">
-            <i class="ph-fill ph-magic-wand" style="font-size: 70px; color: var(--accent); margin-bottom: 25px; filter: drop-shadow(0 0 20px var(--accent-glow));"></i>
-            <p data-i18n="ai_desc" style="color: var(--text-color); margin-bottom: 30px; font-size: 16px; font-weight: 500; line-height: 1.6;"></p>
+        <div style="padding: 100px 20px 20px 20px; text-align: center; height: 100%;">
+            <i class="ph-fill ph-magic-wand" style="font-size: 60px; color: var(--accent); margin-bottom: 20px;"></i>
+            <p data-i18n="ai_desc" style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">اكتب وصفاً للصورة التي تتخيلها وسيقوم الذكاء الاصطناعي برسمها لك كخلفية فريدة!</p>
+            
             <div class="ai-input-area">
                 <textarea id="aiPromptInput" data-i18n-placeholder="ai_prompt_placeholder" placeholder="Describe the image you want..."></textarea>
             </div>
-            <button class="apply-action-btn" onclick="generateAiImage()" style="margin-top: 25px;" data-i18n="generate">Generate</button>
+            <button class="apply-action-btn" onclick="generateAiImage()" style="margin-top: 20px; padding: 16px;" data-i18n="generate">Generate</button>
         </div>
     </div>
 
-    <div class="modal-viewer" id="aboutAppModal">
-        <div class="viewer-header glass-panel" style="background: transparent;">
-            <div class="title" style="font-size: 20px; font-weight: 800;" data-i18n="about_app">About the app</div>
-            <i class="ph ph-arrow-left" onclick="closeModal('aboutAppModal')"></i>
+    <div class="modal-viewer" id="aboutAppModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="about_app">About the app</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('aboutAppModal')" style="font-size: 24px; cursor: pointer;"></i>
         </div>
         <div class="modal-text-content" style="text-align: center;">
-            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--accent), #fff); border-radius: 26px; box-shadow: 0 15px 35px var(--accent-glow); display: flex; justify-content: center; align-items: center; margin: 20px auto;">
-                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <div style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--accent), #fff); border-radius: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; margin: 20px auto;">
+                <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="var(--bg-color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path>
                 </svg>
             </div>
-            <h2 id="aboutTitleText" style="color: white; font-weight: 800; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(255,255,255,0.2);">Rawnaq</h2>
-            <p style="color: var(--accent); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px;">Wallpapers & Art</p>
-            <p data-i18n="about_desc" style="color: var(--text-muted); line-height: 1.8; font-size: 16px; padding: 0 10px;">
-                Rawnaq is your ultimate destination for high-quality, stunning wallpapers.
+            <h2 id="aboutTitleText" style="color: var(--text-color); font-weight: 800; margin-bottom: 5px;">Rawnaq</h2>
+            <p style="color: var(--accent); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Wallpapers & Art</p>
+            <p data-i18n="about_desc" style="color: var(--text-muted); line-height: 1.8; font-size: 15px; padding: 0 10px;">
+                Rawnaq is your ultimate destination for high-quality, stunning wallpapers. Carefully crafted to bring beauty to your screen every single day.
             </p>
         </div>
     </div>
 
-    <div class="modal-viewer" id="termsModal">
-        <div class="viewer-header glass-panel" style="background: transparent;">
-            <div class="title" style="font-size: 20px; font-weight: 800;" data-i18n="terms_of_use">Terms of use</div>
-            <i class="ph ph-arrow-left" onclick="closeModal('termsModal')"></i>
+    <div class="modal-viewer" id="termsModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="terms_of_use">Terms of use</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('termsModal')" style="font-size: 24px; cursor: pointer;"></i>
         </div>
-        <div class="modal-text-content"><h3 data-i18n="terms_of_use">Terms of Use</h3><p data-i18n="terms_content"></p></div>
+        <div class="modal-text-content">
+            <h3 data-i18n="terms_of_use">Terms of Use</h3>
+            <p data-i18n="terms_content">Welcome to Rawnaq! By downloading and using this application, you agree to these terms and conditions.</p>
+        </div>
     </div>
 
-    <div class="modal-viewer" id="privacyModal">
-        <div class="viewer-header glass-panel" style="background: transparent;">
-            <div class="title" style="font-size: 20px; font-weight: 800;" data-i18n="privacy_policy">Privacy policy</div>
-            <i class="ph ph-arrow-left" onclick="closeModal('privacyModal')"></i>
+    <div class="modal-viewer" id="privacyModal" style="z-index: 3100;">
+        <div class="viewer-header" style="justify-content: space-between; padding: 20px;">
+            <div class="title" style="font-size: 20px; font-weight: 700;" data-i18n="privacy_policy">Privacy policy</div>
+            <i class="ph ph-arrow-left" onclick="closeModal('privacyModal')" style="font-size: 24px; cursor: pointer;"></i>
         </div>
-        <div class="modal-text-content"><h3 data-i18n="privacy_policy">Privacy Policy</h3><p data-i18n="privacy_content"></p></div>
+        <div class="modal-text-content">
+            <h3 data-i18n="privacy_policy">Privacy Policy</h3>
+            <p data-i18n="privacy_content">Your privacy is important to us. Rawnaq does not collect, store, or share your personal data.</p>
+        </div>
     </div>
 
-    <!-- Image Viewer (Immersive UI) -->
     <div class="image-viewer" id="imageViewer">
         <div class="viewer-header">
             <div class="header-icons-left">
                 <i class="ph ph-dots-three-vertical" onclick="toggleOptionsMenu()"></i>
-                <div class="options-menu glass-panel" id="optionsMenu">
+                <div class="options-menu" id="optionsMenu">
                     <div class="options-option" onclick="toggleFavorite()"><i class="ph ph-heart" id="favHeartIcon"></i> <span data-i18n="add_fav">Add to favourites</span></div>
                 </div>
                 <i class="ph ph-corners-out" id="fullscreenBtn" onclick="toggleFullscreen()"></i>
@@ -484,16 +477,15 @@
         <div class="viewer-image-container" id="viewerImageContainer"> 
             <div class="image-wrapper">
                 <img id="viewerImage" src="" alt="Full Wallpaper" onclick="toggleFullscreen()"> 
-                <!-- الاقتباس (نص صافي بدون إطار) -->
-                <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; padding: 0; color: white; text-align: center; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 85%; left: 50%; top: 50%; transform: translate(-50%, -50%); line-height: 1.6;"></div>
+                <!-- الاقتباس (نص فقط بدون إطار) -->
+                <div id="quoteOverlay" style="position: absolute; display: none; z-index: 10; touch-action: none; padding: 5px; color: white; text-align: center; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-size: 24px; font-weight: bold; width: 80%; left: 50%; top: 50%; transform: translate(-50%, -50%); line-height: 1.5;"></div>
             </div>
         </div>
 
-        <!-- القوائم العائمة الزجاجية -->
-        <div class="apply-menu glass-panel" id="quoteMenu">
-            <div style="padding: 20px; color: white;">
-                <p id="quoteHint" style="color: var(--accent); font-size: 13px; margin-bottom: 15px; text-align: center; font-weight: 700;"></p>
-                <div id="quotesList" style="display: flex; flex-direction: column; max-height: 160px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;"></div>
+        <div class="apply-menu" id="quoteMenu" style="bottom: 115px;">
+            <div style="padding: 15px; color: white;">
+                <p id="quoteHint" style="color: var(--accent); font-size: 13px; margin-bottom: 12px; text-align: center; font-weight: 600;"></p>
+                <div id="quotesList" style="display: flex; flex-direction: column; max-height: 150px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;"></div>
                 
                 <div class="quote-tools">
                     <input type="color" id="quoteColor" class="color-picker" value="#ffffff" onchange="updateQuoteStyle()">
@@ -501,42 +493,44 @@
                     <button class="tool-btn" id="btnItalic" onclick="toggleQuoteStyle('italic')"><i class="ph-bold ph-text-italic"></i></button>
                     <button class="tool-btn" id="btnUnderline" onclick="toggleQuoteStyle('underline')"><i class="ph-bold ph-text-underline"></i></button>
                 </div>
+                
                 <button class="apply-action-btn" onclick="burnTextQuote()" data-i18n="apply">Apply</button>
             </div>
         </div>
 
-        <div class="apply-menu glass-panel" id="blurMenu">
-            <div style="padding: 25px 20px; color: white; text-align: center;">
-                <label style="display:block; margin-bottom:15px; font-size: 16px; font-weight:800;" data-i18n="glass">Glass</label>
+        <div class="apply-menu" id="blurMenu" style="bottom: 115px;">
+            <div style="padding: 20px; color: white; text-align: center;">
+                <label style="display:block; margin-bottom:10px; font-size: 15px; font-weight:700;" data-i18n="glass">Glass</label>
                 <input type="range" id="blurSlider" min="0" max="100" value="0" oninput="previewBlur()">
-                <button class="apply-action-btn" onclick="applyBlur()" style="margin-top: 25px;" data-i18n="apply">Apply</button>
+                <button class="apply-action-btn" onclick="applyBlur()" style="margin-top: 20px;" data-i18n="apply">Apply</button>
             </div>
         </div>
        
-        <div class="apply-menu glass-panel" id="applyMenu">
+        <div class="apply-menu" id="applyMenu" style="bottom: 115px;">
             <div class="apply-option" onclick="processWallpaper(2)"><i class="ph ph-lock-key"></i> <span data-i18n="lock_screen">Lock screen</span></div>
             <div class="apply-option" onclick="processWallpaper(1)"><i class="ph ph-device-mobile"></i> <span data-i18n="home_screen">Home screen</span></div>
             <div class="apply-option" onclick="processWallpaper(0)"><i class="ph ph-devices"></i> <span data-i18n="both_screens">Home and lock screens</span></div>
         </div>
 
         <div class="toast-msg" id="toastMsg">
-            <i class="ph-bold ph-image" id="toastIcon" style="font-size: 18px;"></i>
+            <div style="background-color: var(--accent); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="ph-bold ph-image" id="toastIcon" style="color: white; font-size: 16px;"></i>
+            </div>
             <span id="toastText" data-i18n="wallpaper_success">Wallpaper was set successfully</span>
         </div>
         
-        <!-- أزرار التحكم العائمة الدائرية -->
         <div class="viewer-actions">
-            <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span></span></div>
-            <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span></span></div>
-            <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span></span></div>
-            <div class="action-btn" onclick="openModal('aiModal')"><div class="action-icon"><i class="ph ph-magic-wand"></i></div><span></span></div>
-            <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span></span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('applyMenu')"><div class="action-icon"><i class="ph ph-paint-roller"></i></div><span data-i18n="apply">Apply</span></div>
+            <div class="action-btn" onclick="saveWallpaper()"><div class="action-icon" id="saveIcon"><i class="ph ph-download-simple"></i></div><span id="saveText" data-i18n="save">Save</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('quoteMenu')"><div class="action-icon"><i class="ph ph-quotes"></i></div><span data-i18n="quote">Quote</span></div>
+            <div class="action-btn" onclick="openModal('aiModal')"><div class="action-icon"><i class="ph ph-magic-wand"></i></div><span data-i18n="ai_gen">AI</span></div>
+            <div class="action-btn" onclick="toggleViewerMenu('blurMenu')"><div class="action-icon"><i class="ph ph-drop"></i></div><span data-i18n="glass">Glass</span></div>
         </div>
     </div>
 
     <!-- الشريط العلوي العائم -->
     <div class="header-container">
-        <div class="top-bar-box glass-panel">
+        <div class="top-bar-box">
             <i class="ph ph-magnifying-glass" onclick="toggleSearch()"></i>
             <div class="title-logo-wrapper">
                 <div class="title" id="mainAppTitle" data-i18n="app_title">Rawnaq</div>
@@ -547,17 +541,18 @@
     
     <div id="mainContainer" class="grid"></div>
 
-    <!-- الشريط السفلي العائم -->
-    <div class="bottom-nav glass-panel">
+    <div class="bottom-nav">
         <div class="nav-item" onclick="switchTab('categories', this)"><i class="ph ph-stack"></i></div>
         <div class="nav-item" onclick="switchTab('premium', this)"><i class="ph ph-crown"></i></div>
         <div class="nav-item-center-wrapper">
             <div class="nav-item-center active" onclick="switchTab('home', this)"><i class="ph-fill ph-house"></i></div>
         </div>
         <div class="nav-item" onclick="switchTab('community', this)"><i class="ph ph-users"></i></div>
+        
+        <!-- زر 4K بخصائص توسيط تامة -->
         <div class="nav-item" onclick="switchTab('desktop', this)">
-            <div style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 2.5px solid currentColor; border-radius: 8px; margin: auto;">
-                <span style="font-size: 13px; font-weight: 800; line-height: 0; padding-top: 1px;">4K</span>
+            <div style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 2.5px solid currentColor; border-radius: 8px; margin: auto;">
+                <span style="font-size: 13px; font-weight: 800; line-height: 0;">4K</span>
             </div>
         </div>
     </div>
