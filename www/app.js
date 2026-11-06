@@ -80,11 +80,11 @@ const quotesData = {
 };
 
 const palettes = [
-    { gradient: 'linear-gradient(135deg, #0f172a, #1e293b)', surface: '#1e293b', light: '#334155', accent: '#38bdf8' }, 
-    { gradient: 'linear-gradient(135deg, #064e3b, #0f766e)', surface: '#0f766e', light: '#115e59', accent: '#10b981' }, 
-    { gradient: 'linear-gradient(135deg, #2e1065, #4c1d95)', surface: '#4c1d95', light: '#5b21b6', accent: '#a855f7' }, 
-    { gradient: 'linear-gradient(135deg, #4c0519, #881337)', surface: '#881337', light: '#9f1239', accent: '#f43f5e' }, 
-    { gradient: 'linear-gradient(135deg, #1f1209, #431407)', surface: '#431407', light: '#7c2d12', accent: '#fbbf24' }  
+    { gradient: 'linear-gradient(135deg, #0f172a, #1e293b)', surface: 'rgba(30, 41, 59, 0.7)', light: 'rgba(51, 65, 85, 0.9)', accent: '#38bdf8' }, 
+    { gradient: 'linear-gradient(135deg, #064e3b, #0f766e)', surface: 'rgba(15, 118, 110, 0.7)', light: 'rgba(17, 94, 89, 0.9)', accent: '#10b981' }, 
+    { gradient: 'linear-gradient(135deg, #2e1065, #4c1d95)', surface: 'rgba(76, 29, 149, 0.7)', light: 'rgba(91, 33, 182, 0.9)', accent: '#a855f7' }, 
+    { gradient: 'linear-gradient(135deg, #4c0519, #881337)', surface: 'rgba(136, 19, 55, 0.7)', light: 'rgba(159, 18, 57, 0.9)', accent: '#f43f5e' }, 
+    { gradient: 'linear-gradient(135deg, #1f1209, #431407)', surface: 'rgba(67, 20, 7, 0.7)', light: 'rgba(124, 45, 18, 0.9)', accent: '#fbbf24' }  
 ];
 
 let currentLang = localStorage.getItem('appLang') || 'en';
@@ -127,12 +127,12 @@ function changeLanguage(lang) {
             splashTitle.style.fontFamily = "'Reem Kufi', serif"; splashTitle.style.fontSize = "46px";
             aboutTitleText.style.fontFamily = "'Reem Kufi', serif"; aboutTitleText.style.fontSize = "38px";
         } else {
-            appTitle.style.fontFamily = "'Cinzel', serif"; appTitle.style.fontSize = "22px";
+            appTitle.style.fontFamily = "'Cinzel', serif"; appTitle.style.fontSize = "24px";
             splashTitle.style.fontFamily = "'Cinzel', serif"; splashTitle.style.fontSize = "36px";
             aboutTitleText.style.fontFamily = "'Cinzel', serif"; aboutTitleText.style.fontSize = "30px";
         }
     }
-    renderQuotesList(); // تحديث قائمة الاقتباسات حسب اللغة
+    renderQuotesList();
 }
 changeLanguage(currentLang);
 
@@ -257,7 +257,7 @@ function toggleFavorite() {
     if (index > -1) {
         favoritesList.splice(index, 1);
         showToast('fav_removed');
-        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'var(--text-color)';
+        heartIcon.className = 'ph ph-heart'; heartIcon.style.color = 'white';
     } else {
         favoritesList.push(url);
         showToast('fav_added');
@@ -273,7 +273,7 @@ function displayFavorites() {
     mainContainer.className = 'grid'; mainContainer.innerHTML = '';
     
     if (favoritesList.length === 0) {
-        mainContainer.innerHTML = `<p style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 40px;">${translations[currentLang].fav_empty}</p>`;
+        mainContainer.innerHTML = `<div style="text-align:center; grid-column: span 3; color: var(--text-muted); padding: 60px 20px;"><i class="ph ph-heart-break" style="font-size: 48px; color: var(--border-color); margin-bottom: 15px;"></i><p>${translations[currentLang].fav_empty}</p></div>`;
         return;
     }
     favoritesList.forEach(url => {
@@ -289,7 +289,7 @@ async function shareApp() {
     try {
         const shareData = {
             title: translations[currentLang].app_title,
-            text: currentLang === 'ar' ? "اكتشف أفضل تطبيق للخلفيات العربية الأصيلة والذكاء الاصطناعي!" : "Check out this amazing wallpaper app!",
+            text: currentLang === 'ar' ? "اكتشف أفضل تطبيق للخلفيات والذكاء الاصطناعي!" : "Check out this amazing wallpaper app!",
             url: 'https://play.google.com/store/apps/details?id=com.tijanim.arabicwalls'
         };
         if (navigator.share) {
@@ -313,7 +313,6 @@ function openModal(modalId) {
     document.getElementById(modalId).classList.add('show'); 
 }
 
-// توليد الصور بالذكاء الاصطناعي مع معالجة اللغة العربية
 async function generateAiImage() {
     let prompt = document.getElementById('aiPromptInput').value.trim();
     if(!prompt) return;
@@ -321,9 +320,8 @@ async function generateAiImage() {
     closeModal('aiModal');
     showToast('loading');
     
-    // قاموس بسيط لترجمة الكلمات العربية الأساسية لمحرك الـ AI
     if(currentLang === 'ar') {
-        const arDict = {"مسجد": "mosque", "صحراء": "desert", "ليل": "night", "نجوم": "stars", "طبيعة": "nature", "مدينة": "city", "سيارة": "car", "خيال": "fantasy", "قمر": "moon"};
+        const arDict = {"مسجد": "mosque", "صحراء": "desert", "ليل": "night", "نجوم": "stars", "طبيعة": "nature", "مدينة": "city", "سيارة": "car", "قمر": "moon", "حصان": "horse", "خيال": "fantasy"};
         for(let key in arDict) { prompt = prompt.replace(new RegExp(key, 'g'), arDict[key]); }
         prompt = prompt + ", highly detailed, masterpiece, 4k resolution, cinematic lighting, ultra realistic";
     } else {
@@ -488,18 +486,20 @@ function toggleViewerMenu(menuId) {
 function showToast(messageKey) {
     const text = document.getElementById('toastText');
     const icon = document.getElementById('toastIcon');
-    icon.className = 'ph-bold ph-image'; icon.style.animation = 'none';
+    icon.className = 'ph-bold ph-check'; 
+    if(messageKey === 'loading') { icon.className = 'ph-bold ph-spinner'; icon.style.animation = 'spin 1s linear infinite'; } 
+    else if(messageKey === 'conn_failed') { icon.className = 'ph-bold ph-warning'; icon.style.animation = 'none'; }
+    else { icon.style.animation = 'none'; }
+    
     text.innerText = translations[currentLang][messageKey] || messageKey;
     toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
 }
 
-// --- نظام دمج الاقتباسات وتنسيقها (ألوان / عريض / مائل / تسطير) ---
 const quoteOverlay = document.getElementById('quoteOverlay');
 let isDraggingQuote = false;
 let currentScale = 1;
 let initialPinchDistance = null;
 let initialScale = 1;
-
 let quoteStyle = { color: '#ffffff', bold: false, italic: false, underline: false };
 
 function updateQuoteStyle() {
@@ -543,6 +543,7 @@ function addQuote(text) {
     currentScale = 1;
     quoteOverlay.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
     applyQuoteStylesToElement();
+    toggleViewerMenu('');
 }
 
 quoteOverlay.addEventListener('touchstart', (e) => {
@@ -575,7 +576,7 @@ document.addEventListener('touchmove', (e) => {
             e.touches[0].clientY - e.touches[1].clientY
         );
         currentScale = initialScale * (currentDistance / initialPinchDistance);
-        currentScale = Math.max(0.5, Math.min(currentScale, 4.0));
+        currentScale = Math.max(0.5, Math.min(currentScale, 3.5));
         quoteOverlay.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
     }
 });
@@ -618,21 +619,37 @@ async function getFinalImageData() {
     
     let fontStyleStr = quoteStyle.italic ? 'italic ' : '';
     let fontWeightStr = quoteStyle.bold ? '900 ' : 'bold ';
-    let fontFamilyStr = currentLang === 'ar' ? "'Aref Ruqaa', serif" : "'Cinzel', serif";
+    let fontFamilyStr = currentLang === 'ar' ? "'Reem Kufi', serif" : "'Cinzel', serif";
     
-    ctx.font = `${fontStyleStr}${fontWeightStr}${32 * currentScale * scaleY}px ${fontFamilyStr}`;
+    ctx.font = `${fontStyleStr}${fontWeightStr}${28 * currentScale * scaleY}px ${fontFamilyStr}`;
     ctx.fillStyle = quoteStyle.color;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.9)";
     ctx.shadowBlur = 15 * scaleY;
     
-    ctx.fillText(quoteOverlay.innerText, centerX, centerY);
-    
-    if(quoteStyle.underline) {
-        const textWidth = ctx.measureText(quoteOverlay.innerText).width;
-        ctx.fillRect(centerX - textWidth/2, centerY + (16 * currentScale * scaleY), textWidth, 3 * scaleY);
+    const words = quoteOverlay.innerText.split(' ');
+    let line = '';
+    let y = centerY;
+    const maxWidth = img.width * 0.8;
+    const lineHeight = 40 * currentScale * scaleY;
+
+    // دعم تعدد الأسطر
+    for(let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        let metrics = ctx.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+            ctx.fillText(line, centerX, y);
+            if(quoteStyle.underline) ctx.fillRect(centerX - ctx.measureText(line).width/2, y + (lineHeight/2.5), ctx.measureText(line).width, 3 * scaleY);
+            line = words[n] + ' ';
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
     }
+    ctx.fillText(line, centerX, y);
+    if(quoteStyle.underline) ctx.fillRect(centerX - ctx.measureText(line).width/2, y + (lineHeight/2.5), ctx.measureText(line).width, 3 * scaleY);
 
     return canvas.toDataURL('image/jpeg', 0.95);
 }
@@ -640,14 +657,11 @@ async function getFinalImageData() {
 async function burnTextQuote() {
     if (quoteOverlay.style.display === 'none') return;
     toggleViewerMenu('');
+    showToast('loading');
     const finalImgUrl = await getFinalImageData();
     viewerImage.src = finalImgUrl;
     quoteOverlay.style.display = 'none';
-    
-    document.getElementById('toastIcon').className = 'ph-bold ph-check';
-    document.getElementById('toastText').innerText = currentLang === 'ar' ? 'تم تطبيق الاقتباس بنجاح' : 'Quote applied successfully';
-    const toastMsg = document.getElementById('toastMsg');
-    toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
+    showToast('wallpaper_success');
 }
 
 function previewBlur() {
@@ -660,6 +674,7 @@ async function applyBlur() {
     if(blurVal == 0) { toggleViewerMenu(''); return; }
     
     toggleViewerMenu('');
+    showToast('loading');
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const img = new Image();
@@ -676,23 +691,12 @@ async function applyBlur() {
     viewerImage.src = canvas.toDataURL('image/jpeg', 0.95);
     viewerImage.style.filter = 'none';
     document.getElementById('blurSlider').value = 0;
-
-    document.getElementById('toastIcon').className = 'ph-bold ph-check';
-    document.getElementById('toastText').innerText = currentLang === 'ar' ? 'تم تطبيق التأثير بنجاح' : 'Glass effect applied successfully';
-    toastMsg.classList.add('show'); setTimeout(() => { toastMsg.classList.remove('show'); }, 3000);
+    showToast('wallpaper_success');
 }
 
 async function processWallpaper(mode) {
     toggleViewerMenu('');
-    
-    const toast = document.getElementById('toastMsg');
-    const toastText = document.getElementById('toastText');
-    const toastIcon = document.getElementById('toastIcon');
-    
-    toastIcon.className = 'ph-bold ph-spinner'; 
-    toastIcon.style.animation = 'spin 1s linear infinite';
-    toastText.innerText = translations[currentLang].loading;
-    toast.classList.add('show');
+    showToast('loading');
     
     try {
         const finalImageSrc = await getFinalImageData(); 
@@ -704,16 +708,8 @@ async function processWallpaper(mode) {
         reader.onloadend = async function() {
             const base64data = reader.result.split(',')[1];
             
-            let success = () => {
-                toastIcon.className = 'ph-bold ph-check'; toastIcon.style.animation = 'none';
-                toastText.innerText = translations[currentLang].wallpaper_success;
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            };
-            let error = (err) => {
-                toastIcon.className = 'ph-bold ph-warning'; toastIcon.style.animation = 'none';
-                toastText.innerText = translations[currentLang].conn_failed;
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            };
+            let success = () => { showToast('wallpaper_success'); };
+            let error = (err) => { showToast('conn_failed'); };
 
             if (window.Capacitor && window.Capacitor.Plugins.Wallpaper) {
                 try {
@@ -740,14 +736,11 @@ async function processWallpaper(mode) {
                 }
             } else { error(); }
         }
-    } catch (e) { 
-        toastIcon.className = 'ph-bold ph-warning'; toastIcon.style.animation = 'none';
-        toastText.innerText = translations[currentLang].conn_failed;
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    }
+    } catch (e) { showToast('conn_failed'); }
 }
 
 async function saveWallpaper() {
+    showToast('loading');
     try {
         const finalImageSrc = await getFinalImageData();
         const response = await fetch(finalImageSrc);
@@ -761,11 +754,9 @@ async function saveWallpaper() {
                 const { Filesystem } = window.Capacitor.Plugins;
                 const fileName = 'Rawnaq_' + new Date().getTime() + '.jpg';
                 await Filesystem.writeFile({ path: fileName, data: base64data, directory: 'DOCUMENTS', recursive: true });
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: var(--accent);"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة بنجاح' : (currentLang === 'fr' ? 'Image enregistrée avec succès' : 'Image saved successfully'));
+                showToast('wallpaper_success');
             } else {
-                document.getElementById('saveIcon').innerHTML = '<i class="ph-fill ph-check" style="color: var(--accent);"></i>';
-                showToast(currentLang === 'ar' ? 'تم حفظ الصورة' : 'Saved');
+                showToast('wallpaper_success');
             }
         }
     } catch (error) { showToast('conn_failed'); }
