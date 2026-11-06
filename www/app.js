@@ -634,7 +634,6 @@ async function getFinalImageData() {
     const maxWidth = img.width * 0.8;
     const lineHeight = 40 * currentScale * scaleY;
 
-    // دعم تعدد الأسطر
     for(let n = 0; n < words.length; n++) {
         let testLine = line + words[n] + ' ';
         let metrics = ctx.measureText(testLine);
